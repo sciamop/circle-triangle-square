@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://ciw2l5tkuxw2a"]
+
+[ext_resource type="Script" uid="uid://cqmtny1pndhcu" path="res://Scripts/enemy.gd" id="1_hghv2"]
+
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_ne65n"]
+points = PackedVector2Array(-23, 15, 18, 15, -2, -16)
+
+[node name="enemy" type="RigidBody2D"]
+collision_layer = 3
+collision_mask = 3
+freeze = true
+script = ExtResource("1_hghv2")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2(1, -15)
+scale = Vector2(1.54839, 1.63158)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-14, 19, 13.125, 19, 0, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(3, 1)
+shape = SubResource("ConvexPolygonShape2D_ne65n")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
