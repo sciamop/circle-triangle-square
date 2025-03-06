@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://ciw2l5tkuxw2a"]
 
-[ext_resource type="Script" path="res://Scripts/enemy.gd" id="1_hghv2"]
+[ext_resource type="Script" uid="uid://cqmtny1pndhcu" path="res://Scripts/enemy.gd" id="1_hghv2"]
 
 [sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_ne65n"]
 points = PackedVector2Array(-41.255, 15, 39.065, 15, -2.02, -18)

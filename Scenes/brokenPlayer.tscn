@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://bik7edjjyhft4"]
 
-[ext_resource type="Script" path="res://Scripts/broken_player.gd" id="1_q66v6"]
-[ext_resource type="Script" path="res://Scenes/polygon_2d.gd" id="2_045ni"]
-[ext_resource type="Script" path="res://Scenes/timer.gd" id="3_045ni"]
+[ext_resource type="Script" uid="uid://dllb4k0qdbk8a" path="res://Scripts/broken_player.gd" id="1_q66v6"]
+[ext_resource type="Script" uid="uid://y63jp0cst87s" path="res://Scenes/polygon_2d.gd" id="2_045ni"]
+[ext_resource type="Script" uid="uid://hus3ce75rnyn" path="res://Scenes/timer.gd" id="3_045ni"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5w4a4"]
 radius = 0.0

@@ -1,10 +1,9 @@
-[gd_scene load_steps=9 format=4 uid="uid://1jgi6tcbrn7v"]
+[gd_scene load_steps=8 format=4 uid="uid://1jgi6tcbrn7v"]
 
 [ext_resource type="Texture2D" uid="uid://43q28fbloexy" path="res://Sprites/1x16_tiles-trimmed.png" id="1_8ruqu"]
 [ext_resource type="PackedScene" uid="uid://bmlknwmevbp4p" path="res://Scenes/player.tscn" id="2_a8p0r"]
 [ext_resource type="PackedScene" uid="uid://ciw2l5tkuxw2a" path="res://Scenes/enemy.tscn" id="3_wrm1d"]
 [ext_resource type="PackedScene" uid="uid://dl0ufnqft2gc1" path="res://Scenes/killzone.tscn" id="4_3dryh"]
-[ext_resource type="Script" path="res://Scripts/killzone.gd" id="5_wowpa"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_na51i"]
 texture = ExtResource("1_8ruqu")
@@ -534,7 +533,6 @@ freeze = true
 
 [node name="Killzone" parent="." instance=ExtResource("4_3dryh")]
 position = Vector2(84, 125)
-script = ExtResource("5_wowpa")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Killzone"]
 position = Vector2(-24, 0)
