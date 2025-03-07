@@ -1,9 +1,9 @@
 [gd_scene load_steps=22 format=3 uid="uid://bmlknwmevbp4p"]
 
 [ext_resource type="Script" uid="uid://dbvwt6nipxqyt" path="res://Scripts/player.gd" id="1_0rj3f"]
-[ext_resource type="Script" uid="uid://y63jp0cst87s" path="res://Scenes/polygon_2d.gd" id="2_256ay"]
-[ext_resource type="Script" uid="uid://bbvkyttog13hc" path="res://Scenes/armHurtBox.gd" id="3_sgjrr"]
-[ext_resource type="Script" uid="uid://bbmxfaen3j6mc" path="res://Scenes/playerCollider.gd" id="3_v8bm6"]
+[ext_resource type="Script" uid="uid://y63jp0cst87s" path="res://Scripts/polygon_2d.gd" id="2_256ay"]
+[ext_resource type="Script" uid="uid://bbvkyttog13hc" path="res://Scripts/armHurtBox.gd" id="3_sgjrr"]
+[ext_resource type="Script" uid="uid://bbmxfaen3j6mc" path="res://Scripts/playerCollider.gd" id="3_v8bm6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5uiyf"]
 size = Vector2(38.1691, 15.6157)
@@ -530,6 +530,7 @@ collision_layer = 2
 collision_mask = 3
 input_pickable = true
 script = ExtResource("1_0rj3f")
+invincible = true
 
 [node name="IKTargetLeg01" type="Node2D" parent="."]
 position = Vector2(2, 186)
@@ -588,7 +589,7 @@ vertex_colors = PackedColorArray(0, 0, 0, 1)
 z_index = 1
 position = Vector2(11, 80)
 rotation = 1.54139
-scale = Vector2(0.999931, 0.999931)
+scale = Vector2(0.999979, 0.999979)
 color = Color(0, 0, 0, 1)
 texture_scale = Vector2(61.65, 61.65)
 skeleton = NodePath("../Leg01Polygon")
@@ -617,7 +618,7 @@ z_index = 1
 position = Vector2(-3.48818, 52.4327)
 rotation = 3.11577
 scale = Vector2(0.999846, 0.999846)
-skew = -0.00217426
+skew = -0.00217378
 color = Color(0, 0, 0, 1)
 texture_scale = Vector2(61.65, 61.65)
 skeleton = NodePath("../Leg01Polygon")
@@ -692,7 +693,7 @@ metadata/_local_pose_override_enabled_ = true
 position = Vector2(5.58352, -4.79354)
 rotation = 2.25999
 scale = Vector2(0.999897, 0.999897)
-skew = -0.00217283
+skew = -0.0021733
 rest = Transform2D(0.583433, -0.812154, 0.812154, 0.583433, 0, 0)
 auto_calculate_length_and_angle = false
 length = 34.685

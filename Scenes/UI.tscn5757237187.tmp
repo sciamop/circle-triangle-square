@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://ch4o0guerbahn"]
+
+[ext_resource type="Script" uid="uid://dm4ey0iltuo33" path="res://Scripts/UI.gd" id="1_w371h"]
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_w371h")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+scale = Vector2(1.18566, 2.73794)
+color = Color(0.252028, 0.252028, 0.252028, 0.6)
+polygon = PackedVector2Array(0, 50, 300, 50, 300, 2, 0, 0)

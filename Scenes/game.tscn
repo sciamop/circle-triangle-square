@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=4 uid="uid://1jgi6tcbrn7v"]
+[gd_scene load_steps=10 format=4 uid="uid://1jgi6tcbrn7v"]
 
 [ext_resource type="Texture2D" uid="uid://43q28fbloexy" path="res://Sprites/1x16_tiles-trimmed.png" id="1_8ruqu"]
 [ext_resource type="PackedScene" uid="uid://bmlknwmevbp4p" path="res://Scenes/player.tscn" id="2_a8p0r"]
 [ext_resource type="PackedScene" uid="uid://ciw2l5tkuxw2a" path="res://Scenes/enemy.tscn" id="3_wrm1d"]
 [ext_resource type="PackedScene" uid="uid://dl0ufnqft2gc1" path="res://Scenes/killzone.tscn" id="4_3dryh"]
+[ext_resource type="PackedScene" uid="uid://ch4o0guerbahn" path="res://Scenes/UI.tscn" id="5_wowpa"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_na51i"]
 texture = ExtResource("1_8ruqu")
@@ -492,8 +493,11 @@ physics_layer_0/collision_layer = 1
 physics_layer_0/collision_mask = 3
 sources/4 = SubResource("TileSetAtlasSource_na51i")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wowpa"]
-size = Vector2(1526, 20)
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_wowpa"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_wowpa"]
+font_size = 11
+font_color = Color(0, 0, 0, 1)
 
 [node name="Game" type="Node2D"]
 
@@ -514,6 +518,7 @@ navigation_enabled = false
 
 [node name="Player" parent="." instance=ExtResource("2_a8p0r")]
 position = Vector2(195, -215)
+collision_mask = 7
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(-92, 42)
@@ -533,7 +538,20 @@ freeze = true
 
 [node name="Killzone" parent="." instance=ExtResource("4_3dryh")]
 position = Vector2(84, 125)
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Killzone"]
-position = Vector2(-24, 0)
-shape = SubResource("RectangleShape2D_wowpa")
+position = Vector2(-25, 0)
+shape = SubResource("WorldBoundaryShape2D_wowpa")
+
+[node name="UI" parent="." instance=ExtResource("5_wowpa")]
+follow_viewport_scale = 210.486
+
+[node name="Label" type="Label" parent="."]
+offset_left = 34.0
+offset_top = -103.0
+offset_right = 188.0
+offset_bottom = -80.0
+text = "HIT FROM THIS SIDE"
+label_settings = SubResource("LabelSettings_wowpa")
+uppercase = true

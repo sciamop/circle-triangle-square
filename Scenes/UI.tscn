@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://ch4o0guerbahn"]
+
+[ext_resource type="Script" uid="uid://dm4ey0iltuo33" path="res://Scripts/UI.gd" id="1_w371h"]
+[ext_resource type="PackedScene" uid="uid://7j3ne7uossne" path="res://Scenes/slider.tscn" id="2_nxvpl"]
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_w371h")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+scale = Vector2(1.14735, 3.80447)
+color = Color(0.252028, 0.252028, 0.252028, 0.6)
+polygon = PackedVector2Array(0, 50, 300, 50, 300, 2, 0, 0)
+
+[node name="forceX" parent="." instance=ExtResource("2_nxvpl")]
+
+[node name="forceY" parent="." instance=ExtResource("2_nxvpl")]
+offset_top = 45.0
+offset_bottom = 90.0
+
+[node name="dirX" parent="." instance=ExtResource("2_nxvpl")]
+offset_top = 91.0
+offset_bottom = 136.0
+
+[node name="dirY" parent="." instance=ExtResource("2_nxvpl")]
+offset_top = 138.0
+offset_right = 260.0
+offset_bottom = 183.0

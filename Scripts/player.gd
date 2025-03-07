@@ -1,4 +1,5 @@
 extends CharacterBody2D
+@export var invincible:bool = false
 
 @export var speed:float = 300.0
 @export var accel:float = 555.0
@@ -47,7 +48,7 @@ func _physics_process(delta: float) -> void:
 	
 	if collision:
 		print(collision.get_collider().name)
-		if collision.get_collider().name == "enemy":
+		if collision.get_collider().name == "enemy" && invincible == false:
 			explode()
 	
 
