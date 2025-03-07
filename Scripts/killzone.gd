@@ -9,7 +9,7 @@ func _on_body_entered(body: Node2D) -> void:
 		timer.start()
 	
 	if (body.name.contains("enemy")):
-		print("enemememme")
+
 		body.respawn_object()
 		body.queue_free()
 		#get_parent().add_child(enemy)

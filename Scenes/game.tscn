@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://1jgi6tcbrn7v"]
+[gd_scene load_steps=9 format=4 uid="uid://1jgi6tcbrn7v"]
 
 [ext_resource type="Texture2D" uid="uid://43q28fbloexy" path="res://Sprites/1x16_tiles-trimmed.png" id="1_8ruqu"]
 [ext_resource type="PackedScene" uid="uid://bmlknwmevbp4p" path="res://Scenes/player.tscn" id="2_a8p0r"]
@@ -495,10 +495,6 @@ sources/4 = SubResource("TileSetAtlasSource_na51i")
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_wowpa"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_wowpa"]
-font_size = 11
-font_color = Color(0, 0, 0, 1)
-
 [node name="Game" type="Node2D"]
 
 [node name="mid" type="TileMapLayer" parent="."]
@@ -519,22 +515,22 @@ navigation_enabled = false
 [node name="Player" parent="." instance=ExtResource("2_a8p0r")]
 position = Vector2(195, -215)
 collision_mask = 7
+invincible = false
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(-92, 42)
 scale = Vector2(0.933185, 0.933185)
 offset = Vector2(1, 1)
-zoom = Vector2(2, 2)
+zoom = Vector2(1.5, 1.5)
 limit_bottom = 150
 limit_smoothed = true
 position_smoothing_enabled = true
 
 [node name="enemy" parent="." instance=ExtResource("3_wrm1d")]
-position = Vector2(-19, -124)
+position = Vector2(62, -134)
 mass = 1.282
 gravity_scale = 0.856
 can_sleep = false
-freeze = true
 
 [node name="Killzone" parent="." instance=ExtResource("4_3dryh")]
 position = Vector2(84, 125)
@@ -545,13 +541,6 @@ position = Vector2(-25, 0)
 shape = SubResource("WorldBoundaryShape2D_wowpa")
 
 [node name="UI" parent="." instance=ExtResource("5_wowpa")]
+scale = Vector2(0.745, 0.745)
+transform = Transform2D(0.745, 0, 0, 0.745, 0, 0)
 follow_viewport_scale = 210.486
-
-[node name="Label" type="Label" parent="."]
-offset_left = 34.0
-offset_top = -103.0
-offset_right = 188.0
-offset_bottom = -80.0
-text = "HIT FROM THIS SIDE"
-label_settings = SubResource("LabelSettings_wowpa")
-uppercase = true

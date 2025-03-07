@@ -3,9 +3,10 @@
 [ext_resource type="Script" uid="uid://cqmtny1pndhcu" path="res://Scripts/enemy.gd" id="1_hghv2"]
 
 [sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_ne65n"]
-points = PackedVector2Array(-41.255, 15, 39.065, 15, -2.02, -18)
+points = PackedVector2Array(-47.5601, 14.8945, 43.3325, 14.8945, -2.11378, -21.1005)
 
 [node name="enemy" type="RigidBody2D"]
+collision_layer = 4
 collision_mask = 3
 gravity_scale = 2.544
 script = ExtResource("1_hghv2")
@@ -14,7 +15,7 @@ script = ExtResource("1_hghv2")
 position = Vector2(1, -36)
 scale = Vector2(1.21055, 3.84702)
 color = Color(0, 0, 0, 1)
-polygon = PackedVector2Array(-25.6081, 18.9757, 28.9124, 18.9757, 0, -2.07953)
+polygon = PackedVector2Array(-39.6514, 18.9757, 38.8253, 18.9757, 0, -2.07953)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(3, 1)

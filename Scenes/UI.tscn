@@ -7,21 +7,29 @@
 script = ExtResource("1_w371h")
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
-scale = Vector2(1.14735, 3.80447)
+position = Vector2(1, 0)
+scale = Vector2(0.889855, 2.70857)
 color = Color(0.252028, 0.252028, 0.252028, 0.6)
-polygon = PackedVector2Array(0, 50, 300, 50, 300, 2, 0, 0)
+polygon = PackedVector2Array(0, 50, 150.046, 50, 300, 50, 300, 2, 0, 0)
 
 [node name="forceX" parent="." instance=ExtResource("2_nxvpl")]
+offset_left = 11.0
+offset_right = 255.0
+scale = Vector2(0.643942, 0.690376)
 
 [node name="forceY" parent="." instance=ExtResource("2_nxvpl")]
-offset_top = 45.0
-offset_bottom = 90.0
+offset_top = 38.0
+offset_bottom = 83.0
+scale = Vector2(0.643942, 0.690376)
 
 [node name="dirX" parent="." instance=ExtResource("2_nxvpl")]
-offset_top = 91.0
-offset_bottom = 136.0
+offset_top = 72.0
+offset_bottom = 117.0
+scale = Vector2(0.643942, 0.690376)
 
 [node name="dirY" parent="." instance=ExtResource("2_nxvpl")]
-offset_top = 138.0
-offset_right = 260.0
-offset_bottom = 183.0
+offset_left = 11.0
+offset_top = 102.0
+offset_right = 261.0
+offset_bottom = 147.0
+scale = Vector2(0.643942, 0.690376)

@@ -14,6 +14,8 @@ const JUMP_VELOCITY = -420.0
 @export var dash_cooldown: float = 1.0
 
 @onready var player: CharacterBody2D = $"."
+@onready var skeleton_2d: Skeleton2D = $Skeleton2D
+@onready var arm_hurt_box_wrapper: StaticBody2D = $Skeleton2D/HipBone/BodyBone/HeadBone/upperArmBone/lowerArmBone/ArmHurtBoxWrapper
 
 #dashing
 var is_dashing:bool 				= false
@@ -47,8 +49,8 @@ func _physics_process(delta: float) -> void:
 	var collision = move_and_collide(velocity * delta)
 	
 	if collision:
-		print(collision.get_collider().name)
-		if collision.get_collider().name == "enemy" && invincible == false:
+		#print(collision.get_collider().name)
+		if collision.get_collider().name.contains("enemy") && invincible == false:
 			explode()
 	
 
@@ -72,9 +74,13 @@ func _physics_process(delta: float) -> void:
 		
 	if is_on_floor():
 		if direction < 0:
+			#scale.x = 1
+			$Skeleton2D.scale.x = 1
 			player_anim_player.play("walkLeft")
 		
 		elif direction > 0:
+			#scale.x = -1
+			$Skeleton2D.scale.x = -1
 			player_anim_player.play("walkRight")
 
 	move_and_slide()
@@ -95,8 +101,15 @@ func _process(delta):
 func slash():
 	is_slashing = true
 	can_slash = false
-	print("slash slash slash")
-	#if last_direction:
+
+#	for animation
+	if last_direction < 0:
+		$Skeleton2D.scale.x = 1
+		print(last_direction)
+	if last_direction > 0:		
+		$Skeleton2D.scale.x = -1
+		print(last_direction)
+	
 	player_anim_player.play("slashLeft")
 	
 	await get_tree().create_timer(slash_cooldown).timeout
