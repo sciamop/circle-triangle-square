@@ -9,14 +9,14 @@ var parent
 
 
 func _ready() -> void:
-	set_deferred("gravity_scale", _gravity_scale)
-	set_deferred("mass", _mass)
+	#set_deferred("gravity_scale", _gravity_scale)
+	#set_deferred("mass", _mass)
 	spawn_position = Vector2(position.x,position.y)
 	c_layer = collision_layer
 	m_layer = collision_mask
 	parent = get_parent()
-	print(c_layer)
-	print(m_layer)
+	print("collide: " + str(c_layer))
+	print("mask: " + str(m_layer))
 
 func _process(delta: float) -> void:
 	#print(position.y)
@@ -35,8 +35,8 @@ func respawn_object():
 	new_object.global_position = Vector2(spawn_position.x, spawn_position.y - 100)
 	new_object.collision_layer = c_layer
 	new_object.collision_mask = m_layer
-	new_object.set_deferred("mass", _gravity_scale)
-	new_object.set_deferred("gravity_scale", _gravity_scale)
+	#new_object.set_deferred("mass", _gravity_scale)
+	#new_object.set_deferred("gravity_scale", _gravity_scale)
 	
 	set_process(true)
 	set_physics_process(true)

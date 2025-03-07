@@ -1,4 +1,4 @@
-extends StaticBody2D
+extends RigidBody2D
 
 var forceX: int = 1000
 var forceY: int = 1000
@@ -10,7 +10,7 @@ var dirY: int = 1000
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	
-	set_deferred("disabled", true)
+	#set_deferred("disabled", true)
 	pass # Replace with function body.
 
 
@@ -28,22 +28,29 @@ func _physics_process(delta: float) -> void:
 		
 		# added is slashing so kill is only possible on strike
 		if (colObj.name.contains("enemy") && player.is_slashing):
-			
-			colObj.set_deferred("freeze",false)
-			
 			var enemyCollider:CollisionShape2D = colObj.get_child(1)
-			print(forceY)
+			var enemyPos:Vector2 = colObj.global_position
+			
+			forceY = 50 + randi() % 20
+			forceX = 128 + randi() % 20
+			dirX = 80 + randi() % 20
+			dirY = 77 + randi() % 20
 			var force = Vector2(forceX,forceY) * player.last_direction
 			var direction = Vector2(dirX,dirY) * player.last_direction
+			
+			
+			#colObj.set_deferred("freeze",false)
 			
 			#colObj.apply_impulse(direction, random_force)
 			#colObj.queue_free()  # Remove the character
 			#colObj.linear_velocity = direction.normalized() * force
 			#var random_force = Vector2(-30,-50)
-			colObj.apply_impulse(direction, force)
-	
-	set_deferred("position", Vector2(-10,-20))
-
+			
+			colObj.apply_impulse(force, direction)
+			#if enemyPos == colObj.global_position:
+				#print("didn't move")
+	#set_deferred("position", Vector2(-10,-20))
+	position = Vector2(-10,-20)
 
 	#colObj.queue_free()  # Remove the character
 	

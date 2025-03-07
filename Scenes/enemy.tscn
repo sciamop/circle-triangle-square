@@ -8,7 +8,13 @@ points = PackedVector2Array(-47.5601, 14.8945, 43.3325, 14.8945, -2.11378, -21.1
 [node name="enemy" type="RigidBody2D"]
 collision_layer = 4
 collision_mask = 3
-gravity_scale = 2.544
+mass = 0.93
+gravity_scale = 0.88
+center_of_mass_mode = 1
+center_of_mass = Vector2(0, -20.41)
+can_sleep = false
+lock_rotation = true
+continuous_cd = 1
 script = ExtResource("1_hghv2")
 
 [node name="Polygon2D" type="Polygon2D" parent="."]

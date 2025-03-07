@@ -15,7 +15,7 @@ const JUMP_VELOCITY = -420.0
 
 @onready var player: CharacterBody2D = $"."
 @onready var skeleton_2d: Skeleton2D = $Skeleton2D
-@onready var arm_hurt_box_wrapper: StaticBody2D = $Skeleton2D/HipBone/BodyBone/HeadBone/upperArmBone/lowerArmBone/ArmHurtBoxWrapper
+@onready var arm_hurt_box_wrapper: RigidBody2D = $Skeleton2D/HipBone/BodyBone/HeadBone/upperArmBone/lowerArmBone/ArmHurtBoxWrapper
 
 #dashing
 var is_dashing:bool 				= false
@@ -105,10 +105,8 @@ func slash():
 #	for animation
 	if last_direction < 0:
 		$Skeleton2D.scale.x = 1
-		print(last_direction)
 	if last_direction > 0:		
 		$Skeleton2D.scale.x = -1
-		print(last_direction)
 	
 	player_anim_player.play("slashLeft")
 	

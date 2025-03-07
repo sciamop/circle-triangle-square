@@ -515,7 +515,6 @@ navigation_enabled = false
 [node name="Player" parent="." instance=ExtResource("2_a8p0r")]
 position = Vector2(195, -215)
 collision_mask = 7
-invincible = false
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(-92, 42)
@@ -530,7 +529,6 @@ position_smoothing_enabled = true
 position = Vector2(62, -134)
 mass = 1.282
 gravity_scale = 0.856
-can_sleep = false
 
 [node name="Killzone" parent="." instance=ExtResource("4_3dryh")]
 position = Vector2(84, 125)
