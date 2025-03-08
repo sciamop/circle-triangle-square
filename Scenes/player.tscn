@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bmlknwmevbp4p"]
+[gd_scene load_steps=22 format=3 uid="uid://bmlknwmevbp4p"]
 
 [ext_resource type="Script" uid="uid://dbvwt6nipxqyt" path="res://Scripts/player.gd" id="1_0rj3f"]
 [ext_resource type="Script" uid="uid://y63jp0cst87s" path="res://Scripts/polygon_2d.gd" id="2_256ay"]
@@ -53,8 +53,6 @@ modifications/1 = SubResource("SkeletonModification2DTwoBoneIK_v6nfe")
 modifications/2 = SubResource("SkeletonModification2DTwoBoneIK_mlksc")
 modifications/3 = SubResource("SkeletonModification2DTwoBoneIK_akpe4")
 modifications/4 = SubResource("SkeletonModification2DTwoBoneIK_cvnsp")
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_vgqql"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5uiyf"]
 size = Vector2(38.1691, 15.6157)
@@ -516,7 +514,7 @@ position = Vector2(0.582203, 36.5352)
 rotation = -1.40764
 scale = Vector2(0.999999, 0.999999)
 color = Color(0, 0, 0, 1)
-polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34788e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46958e-15, -10.3923, -6, -6, -10.3923, -2.20436e-15, -12, 6, -10.3923, 10.3923, -6)
+polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
 script = ExtResource("2_256ay")
 radius = 12.0
 segments = 12
@@ -536,7 +534,7 @@ vertex_colors = PackedColorArray(0, 0, 0, 1)
 z_index = 1
 position = Vector2(11, 80)
 rotation = 1.54139
-scale = Vector2(0.999931, 0.999931)
+scale = Vector2(0.999973, 0.999973)
 color = Color(0, 0, 0, 1)
 texture_scale = Vector2(61.65, 61.65)
 skeleton = NodePath("../Leg01Polygon")
@@ -545,10 +543,10 @@ vertex_colors = PackedColorArray(0, 0, 0, 1)
 
 [node name="ArmPolygon" type="Polygon2D" parent="."]
 z_index = 1
-position = Vector2(7.42814, 50.0186)
-rotation = -2.52531
+position = Vector2(7.43216, 50.0071)
+rotation = -2.52939
 scale = Vector2(0.999732, 0.999724)
-skew = -0.0029608
+skew = -0.00296068
 color = Color(0, 0, 0, 1)
 texture_scale = Vector2(61.65, 61.65)
 skeleton = NodePath("../Leg01Polygon")
@@ -661,13 +659,9 @@ rotation = -2.25523
 scale = Vector2(1.00156, 0.999186)
 collision_layer = 0
 collision_mask = 14
-physics_material_override = SubResource("PhysicsMaterial_vgqql")
 can_sleep = false
-lock_rotation = true
-freeze_mode = 1
-custom_integrator = true
 max_contacts_reported = 4
-linear_velocity = Vector2(0.98, 0)
+constant_force = Vector2(51.465, 0)
 script = ExtResource("3_sgjrr")
 
 [node name="ArmHurtBox" type="CollisionShape2D" parent="Skeleton2D/HipBone/BodyBone/HeadBone/upperArmBone/lowerArmBone/ArmHurtBoxWrapper"]

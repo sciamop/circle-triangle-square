@@ -107,7 +107,7 @@ func slash():
 		$Skeleton2D.scale.x = 1
 	if last_direction > 0:		
 		$Skeleton2D.scale.x = -1
-	
+	await get_tree().create_timer(0.1).timeout
 	player_anim_player.play("slashLeft")
 	
 	await get_tree().create_timer(slash_cooldown).timeout

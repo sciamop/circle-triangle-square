@@ -4,7 +4,10 @@ var forceX: int = 1000
 var forceY: int = 1000
 var dirX: int = 1000
 var dirY: int = 1000
+@export var attack_cooldown: float = 0.5
 
+var damage: int = 10
+@onready var game_manager: Node2D = $"/root/Game"
 @onready var player: CharacterBody2D = $"../../../../../../.."
 
 # Called when the node enters the scene tree for the first time.
@@ -19,39 +22,17 @@ func _process(delta: float) -> void:
 	pass
 
 func _physics_process(delta: float) -> void:
-	var velocity = Vector2()
+	var velocity = Vector2(200,200)
 	var collision = move_and_collide(velocity * delta)
 	
 	if collision && collision.get_collider() is RigidBody2D:
 		var colObj:RigidBody2D = collision.get_collider()
-		#print(collision.get_collider().name)
-		
-		# added is slashing so kill is only possible on strike
+	
 		if (colObj.name.contains("enemy") && player.is_slashing):
-			var enemyCollider:CollisionShape2D = colObj.get_child(1)
-			var enemyPos:Vector2 = colObj.global_position
-			
-			forceY = 50 + randi() % 20
-			forceX = 128 + randi() % 20
-			dirX = 80 + randi() % 20
-			dirY = 77 + randi() % 20
-			var force = Vector2(forceX,forceY) * player.last_direction
-			var direction = Vector2(dirX,dirY) * player.last_direction
-			
-			
-			#colObj.set_deferred("freeze",false)
-			
-			#colObj.apply_impulse(direction, random_force)
-			#colObj.queue_free()  # Remove the character
-			#colObj.linear_velocity = direction.normalized() * force
-			#var random_force = Vector2(-30,-50)
-			
-			colObj.apply_impulse(force, direction)
-			#if enemyPos == colObj.global_position:
-				#print("didn't move")
-	#set_deferred("position", Vector2(-10,-20))
-	position = Vector2(-10,-20)
 
-	#colObj.queue_free()  # Remove the character
-	
-	
+			#colObj.move_local_x(1000 * delta) 
+			colObj.apply_central_impulse(Vector2(100,0) * player.last_direction)
+			game_manager.pause_game()
+			colObj.take_damage(damage)
+			
+	position = Vector2(-10,-20)

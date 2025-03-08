@@ -1,9 +1,24 @@
-[gd_scene load_steps=2 format=3 uid="uid://bobxhelcghu6i"]
+[gd_scene load_steps=3 format=3 uid="uid://bobxhelcghu6i"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_6yr2a"]
+[ext_resource type="Script" uid="uid://cqmtny1pndhcu" path="res://Scripts/enemy.gd" id="1_nd410"]
+[ext_resource type="Script" uid="uid://y63jp0cst87s" path="res://Scripts/polygon_2d.gd" id="1_yic74"]
 
-[node name="enemy" type="Area2D"]
+[node name="enemy" type="RigidBody2D"]
+collision_layer = 4
 collision_mask = 3
+can_sleep = false
+script = ExtResource("1_nd410")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_6yr2a")
+[node name="HeadPolygon" type="Polygon2D" parent="."]
+position = Vector2(2.28882e-05, 1)
+scale = Vector2(3.3, 3.3)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+script = ExtResource("1_yic74")
+radius = 12.0
+segments = 12
+
+[node name="HeadPolygon2" type="CollisionPolygon2D" parent="."]
+position = Vector2(2.28882e-05, 1)
+scale = Vector2(3.3, 3.3)
+polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)

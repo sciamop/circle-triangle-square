@@ -1,10 +1,12 @@
-[gd_scene load_steps=9 format=4 uid="uid://1jgi6tcbrn7v"]
+[gd_scene load_steps=11 format=4 uid="uid://1jgi6tcbrn7v"]
 
 [ext_resource type="Texture2D" uid="uid://43q28fbloexy" path="res://Sprites/1x16_tiles-trimmed.png" id="1_8ruqu"]
+[ext_resource type="Script" uid="uid://l3cbc1e4asf3" path="res://Scripts/game_manager.gd" id="1_wowpa"]
 [ext_resource type="PackedScene" uid="uid://bmlknwmevbp4p" path="res://Scenes/player.tscn" id="2_a8p0r"]
 [ext_resource type="PackedScene" uid="uid://ciw2l5tkuxw2a" path="res://Scenes/enemy.tscn" id="3_wrm1d"]
 [ext_resource type="PackedScene" uid="uid://dl0ufnqft2gc1" path="res://Scenes/killzone.tscn" id="4_3dryh"]
-[ext_resource type="PackedScene" uid="uid://ch4o0guerbahn" path="res://Scenes/UI.tscn" id="5_wowpa"]
+[ext_resource type="PackedScene" uid="uid://bqns8dt1qoxtw" path="res://Scenes/enemy03.tscn" id="6_1l0tm"]
+[ext_resource type="PackedScene" uid="uid://bobxhelcghu6i" path="res://Scenes/enemy02.tscn" id="7_v158k"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_na51i"]
 texture = ExtResource("1_8ruqu")
@@ -496,6 +498,7 @@ sources/4 = SubResource("TileSetAtlasSource_na51i")
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_wowpa"]
 
 [node name="Game" type="Node2D"]
+script = ExtResource("1_wowpa")
 
 [node name="mid" type="TileMapLayer" parent="."]
 z_index = 1
@@ -525,11 +528,6 @@ limit_bottom = 150
 limit_smoothed = true
 position_smoothing_enabled = true
 
-[node name="enemy" parent="." instance=ExtResource("3_wrm1d")]
-position = Vector2(62, -134)
-mass = 1.282
-gravity_scale = 0.856
-
 [node name="Killzone" parent="." instance=ExtResource("4_3dryh")]
 position = Vector2(84, 125)
 collision_mask = 3
@@ -538,7 +536,18 @@ collision_mask = 3
 position = Vector2(-25, 0)
 shape = SubResource("WorldBoundaryShape2D_wowpa")
 
-[node name="UI" parent="." instance=ExtResource("5_wowpa")]
-scale = Vector2(0.745, 0.745)
-transform = Transform2D(0.745, 0, 0, 0.745, 0, 0)
-follow_viewport_scale = 210.486
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.025
+one_shot = true
+ignore_time_scale = true
+
+[node name="enemy" parent="." instance=ExtResource("3_wrm1d")]
+position = Vector2(-259, -82)
+
+[node name="enemy2" parent="." instance=ExtResource("6_1l0tm")]
+position = Vector2(-1, -167)
+
+[node name="enemy3" parent="." instance=ExtResource("7_v158k")]
+position = Vector2(430, -119)
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
