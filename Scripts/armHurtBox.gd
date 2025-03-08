@@ -22,7 +22,7 @@ func _process(delta: float) -> void:
 	pass
 
 func _physics_process(delta: float) -> void:
-	var velocity = Vector2(200,200)
+	var velocity = Vector2(200,144)
 	var collision = move_and_collide(velocity * delta)
 	
 	if collision && collision.get_collider() is RigidBody2D:
@@ -31,7 +31,7 @@ func _physics_process(delta: float) -> void:
 		if (colObj.name.contains("enemy") && player.is_slashing):
 
 			#colObj.move_local_x(1000 * delta) 
-			colObj.apply_central_impulse(Vector2(100,0) * player.last_direction)
+			colObj.apply_central_impulse(Vector2(66,22) * player.last_direction)
 			game_manager.pause_game()
 			colObj.take_damage(damage)
 			

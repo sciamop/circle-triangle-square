@@ -79,7 +79,7 @@ func take_damage(damage:int):
 		
 func respawn_object():
 	var enemies = ["enemy","enemy02","enemy03"]
-	var enemyStr:String = enemies[randi() % 2]
+	var enemyStr:String = enemies[randi() % 3]
 
 	
 	var new_object:RigidBody2D

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://1jgi6tcbrn7v"]
+[gd_scene load_steps=13 format=4 uid="uid://1jgi6tcbrn7v"]
 
 [ext_resource type="Texture2D" uid="uid://43q28fbloexy" path="res://Sprites/1x16_tiles-trimmed.png" id="1_8ruqu"]
 [ext_resource type="Script" uid="uid://l3cbc1e4asf3" path="res://Scripts/game_manager.gd" id="1_wowpa"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dl0ufnqft2gc1" path="res://Scenes/killzone.tscn" id="4_3dryh"]
 [ext_resource type="PackedScene" uid="uid://bqns8dt1qoxtw" path="res://Scenes/enemy03.tscn" id="6_1l0tm"]
 [ext_resource type="PackedScene" uid="uid://bobxhelcghu6i" path="res://Scenes/enemy02.tscn" id="7_v158k"]
+[ext_resource type="Texture2D" uid="uid://dokj2kx84i3mx" path="res://Sprites/triangle_circle_square-logo-004.png" id="8_v158k"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_na51i"]
 texture = ExtResource("1_8ruqu")
@@ -497,6 +498,10 @@ sources/4 = SubResource("TileSetAtlasSource_na51i")
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_wowpa"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_h4fw4"]
+atlas = ExtResource("8_v158k")
+region = Rect2(0, 0, 1260, 400)
+
 [node name="Game" type="Node2D"]
 script = ExtResource("1_wowpa")
 
@@ -518,6 +523,7 @@ navigation_enabled = false
 [node name="Player" parent="." instance=ExtResource("2_a8p0r")]
 position = Vector2(195, -215)
 collision_mask = 7
+invincible = false
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(-92, 42)
@@ -537,7 +543,7 @@ position = Vector2(-25, 0)
 shape = SubResource("WorldBoundaryShape2D_wowpa")
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 0.025
+wait_time = 0.019
 one_shot = true
 ignore_time_scale = true
 
@@ -549,5 +555,13 @@ position = Vector2(-1, -167)
 
 [node name="enemy3" parent="." instance=ExtResource("7_v158k")]
 position = Vector2(430, -119)
+
+[node name="Parallax2D" type="Parallax2D" parent="."]
+scroll_scale = Vector2(1.73, 1.73)
+scroll_offset = Vector2(14.78, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D"]
+position = Vector2(-113, -705)
+texture = SubResource("AtlasTexture_h4fw4")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

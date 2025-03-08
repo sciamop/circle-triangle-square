@@ -1,10 +1,10 @@
 extends CharacterBody2D
 @export var invincible:bool = false
 
-@export var speed:float = 300.0
-@export var accel:float = 555.0
-const MAXSPEED = 500
-const JUMP_VELOCITY = -420.0
+@export var speed:float = 220.0
+@export var accel:float = 405.0
+const MAXSPEED = 400
+const JUMP_VELOCITY = -320.0
 
 @onready var player_anim_player: AnimationPlayer = $PlayerAnimPlayer
 @onready var dash_particles: GPUParticles2D = $DashParticles
