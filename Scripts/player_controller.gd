@@ -393,13 +393,13 @@ func handle_wall_interactions(delta: float) -> void:
 	
 	# Check for wall collision
 	if not is_on_floor() and velocity.y > 0:
-		if wall_check_left:
-			if wall_check_left.is_colliding():
-				current_wall_direction = -1
-				is_wall_sliding = true
-			elif wall_check_right.is_colliding():
-				current_wall_direction = 1
-				is_wall_sliding = true
+	
+		if wall_check_left.is_colliding():
+			current_wall_direction = -1
+			is_wall_sliding = true
+		elif wall_check_right.is_colliding():
+			current_wall_direction = 1
+			is_wall_sliding = true
 
 func start_dash() -> void:
 	is_dashing = true
