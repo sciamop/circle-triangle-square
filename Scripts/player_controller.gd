@@ -53,6 +53,7 @@ var is_alive: bool = true
 var knockback_direction: Vector2 = Vector2.ZERO
 var is_being_knocked_back: bool = false
 var knockback_timer: float = 0.0
+var pieces_scene: Node
 
 # Juice parameters
 @export_group("Visual Juice")
@@ -65,6 +66,7 @@ var knockback_timer: float = 0.0
 @export var trail_length: int = 10
 @export var trail_lifetime: float = 0.3
 
+
 # State variables
 var is_jumping: bool = false
 var is_wall_sliding: bool = false
@@ -72,6 +74,7 @@ var is_dashing: bool = false
 var direction: int = 0
 var facing_direction: int = 1
 var current_wall_direction: int = 0
+var has_exploded:bool 			= false
 
 # Combat state
 var attacking: bool = false
@@ -146,7 +149,10 @@ func _ready() -> void:
 		for i in range(trail_length):
 			trail_points.append(position)
 			trail.add_point(Vector2.ZERO)
-			
+
+	#initialize 
+	pieces_scene = preload("res://Scenes/brokenPlayer.tscn").instantiate() 
+	
 	# Create a vacuum detection area
 	var vacuum_area = Area2D.new()
 	vacuum_area.name = "VacuumArea"
@@ -681,6 +687,18 @@ func die() -> void:
 	
 	# Optional: add a timer to handle respawn or game over
 	var timer = get_tree().create_timer(2.0)
+	
+	if has_exploded:
+		return  # Stop if already exploded
+
+	
+	pieces_scene.global_position = global_position
+	get_parent().add_child(pieces_scene)
+	
+	has_exploded = true  # Mark explosion as happened  # Add pieces to the scene
+
+	queue_free()  # Remove the character
+	
 	timer.timeout.connect(_on_death_timer_timeout)
 
 # Called when death timer expires
@@ -713,6 +731,7 @@ func respawn() -> void:
 	
 	# You might want to set the player's position to a spawn point here
 	# position = spawn_point_position
+
 
 func print_debug_info() -> void:
 	print("Velocity: ", velocity)

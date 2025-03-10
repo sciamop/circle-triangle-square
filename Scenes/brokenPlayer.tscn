@@ -9,14 +9,14 @@ radius = 0.0
 height = 12.0
 
 [node name="BrokenPlayer" type="CharacterBody2D"]
-collision_layer = 3
-collision_mask = 3
+collision_mask = 0
 script = ExtResource("1_q66v6")
 
 [node name="hatRB" type="RigidBody2D" parent="."]
 position = Vector2(6, 30)
 rotation = -1.41457
 scale = Vector2(0.999998, 0.999998)
+collision_mask = 0
 can_sleep = false
 
 [node name="hatRBCollider" type="CollisionPolygon2D" parent="hatRB"]
@@ -33,6 +33,7 @@ polygon = PackedVector2Array(2.57, 7.46, 65.57, -2.53999, 1.57, -11.54)
 vertex_colors = PackedColorArray(0, 0, 0, 1)
 
 [node name="HeadRB" type="RigidBody2D" parent="."]
+collision_mask = 0
 
 [node name="HeadPolygon" type="Polygon2D" parent="HeadRB"]
 position = Vector2(4.00005, 36)
@@ -49,6 +50,7 @@ rotation = -1.5708
 polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34788e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46958e-15, -10.3923, -6, -6, -10.3923, -2.20436e-15, -12, 6, -10.3923, 10.3923, -6)
 
 [node name="BodyRB" type="RigidBody2D" parent="."]
+collision_mask = 0
 
 [node name="BodyPolygon" type="Polygon2D" parent="BodyRB"]
 z_index = 1
@@ -67,6 +69,7 @@ rotation = -1.5708
 polygon = PackedVector2Array(43.235, -4.365, 0.235, -22.365, 1.235, -4.365, 0.235, 13.635)
 
 [node name="Leg02RB" type="RigidBody2D" parent="."]
+collision_mask = 2
 
 [node name="Leg02Polygon" type="Polygon2D" parent="Leg02RB"]
 z_index = 1
@@ -86,6 +89,7 @@ polygon = PackedVector2Array(22, -9.53674e-07, -9.7498, -1.72055, -3.6869, 8.684
 
 [node name="Leg01RB" type="RigidBody2D" parent="."]
 collision_layer = 4
+collision_mask = 2
 
 [node name="Leg01Polygon" type="Polygon2D" parent="Leg01RB"]
 z_index = 1

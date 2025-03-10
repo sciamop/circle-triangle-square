@@ -9,6 +9,6 @@ func _ready():
   # Remove the whole broken character node
 	for part in get_children():
 		if part is RigidBody2D:
-			var random_force = Vector2(randf_range(-30, 30), randf_range(-30, -30))
-			part.apply_impulse(Vector2.ZERO, random_force)
+			var random_force = Vector2(randf_range(30, 255) * player.direction, randf_range(-130, -330))
+			part.apply_central_impulse(random_force)
 	
