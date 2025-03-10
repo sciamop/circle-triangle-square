@@ -8,8 +8,20 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hghv2"]
 size = Vector2(92, 287.604)
 
-[sub_resource type="Animation" id="Animation_hghv2"]
-resource_name = "hurt"
+[sub_resource type="Animation" id="Animation_auwsv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Polygon2D:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_1f0kj"]
 resource_name = "attack"
@@ -30,32 +42,14 @@ tracks/0/keys = {
 "values": [Color(0, 0, 0, 1), Color(1, 0, 0, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_287tu"]
-resource_name = "idle"
-
-[sub_resource type="Animation" id="Animation_0830c"]
-resource_name = "walk"
-
-[sub_resource type="Animation" id="Animation_ghaa6"]
-resource_name = "run"
-
 [sub_resource type="Animation" id="Animation_1dp5w"]
 resource_name = "fall"
 
-[sub_resource type="Animation" id="Animation_auwsv"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Polygon2D:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0, 0, 0, 1)]
-}
+[sub_resource type="Animation" id="Animation_hghv2"]
+resource_name = "hurt"
+
+[sub_resource type="Animation" id="Animation_287tu"]
+resource_name = "idle"
 
 [sub_resource type="Animation" id="Animation_8uf12"]
 resource_name = "respawn"
@@ -73,6 +67,12 @@ tracks/0/keys = {
 "update": 0,
 "values": [Color(1, 0, 0, 0), Color(0.501961, 0, 0, 1), Color(0, 0, 0, 1)]
 }
+
+[sub_resource type="Animation" id="Animation_ghaa6"]
+resource_name = "run"
+
+[sub_resource type="Animation" id="Animation_0830c"]
+resource_name = "walk"
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_auwsv"]
 _data = {
@@ -147,7 +147,7 @@ collide_with_areas = true
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 show_behind_parent = true
-position = Vector2(1, -36)
+position = Vector2(-2, -36)
 scale = Vector2(1.21055, 3.84702)
 color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(-39.6514, 18.9757, 38.8253, 18.9757, 38.8253, -1.55965, -38.8253, -1.55965)

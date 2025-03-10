@@ -1,0 +1,56 @@
+[gd_scene load_steps=10 format=3 uid="uid://ciw2l5tkuxw2a"]
+
+[ext_resource type="Script" uid="uid://di56q66dxdj4c" path="res://Scripts/enemy_controller.gd" id="1_hghv2"]
+
+[sub_resource type="Animation" id="Animation_hghv2"]
+resource_name = "hurt"
+
+[sub_resource type="Animation" id="Animation_1f0kj"]
+resource_name = "attack"
+
+[sub_resource type="Animation" id="Animation_afpow"]
+resource_name = "death"
+
+[sub_resource type="Animation" id="Animation_287tu"]
+resource_name = "idle"
+
+[sub_resource type="Animation" id="Animation_0830c"]
+resource_name = "walk"
+
+[sub_resource type="Animation" id="Animation_ghaa6"]
+resource_name = "run"
+
+[sub_resource type="Animation" id="Animation_1dp5w"]
+resource_name = "fall"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_auwsv"]
+_data = {
+&"attack": SubResource("Animation_1f0kj"),
+&"death": SubResource("Animation_afpow"),
+&"fall": SubResource("Animation_1dp5w"),
+&"hurt": SubResource("Animation_hghv2"),
+&"idle": SubResource("Animation_287tu"),
+&"run": SubResource("Animation_ghaa6"),
+&"walk": SubResource("Animation_0830c")
+}
+
+[node name="enemy" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("1_hghv2")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2(1, -36)
+scale = Vector2(1.21055, 3.84702)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-39.6514, 18.9757, 38.8253, 18.9757, 38.8253, -1.55965, -38.8253, -1.55965)
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(3, 1)
+scale = Vector2(0.946172, 2.417)
+polygon = PackedVector2Array(-51.7876, -17.3769, -50.7307, 14.067, 46.5032, 14.067, 47.5601, -17.3769)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_auwsv")
+}

@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://bqns8dt1qoxtw"]
+
+[ext_resource type="Script" uid="uid://cqmtny1pndhcu" path="res://Scripts/enemy.gd" id="1_4dsfa"]
+
+[node name="enemy" type="RigidBody2D"]
+collision_layer = 4
+collision_mask = 3
+can_sleep = false
+script = ExtResource("1_4dsfa")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2(1, -36)
+scale = Vector2(1.21055, 3.84702)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-39.6514, 18.9757, 38.8253, 18.9757, 0.826071, -1.29971)
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(3, 1)
+scale = Vector2(0.946172, 2.417)
+polygon = PackedVector2Array(-1.05689, -17.3769, -50.7307, 14.067, 46.5032, 14.067)

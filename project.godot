@@ -13,6 +13,8 @@ config_version=5
 config/name="[]/\\O"
 run/main_scene="res://Scenes/game.tscn"
 config/features=PackedStringArray("4.4", "Forward Plus")
+boot_splash/bg_color=Color(0.481789, 0.48179, 0.481789, 1)
+boot_splash/image="uid://dokj2kx84i3mx"
 config/icon="res://icon.svg"
 
 [global_group]

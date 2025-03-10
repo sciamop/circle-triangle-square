@@ -416,96 +416,6 @@ tracks/2/keys = {
 "values": [Vector2(5.1009, -1.5595)]
 }
 
-[sub_resource type="Animation" id="Animation_vgqql"]
-resource_name = "jump"
-length = 0.25
-loop_mode = 1
-step = 0.125
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("IKTargetHat:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = false
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.125, 0.25),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(34, -36), Vector2(95, -131), Vector2(34, -36)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("IKTargetBody:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = false
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.125, 0.25),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(-79, -583), Vector2(-240, -581), Vector2(-79, -583)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("IKTargetLeg01:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = false
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.125, 0.25),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(2, 186), Vector2(55, 179), Vector2(2, 186)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("IKTargetLeg02:position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = false
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.125, 0.25),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(13, 148), Vector2(-13, 150), Vector2(13, 148)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("CollisionShape2D:position")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.125, 0.25),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(0, 68), Vector2(2, 65), Vector2(0, 68)]
-}
-tracks/5/type = "value"
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/path = NodePath("Skeleton2D/HipBone/BodyBone/HeadBone/upperArmBone/lowerArmBone:position")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0.406143, 4.48197)]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("Skeleton2D/HipBone/BodyBone/HeadBone/upperArmBone/lowerArmBone:rotation")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
-"times": PackedFloat32Array(0, 0.125),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [-0.118089, -1.48414]
-}
-
 [sub_resource type="Animation" id="Animation_vwe64"]
 resource_name = "slashLeft"
 length = 0.25
@@ -882,13 +792,55 @@ tracks/6/keys = {
 "values": [-0.118089, -1.48414]
 }
 
+[sub_resource type="Animation" id="Animation_6t5aa"]
+resource_name = "jump"
+length = 3.0
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("IKTargetBody:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-25, -602)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("IKTargetHat:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, -54), Vector2(-7, -51), Vector2(8, -49)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Skeleton2D/HipBone/BodyBone/HeadBone/upperArmBone/lowerArmBone:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(5.1009, -1.5595)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nq0pq"]
 _data = {
 &"RESET": SubResource("Animation_te0kc"),
 &"dash": SubResource("Animation_fkybt"),
 &"fall": SubResource("Animation_3smsa"),
 &"idle": SubResource("Animation_1sckd"),
-&"jump": SubResource("Animation_vgqql"),
+&"jump": SubResource("Animation_6t5aa"),
 &"melee_attack": SubResource("Animation_vwe64"),
 &"ranged_attack": SubResource("Animation_8erm5"),
 &"run_left": SubResource("Animation_ktgti"),
@@ -945,8 +897,8 @@ enable_juice = false
 
 [node name="HatPolygon" type="Polygon2D" parent="."]
 z_index = 1
-position = Vector2(1.79445, 29.6435)
-rotation = -1.33087
+position = Vector2(1.41246, 28.9929)
+rotation = -1.57577
 scale = Vector2(0.999999, 0.999999)
 color = Color(0, 0, 0, 1)
 offset = Vector2(-2.57, 2.54)
@@ -955,8 +907,8 @@ polygon = PackedVector2Array(2.57, 7.46, 65.57, -2.53999, 1.57, -11.54)
 vertex_colors = PackedColorArray(0, 0, 0, 1)
 
 [node name="HeadPolygon" type="Polygon2D" parent="."]
-position = Vector2(0.582203, 36.5352)
-rotation = -1.40764
+position = Vector2(1.90733, 35.9729)
+rotation = -1.65254
 scale = Vector2(0.999999, 0.999999)
 color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
@@ -967,7 +919,7 @@ segments = 12
 [node name="BodyPolygon" type="Polygon2D" parent="."]
 z_index = 1
 position = Vector2(3, 80)
-rotation = -1.69385
+rotation = -1.61183
 scale = Vector2(1, 1)
 color = Color(0, 0, 0, 1)
 offset = Vector2(-1.235, 4.365)
@@ -988,10 +940,10 @@ vertex_colors = PackedColorArray(0, 0, 0, 1)
 
 [node name="ArmPolygon" type="Polygon2D" parent="."]
 z_index = 1
-position = Vector2(7.43191, 50.0069)
-rotation = -2.52939
+position = Vector2(4.00058, 50.2881)
+rotation = -2.77429
 scale = Vector2(0.999732, 0.999724)
-skew = -0.00332832
+skew = -0.00332844
 color = Color(0, 0, 0, 1)
 texture_scale = Vector2(61.65, 61.65)
 skeleton = NodePath("../Leg01Polygon")

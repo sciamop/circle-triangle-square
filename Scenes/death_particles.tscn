@@ -1,0 +1,66 @@
+[gd_scene load_steps=2 format=3 uid="uid://hmt862n0mdc3"]
+
+[ext_resource type="Script" uid="uid://bqdfkp836qa15" path="res://Scripts/death_particles.gd" id="1_nkpam"]
+
+[node name="death_particles" type="Area2D"]
+script = ExtResource("1_nkpam")
+
+[node name="CollisionShape2D3" type="CollisionPolygon2D" parent="."]
+position = Vector2(25, 22)
+scale = Vector2(0.781811, -2.47912)
+polygon = PackedVector2Array(-51.7876, -17.3769, -50.7307, 14.067, 46.5032, 14.067, 47.5601, -17.3769)
+
+[node name="square01" type="RigidBody2D" parent="."]
+
+[node name="Polygon2D2" type="Polygon2D" parent="square01"]
+position = Vector2(7, 2)
+scale = Vector2(0.479134, 1.52264)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-39.6514, 18.9757, 38.8253, 18.9757, 38.8253, -1.55965, -38.8253, -1.55965)
+
+[node name="CollisionShape2D2" type="CollisionPolygon2D" parent="square01"]
+position = Vector2(7.19997, 16.7999)
+scale = Vector2(0.368344, 0.966792)
+polygon = PackedVector2Array(-51.7876, -17.3769, -50.7307, 14.067, 46.5032, 14.067, 47.5601, -17.3769)
+
+[node name="square02" type="RigidBody2D" parent="."]
+position = Vector2(36, -1)
+
+[node name="Polygon2D2" type="Polygon2D" parent="square02"]
+position = Vector2(7, 2)
+scale = Vector2(0.479134, 1.52264)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-39.6514, 18.9757, 38.8253, 18.9757, 38.8253, -1.55965, -38.8253, -1.55965)
+
+[node name="CollisionShape2D2" type="CollisionPolygon2D" parent="square02"]
+position = Vector2(7.19997, 16.7999)
+scale = Vector2(0.368344, 0.966792)
+polygon = PackedVector2Array(-51.7876, -17.3769, -50.7307, 14.067, 46.5032, 14.067, 47.5601, -17.3769)
+
+[node name="square03" type="RigidBody2D" parent="."]
+position = Vector2(-1, 32)
+
+[node name="Polygon2D2" type="Polygon2D" parent="square03"]
+position = Vector2(7, 2)
+scale = Vector2(0.479134, 1.52264)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-39.6514, 18.9757, 38.8253, 18.9757, 38.8253, -1.55965, -38.8253, -1.55965)
+
+[node name="CollisionShape2D2" type="CollisionPolygon2D" parent="square03"]
+position = Vector2(7.19997, 16.7999)
+scale = Vector2(0.368344, 0.966792)
+polygon = PackedVector2Array(-51.7876, -17.3769, -50.7307, 14.067, 46.5032, 14.067, 47.5601, -17.3769)
+
+[node name="square04" type="RigidBody2D" parent="."]
+position = Vector2(36, 33)
+
+[node name="Polygon2D2" type="Polygon2D" parent="square04"]
+position = Vector2(7, 2)
+scale = Vector2(0.479134, 1.52264)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-39.6514, 18.9757, 38.8253, 18.9757, 38.8253, -1.55965, -38.8253, -1.55965)
+
+[node name="CollisionShape2D2" type="CollisionPolygon2D" parent="square04"]
+position = Vector2(7.19997, 16.7999)
+scale = Vector2(0.368344, 0.966792)
+polygon = PackedVector2Array(-51.7876, -17.3769, -50.7307, 14.067, 46.5032, 14.067, 47.5601, -17.3769)
