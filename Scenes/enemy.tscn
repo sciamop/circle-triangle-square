@@ -1,14 +1,152 @@
-[gd_scene load_steps=2 format=3 uid="uid://ciw2l5tkuxw2a"]
+[gd_scene load_steps=16 format=3 uid="uid://ciw2l5tkuxw2a"]
 
-[ext_resource type="Script" uid="uid://cqmtny1pndhcu" path="res://Scripts/enemy.gd" id="1_hghv2"]
+[ext_resource type="Script" uid="uid://di56q66dxdj4c" path="res://Scripts/enemy_controller.gd" id="1_hghv2"]
+[ext_resource type="PackedScene" uid="uid://dtoyjmhtnlybu" path="res://Scenes/circle_pickup.tscn" id="2_287tu"]
+[ext_resource type="PackedScene" uid="uid://cxivow1cwemf8" path="res://Scenes/triangle_pickup.tscn" id="3_0830c"]
+[ext_resource type="PackedScene" uid="uid://dqgxiqht64kh0" path="res://Scenes/square_pickup.tscn" id="4_ghaa6"]
 
-[node name="enemy" type="RigidBody2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hghv2"]
+size = Vector2(92, 287.604)
+
+[sub_resource type="Animation" id="Animation_hghv2"]
+resource_name = "hurt"
+
+[sub_resource type="Animation" id="Animation_1f0kj"]
+resource_name = "attack"
+
+[sub_resource type="Animation" id="Animation_afpow"]
+resource_name = "death"
+length = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Polygon2D:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(1, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_287tu"]
+resource_name = "idle"
+
+[sub_resource type="Animation" id="Animation_0830c"]
+resource_name = "walk"
+
+[sub_resource type="Animation" id="Animation_ghaa6"]
+resource_name = "run"
+
+[sub_resource type="Animation" id="Animation_1dp5w"]
+resource_name = "fall"
+
+[sub_resource type="Animation" id="Animation_auwsv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Polygon2D:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_8uf12"]
+resource_name = "respawn"
+length = 0.4
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Polygon2D:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.375),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 0, 0, 0), Color(0.501961, 0, 0, 1), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_auwsv"]
+_data = {
+&"RESET": SubResource("Animation_auwsv"),
+&"attack": SubResource("Animation_1f0kj"),
+&"death": SubResource("Animation_afpow"),
+&"fall": SubResource("Animation_1dp5w"),
+&"hurt": SubResource("Animation_hghv2"),
+&"idle": SubResource("Animation_287tu"),
+&"respawn": SubResource("Animation_8uf12"),
+&"run": SubResource("Animation_ghaa6"),
+&"walk": SubResource("Animation_0830c")
+}
+
+[node name="enemy" type="CharacterBody2D"]
 collision_layer = 4
 collision_mask = 3
-can_sleep = false
 script = ExtResource("1_hghv2")
+max_health = 1
+knockback_force = 500.0
+min_drops = 4
+max_drops = 8
+respawn_time = 5.0
+random_spawn_radius = 1.0
+circle_pickup = ExtResource("2_287tu")
+triangle_pickup = ExtResource("3_0830c")
+square_pickup = ExtResource("4_ghaa6")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(17, -2)
+scale = Vector2(1.05673, 0.292151)
+shape = SubResource("RectangleShape2D_hghv2")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(-17, -2)
+scale = Vector2(1.14305, -0.301967)
+shape = SubResource("RectangleShape2D_hghv2")
+
+[node name="AttackArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+position = Vector2(2, -2.02759)
+scale = Vector2(1.16255, 0.313122)
+shape = SubResource("RectangleShape2D_hghv2")
+
+[node name="GroundCheck" type="RayCast2D" parent="."]
+collide_with_areas = true
+
+[node name="LedgeCheck" type="RayCast2D" parent="."]
+target_position = Vector2(50, 50)
+collide_with_areas = true
+
+[node name="WallCheck" type="RayCast2D" parent="."]
+target_position = Vector2(50, 0)
+collide_with_areas = true
+
+[node name="AttackTimer" type="Timer" parent="."]
+
+[node name="PatrolTimer" type="Timer" parent="."]
+
+[node name="AggroTimer" type="Timer" parent="."]
+
+[node name="HitFlashTimer" type="Timer" parent="."]
+
+[node name="AudioPlayer" type="AudioStreamPlayer2D" parent="."]
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
+show_behind_parent = true
 position = Vector2(1, -36)
 scale = Vector2(1.21055, 3.84702)
 color = Color(0, 0, 0, 1)
@@ -18,3 +156,14 @@ polygon = PackedVector2Array(-39.6514, 18.9757, 38.8253, 18.9757, 38.8253, -1.55
 position = Vector2(3, 1)
 scale = Vector2(0.946172, 2.417)
 polygon = PackedVector2Array(-51.7876, -17.3769, -50.7307, 14.067, 46.5032, 14.067, 47.5601, -17.3769)
+
+[node name="RespawnTimer" type="Timer" parent="."]
+wait_time = 5.87
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_auwsv")
+}
+
+[connection signal="timeout" from="RespawnTimer" to="." method="_on_respawn_timer_timeout"]

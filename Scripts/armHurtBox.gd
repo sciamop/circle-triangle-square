@@ -28,10 +28,10 @@ func _physics_process(delta: float) -> void:
 	if collision && collision.get_collider() is RigidBody2D:
 		var colObj:RigidBody2D = collision.get_collider()
 	
-		if (colObj.name.contains("enemy") && player.is_slashing):
+		if (colObj.name.contains("enemy") && player.attacking):
 
 			#colObj.move_local_x(1000 * delta) 
-			colObj.apply_central_impulse(Vector2(66,22) * player.last_direction)
+			colObj.apply_central_impulse(Vector2(66,22) * player.direction)
 			game_manager.pause_game()
 			colObj.take_damage(damage)
 			
