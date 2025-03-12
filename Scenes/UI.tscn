@@ -1,7 +1,171 @@
-[gd_scene load_steps=3 format=3 uid="uid://ch4o0guerbahn"]
+[gd_scene load_steps=13 format=3 uid="uid://ch4o0guerbahn"]
 
 [ext_resource type="Script" uid="uid://dm4ey0iltuo33" path="res://Scripts/UI.gd" id="1_w371h"]
 [ext_resource type="Script" uid="uid://y63jp0cst87s" path="res://Scripts/polygon_2d.gd" id="2_nxvpl"]
+[ext_resource type="FontFile" uid="uid://dbb1aunswvl1g" path="res://Fonts/circle-triangle-square-Regular.otf" id="3_dewlx"]
+[ext_resource type="Script" uid="uid://dnyl3fayamem0" path="res://Scenes/pickup_tracker.gd" id="4_hfhsn"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_hfhsn"]
+font = ExtResource("3_dewlx")
+font_size = 20
+font_color = Color(0.0214346, 0.0214346, 0.0214346, 1)
+shadow_color = Color(1, 1, 1, 0.835294)
+
+[sub_resource type="LabelSettings" id="LabelSettings_qwshj"]
+font = ExtResource("3_dewlx")
+font_size = 20
+font_color = Color(0, 0, 0, 1)
+shadow_color = Color(1, 1, 1, 0.733333)
+
+[sub_resource type="LabelSettings" id="LabelSettings_48q88"]
+font = ExtResource("3_dewlx")
+font_size = 20
+font_color = Color(0, 0, 0, 1)
+outline_color = Color(0.0383972, 0.0383972, 0.0383972, 1)
+shadow_color = Color(1, 1, 1, 0.788235)
+
+[sub_resource type="Animation" id="Animation_hfhsn"]
+resource_name = "circle_update"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer/circleCenterContainer/circleIcon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(25, 24)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer/circleCenterContainer/circleIcon:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer/circleCenterContainer/circleIcon:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = false
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1.14861, 1.08698), Vector2(1.784, 1.688), Vector2(1.14861, 1.08698)]
+}
+
+[sub_resource type="Animation" id="Animation_qwshj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer/circleCenterContainer/circleIcon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(25, 24)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer/circleCenterContainer/circleIcon:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer/circleCenterContainer/circleIcon:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1.14861, 1.08698)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/triangleVBoxContainer/CenterContainer/triangleIcon:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.0154851, 0.292801)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/squareVBoxContainer/squareCenterContainer/squareIcon:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.359038, 1.25978)]
+}
+
+[sub_resource type="Animation" id="Animation_48q88"]
+resource_name = "triangle_update"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/triangleVBoxContainer/CenterContainer/triangleIcon:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.0154851, 0.292801), Vector2(0.02, 0.391), Vector2(0.0154851, 0.292801)]
+}
+
+[sub_resource type="Animation" id="Animation_xjg7p"]
+resource_name = "square_update"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/squareVBoxContainer/squareCenterContainer/squareIcon:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.359038, 1.25978), Vector2(0.479, 1.681), Vector2(0.359038, 1.25978)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_48q88"]
+_data = {
+&"RESET": SubResource("Animation_qwshj"),
+&"circle_update": SubResource("Animation_hfhsn"),
+&"square_update": SubResource("Animation_xjg7p"),
+&"triangle_update": SubResource("Animation_48q88")
+}
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_w371h")
@@ -37,6 +201,7 @@ layout_mode = 2
 [node name="circleVBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/BoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
+script = ExtResource("4_hfhsn")
 
 [node name="circleCenterContainer" type="CenterContainer" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer"]
 custom_minimum_size = Vector2(40, 40)
@@ -56,11 +221,13 @@ custom_minimum_size = Vector2(25, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "1"
+label_settings = SubResource("LabelSettings_hfhsn")
 horizontal_alignment = 1
 
 [node name="triangleVBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/BoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
+script = ExtResource("4_hfhsn")
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/triangleVBoxContainer"]
 custom_minimum_size = Vector2(40, 40)
@@ -77,11 +244,13 @@ custom_minimum_size = Vector2(25, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "1"
+label_settings = SubResource("LabelSettings_qwshj")
 horizontal_alignment = 1
 
 [node name="squareVBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/BoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
+script = ExtResource("4_hfhsn")
 
 [node name="squareCenterContainer" type="CenterContainer" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/squareVBoxContainer"]
 custom_minimum_size = Vector2(40, 40)
@@ -98,4 +267,10 @@ custom_minimum_size = Vector2(25, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "1"
+label_settings = SubResource("LabelSettings_48q88")
 horizontal_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_48q88")
+}

@@ -134,6 +134,10 @@ var trail_points = []
 signal on_pickup(type, amount)
 signal on_attack(attack_type)
 
+#func _on_pickup():
+	#print("pickedup")
+	#
+
 func _ready() -> void:
 	# Initial setup
 	if animation_player:
@@ -477,6 +481,7 @@ func handle_combat(delta: float) -> void:
 
 func handle_pickups(delta: float) -> void:
 	# Get all pickups in the area
+	
 	var pickups = get_tree().get_nodes_in_group("pickup_group")
 	
 	for pickup in pickups:
@@ -501,20 +506,26 @@ func handle_pickups(delta: float) -> void:
 			# Check if pickup is close enough to collect
 			if distance < 1.2:
 				collect_pickup(pickup)
+		
 
 func collect_pickup(pickup) -> void:
 	# Identify pickup type
 	var pickup_parent: RigidBody2D = pickup.get_parent()
-	var pickup_type = pickup_parent.name.replace("_pickup","")
+	
+	var pickup_type = pickup_parent.get_child(0).name.replace("Shape","")
 	# print(pickup.name)
 	# Add to player inventory
 	match pickup_type:
 		"circle":
 			circle_pieces += 1
+			emit_signal("on_pickup", pickup_type, circle_pieces)
 		"triangle":
 			triangle_pieces += 1
+			emit_signal("on_pickup", pickup_type, triangle_pieces)
 		"square":
 			square_pieces += 1
+			#on_pickup.emit(pickup_type, square_pieces)# Emit signal
+			emit_signal("on_pickup", pickup_type, square_pieces)
 	
 	# Play collection effect
 	if pickup_particles_scene:
@@ -532,8 +543,7 @@ func collect_pickup(pickup) -> void:
 	# pickup.queue_free()
 	pickup_parent.queue_free()
 	
-	# Emit signal
-	emit_signal("on_pickup", pickup_type, 1)
+	
 	
 	# Check if ranged attack should be unlocked
 	check_ranged_unlock()

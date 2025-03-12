@@ -10,21 +10,21 @@ inertia = 11.0
 script = ExtResource("1_l3nsn")
 metadata/_edit_vertical_guides_ = [-99.0]
 
-[node name="pickupArea2D2" type="Area2D" parent="." groups=["pickup_group"]]
-collision_layer = 4
-collision_mask = 7
-metadata/pickup_type = "square"
-
-[node name="CollisionShape2D3" type="CollisionPolygon2D" parent="pickupArea2D2"]
-position = Vector2(0.0718037, -0.348683)
-scale = Vector2(0.520677, 1.64774)
-polygon = PackedVector2Array(-51.7876, -17.3769, -50.7307, 14.067, 46.5032, 14.067, 47.5601, -17.3769)
-
-[node name="Polygon2D" type="Polygon2D" parent="."]
+[node name="squareShape" type="Polygon2D" parent="."]
 position = Vector2(0, -9)
 scale = Vector2(0.304682, 1.06906)
 color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(-39.6514, 18.9757, 38.8253, 18.9757, 38.8253, -1.55965, -38.8253, -1.55965)
+
+[node name="pickupArea2D" type="Area2D" parent="." groups=["pickup_group"]]
+collision_layer = 4
+collision_mask = 7
+metadata/pickup_type = "square"
+
+[node name="CollisionShape2D3" type="CollisionPolygon2D" parent="pickupArea2D"]
+position = Vector2(0.0718037, -0.348683)
+scale = Vector2(0.520677, 1.64774)
+polygon = PackedVector2Array(-51.7876, -17.3769, -50.7307, 14.067, 46.5032, 14.067, 47.5601, -17.3769)
 
 [node name="RBCollShape2D" type="CollisionPolygon2D" parent="."]
 position = Vector2(-4.76837e-07, 1)
