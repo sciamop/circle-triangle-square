@@ -127,7 +127,7 @@ var current_squash_stretch: float = 0.0
 # Trail positions tracker
 var trail_points = []
 
-# Vacuum stuff
+# Vacuum parameters
 @export var vacuum_radius: float = 150.0
 @export var score: int = 0
 
@@ -477,7 +477,7 @@ func handle_combat(delta: float) -> void:
 
 func handle_pickups(delta: float) -> void:
 	# Get all pickups in the area
-	var pickups = get_tree().get_nodes_in_group("pickup")
+	var pickups = get_tree().get_nodes_in_group("pickup_group")
 	
 	for pickup in pickups:
 		# Calculate distance to pickup
@@ -487,19 +487,26 @@ func handle_pickups(delta: float) -> void:
 		if distance < pickup_detection_radius:
 			# Calculate direction to player
 			var direction_to_player = (global_position - pickup.global_position).normalized()
-			
+			# direction_to_player.y = direction_to_player.y + 2
 			# Move pickup towards player with increasing speed as it gets closer
 			var attraction_factor = 1.0 - (distance / pickup_detection_radius)
-			pickup.global_position += direction_to_player * pickup_magnet_speed * attraction_factor * delta
+			var pickup_parent: RigidBody2D = pickup.get_parent()
+			pickup_parent.set_deferred("freeze", true)
+			pickup_parent.get_node("RBCollShape2D").set_deferred("disabled",true)
+			
+			# pickup.global_position += direction_to_player * pickup_magnet_speed * attraction_factor * delta
+			
+			pickup_parent.global_position += direction_to_player * pickup_magnet_speed * attraction_factor * delta
 			
 			# Check if pickup is close enough to collect
-			if distance < 1.0:
+			if distance < 1.2:
 				collect_pickup(pickup)
 
 func collect_pickup(pickup) -> void:
 	# Identify pickup type
-	var pickup_type = pickup.pickup_type
-	
+	var pickup_parent: RigidBody2D = pickup.get_parent()
+	var pickup_type = pickup_parent.name.replace("_pickup","")
+	# print(pickup.name)
 	# Add to player inventory
 	match pickup_type:
 		"circle":
@@ -512,7 +519,7 @@ func collect_pickup(pickup) -> void:
 	# Play collection effect
 	if pickup_particles_scene:
 		var particles = pickup_particles_scene.instantiate()
-		get_parent().add_child(particles)
+		pickup_parent.add_child(particles)
 		particles.global_position = pickup.global_position
 		particles.emitting = true
 	
@@ -522,7 +529,8 @@ func collect_pickup(pickup) -> void:
 		audio_player.play()
 	
 	# Remove pickup
-	pickup.queue_free()
+	# pickup.queue_free()
+	pickup_parent.queue_free()
 	
 	# Emit signal
 	emit_signal("on_pickup", pickup_type, 1)
@@ -621,7 +629,8 @@ func update_animation() -> void:
 			animation_player.play(anim_name)
 
 func _on_pickup_area_entered(body: Node2D) -> void:
-	if body.is_in_group("pickup"):
+	print("pickup area entered - player")
+	if body.is_in_group("pickup_group"):
 		collect_pickup(body)
 
 func _on_vacuum_area_entered(area):
@@ -693,7 +702,7 @@ func die() -> void:
 
 	
 	pieces_scene.global_position = global_position
-	get_parent().add_child(pieces_scene)
+	get_parent().call_deferred("add_child",pieces_scene)
 	
 	has_exploded = true  # Mark explosion as happened  # Add pieces to the scene
 

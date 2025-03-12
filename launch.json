@@ -1,0 +1,8 @@
+{
+    "name": "Launch",
+    "type": "godot",
+    "request": "launch",
+    "editor_path": "C:\\Users\\sciamop\\Documents\\godots\\Godot_v4.4-stable_win64.exe",
+    "address": "127.0.0.1",
+    "port": 6007
+}

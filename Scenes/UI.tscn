@@ -1,35 +1,101 @@
 [gd_scene load_steps=3 format=3 uid="uid://ch4o0guerbahn"]
 
 [ext_resource type="Script" uid="uid://dm4ey0iltuo33" path="res://Scripts/UI.gd" id="1_w371h"]
-[ext_resource type="PackedScene" uid="uid://7j3ne7uossne" path="res://Scenes/slider.tscn" id="2_nxvpl"]
+[ext_resource type="Script" uid="uid://y63jp0cst87s" path="res://Scripts/polygon_2d.gd" id="2_nxvpl"]
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_w371h")
+metadata/_edit_horizontal_guides_ = [626.0, 600.0]
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
-position = Vector2(1, 0)
-scale = Vector2(0.889855, 2.70857)
-color = Color(0.252028, 0.252028, 0.252028, 0.6)
-polygon = PackedVector2Array(0, 50, 150.046, 50, 300, 50, 300, 2, 0, 0)
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="forceX" parent="." instance=ExtResource("2_nxvpl")]
-offset_left = 11.0
-offset_right = 255.0
-scale = Vector2(0.643942, 0.690376)
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
-[node name="forceY" parent="." instance=ExtResource("2_nxvpl")]
-offset_top = 38.0
-offset_bottom = 83.0
-scale = Vector2(0.643942, 0.690376)
+[node name="BoxContainer" type="CenterContainer" parent="CanvasLayer/Control"]
+layout_direction = 2
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 536.0
+offset_top = 550.0
+offset_right = 576.0
+offset_bottom = 590.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 3
 
-[node name="dirX" parent="." instance=ExtResource("2_nxvpl")]
-offset_top = 72.0
-offset_bottom = 117.0
-scale = Vector2(0.643942, 0.690376)
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/BoxContainer"]
+layout_mode = 2
 
-[node name="dirY" parent="." instance=ExtResource("2_nxvpl")]
-offset_left = 11.0
-offset_top = 102.0
-offset_right = 261.0
-offset_bottom = 147.0
-scale = Vector2(0.643942, 0.690376)
+[node name="circleVBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/BoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+
+[node name="circleCenterContainer" type="CenterContainer" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="circleIcon" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer/circleCenterContainer"]
+position = Vector2(25, 24)
+scale = Vector2(1.14861, 1.08698)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+script = ExtResource("2_nxvpl")
+radius = 12.0
+segments = 12
+
+[node name="circleLabel" type="Label" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1"
+horizontal_alignment = 1
+
+[node name="triangleVBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/BoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/triangleVBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="triangleIcon" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/triangleVBoxContainer/CenterContainer"]
+position = Vector2(25, 20)
+scale = Vector2(0.0154851, 0.292801)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-1216.78, 59.4238, 1001.33, 59.424, -101.033, -30.5611)
+
+[node name="triangleLabel" type="Label" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/triangleVBoxContainer"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1"
+horizontal_alignment = 1
+
+[node name="squareVBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/BoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+
+[node name="squareCenterContainer" type="CenterContainer" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/squareVBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="squareIcon" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/squareVBoxContainer/squareCenterContainer"]
+position = Vector2(25, 13)
+scale = Vector2(0.359038, 1.25978)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-39.6514, 18.9757, 38.8253, 18.9757, 38.8253, -1.55965, -38.8253, -1.55965)
+
+[node name="squareLabel" type="Label" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/squareVBoxContainer"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "1"
+horizontal_alignment = 1

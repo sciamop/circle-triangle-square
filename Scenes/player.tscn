@@ -54,7 +54,7 @@ modifications/3 = SubResource("SkeletonModification2DTwoBoneIK_akpe4")
 modifications/4 = SubResource("SkeletonModification2DTwoBoneIK_cvnsp")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vgqql"]
-size = Vector2(77, 25.5)
+size = Vector2(77, 39.3293)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5uiyf"]
 size = Vector2(38.1691, 15.6157)
@@ -863,7 +863,7 @@ position = Vector2(0.582203, 36.5352)
 rotation = -1.40764
 scale = Vector2(0.999999, 0.999999)
 color = Color(0, 0, 0, 1)
-polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34788e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46958e-15, -10.3923, -6, -6, -10.3923, -2.20436e-15, -12, 6, -10.3923, 10.3923, -6)
+polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
 script = ExtResource("2_256ay")
 radius = 12.0
 segments = 12
@@ -872,7 +872,6 @@ segments = 12
 z_index = 1
 position = Vector2(3, 80)
 rotation = -1.69385
-scale = Vector2(1, 1)
 color = Color(0, 0, 0, 1)
 offset = Vector2(-1.235, 4.365)
 texture_scale = Vector2(61.65, 61.65)
@@ -883,7 +882,7 @@ vertex_colors = PackedColorArray(0, 0, 0, 1)
 z_index = 1
 position = Vector2(11, 80)
 rotation = 1.54139
-scale = Vector2(0.999931, 0.999931)
+scale = Vector2(0.999985, 0.999985)
 color = Color(0, 0, 0, 1)
 texture_scale = Vector2(61.65, 61.65)
 skeleton = NodePath("../Leg01Polygon")
@@ -906,7 +905,6 @@ vertex_colors = PackedColorArray(0, 0, 0, 1)
 z_index = 1
 position = Vector2(-3.00159, 79.9435)
 rotation = 1.51425
-scale = Vector2(1, 1)
 color = Color(0, 0, 0, 1)
 offset = Vector2(-0.335, 14.865)
 texture_scale = Vector2(61.65, 61.65)
@@ -1094,7 +1092,8 @@ collision_mask = 5
 position = Vector2(0, 10)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
-position = Vector2(2.5, 73.5)
+position = Vector2(2.5, 33.5)
+scale = Vector2(1, 3.28)
 shape = SubResource("RectangleShape2D_vgqql")
 
 [node name="MeleeHitbox" type="Area2D" parent="."]

@@ -16,8 +16,8 @@ var _player: Node2D = null
 var _vacuum_active: bool = false
 var _velocity: Vector2 = Vector2.ZERO
 var _collected: bool = false
-@onready var area_2d: Area2D = $Area2D
-
+# @onready var area_2d: Area2D = $Area2D
+@onready var pickup_area_2d:Area2D = $pickupArea2D
 
 # Setup sprite on ready
 func _ready():
@@ -34,9 +34,10 @@ func _ready():
 	#add_child(collision)
 
 	# Connect signals
-	area_2d.body_entered.connect(_on_body_entered)
+	body_entered.connect(_on_body_entered)
 
 func _process(delta):
+	return
 	if _collected:
 		return
 		
@@ -53,10 +54,20 @@ func _process(delta):
 		_velocity = _velocity.limit_length(max_speed)
 		global_position += _velocity * delta
 
+
+# func _physics_process(delta: float) -> void:
+# 	var velocity:Vector2 = Vector2.ZERO
+# 	var collision = move_and_collide(velocity * delta)
+	
+# 	if collision:
+# 		#print(collision.get_collider().name)
+# 		if collision.get_collider().is_in_group("player") and !_collected:
+# 			# explode()
+# 			collect(collision.get_collider())
+
 # Called when a body enters the pickup's collision area
 func _on_body_entered(body):
-	print(body.is_in_group("player"))
-	
+
 	if body.is_in_group("player") and !_collected:
 		collect(body)
 
@@ -67,6 +78,7 @@ func start_vacuum(player: Node2D):
 
 # Called when player actually collects the pickup
 func collect(player: Node2D):
+	return
 	_collected = true
 	
 	# Spawn collection effect if provided

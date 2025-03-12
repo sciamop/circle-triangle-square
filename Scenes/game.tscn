@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=4 uid="uid://1jgi6tcbrn7v"]
+[gd_scene load_steps=12 format=4 uid="uid://1jgi6tcbrn7v"]
 
 [ext_resource type="Texture2D" uid="uid://43q28fbloexy" path="res://Sprites/1x16_tiles-trimmed.png" id="1_8ruqu"]
 [ext_resource type="Script" uid="uid://l3cbc1e4asf3" path="res://Scripts/game_manager.gd" id="1_wowpa"]
 [ext_resource type="PackedScene" uid="uid://bmlknwmevbp4p" path="res://Scenes/player.tscn" id="2_a8p0r"]
 [ext_resource type="PackedScene" uid="uid://ciw2l5tkuxw2a" path="res://Scenes/enemy.tscn" id="3_wrm1d"]
 [ext_resource type="PackedScene" uid="uid://dl0ufnqft2gc1" path="res://Scenes/killzone.tscn" id="4_3dryh"]
+[ext_resource type="PackedScene" uid="uid://ch4o0guerbahn" path="res://Scenes/UI.tscn" id="6_1l0tm"]
 [ext_resource type="Texture2D" uid="uid://dokj2kx84i3mx" path="res://Sprites/triangle_circle_square-logo-004.png" id="8_v158k"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_na51i"]
@@ -550,6 +551,8 @@ ignore_time_scale = true
 position = Vector2(-259, -82)
 knockback_force = 666.0
 enable_effects = false
+
+[node name="UI" parent="." instance=ExtResource("6_1l0tm")]
 
 [node name="Parallax2D" type="Parallax2D" parent="."]
 scroll_scale = Vector2(1.73, 1.73)

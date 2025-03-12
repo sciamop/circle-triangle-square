@@ -17,17 +17,18 @@ scale = Vector2(0.00776863, 0.161101)
 color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(-1179.4, 52.6765, 1001.33, 61.4369, -101.033, -30.5611)
 
-[node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
+[node name="RBCollShape2D" type="CollisionPolygon2D" parent="."]
 position = Vector2(2.01362, -1.76131)
 rotation = -0.046246
 scale = Vector2(0.006072, 0.101216)
 polygon = PackedVector2Array(-132.955, -64.558, -1512.64, 67.927, 1277.43, 81.8706)
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="pickupArea2D" type="Area2D" parent="." groups=["pickup_group"]]
 collision_layer = 4
 collision_mask = 7
+metadata/pickup_type = "triangle"
 
-[node name="CollisionShape2D" type="CollisionPolygon2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="pickupArea2D"]
 position = Vector2(2.01759, -1.93996)
 rotation = -0.703328
 scale = Vector2(4.65152e-05, 0.0102338)

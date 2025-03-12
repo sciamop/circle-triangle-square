@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"godotTools.editorPath.godot4": "c:\\Users\\sciamop\\Documents\\godots\\Godot_v4.4-stable_win64.exe",
+		"godotTools.lsp.serverPort": 6005,
+		"godotTools.inlayHints.gdscript": true
+	}
+}
