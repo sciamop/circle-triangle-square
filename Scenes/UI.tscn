@@ -24,46 +24,6 @@ font_color = Color(0, 0, 0, 1)
 outline_color = Color(0.0383972, 0.0383972, 0.0383972, 1)
 shadow_color = Color(1, 1, 1, 0.788235)
 
-[sub_resource type="Animation" id="Animation_hfhsn"]
-resource_name = "circle_update"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer/circleCenterContainer/circleIcon:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = false
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(25, 24)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer/circleCenterContainer/circleIcon:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = false
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer/circleCenterContainer/circleIcon:scale")
-tracks/2/interp = 1
-tracks/2/loop_wrap = false
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(1.14861, 1.08698), Vector2(1.784, 1.688), Vector2(1.14861, 1.08698)]
-}
-
 [sub_resource type="Animation" id="Animation_qwshj"]
 length = 0.001
 tracks/0/type = "value"
@@ -127,20 +87,44 @@ tracks/4/keys = {
 "values": [Vector2(0.359038, 1.25978)]
 }
 
-[sub_resource type="Animation" id="Animation_48q88"]
-resource_name = "triangle_update"
+[sub_resource type="Animation" id="Animation_hfhsn"]
+resource_name = "circle_update"
 length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/triangleVBoxContainer/CenterContainer/triangleIcon:scale")
+tracks/0/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer/circleCenterContainer/circleIcon:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = false
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.125, 0.2),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(25, 24)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer/circleCenterContainer/circleIcon:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer/circleCenterContainer/circleIcon:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = false
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(0.0154851, 0.292801), Vector2(0.02, 0.391), Vector2(0.0154851, 0.292801)]
+"values": [Vector2(1.14861, 1.08698), Vector2(1.784, 1.688), Vector2(1.14861, 1.08698)]
 }
 
 [sub_resource type="Animation" id="Animation_xjg7p"]
@@ -157,6 +141,22 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [Vector2(0.359038, 1.25978), Vector2(0.479, 1.681), Vector2(0.359038, 1.25978)]
+}
+
+[sub_resource type="Animation" id="Animation_48q88"]
+resource_name = "triangle_update"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/triangleVBoxContainer/CenterContainer/triangleIcon:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.0154851, 0.292801), Vector2(0.02, 0.391), Vector2(0.0154851, 0.292801)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_48q88"]
@@ -187,10 +187,10 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 536.0
-offset_top = 550.0
-offset_right = 576.0
-offset_bottom = 590.0
+offset_left = 653.0
+offset_top = 584.0
+offset_right = 811.0
+offset_bottom = 649.0
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 3
@@ -211,7 +211,7 @@ layout_mode = 2
 position = Vector2(25, 24)
 scale = Vector2(1.14861, 1.08698)
 color = Color(0, 0, 0, 1)
-polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34788e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46958e-15, -10.3923, -6, -6, -10.3923, -2.20436e-15, -12, 6, -10.3923, 10.3923, -6)
 script = ExtResource("2_nxvpl")
 radius = 12.0
 segments = 12

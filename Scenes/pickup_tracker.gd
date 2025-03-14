@@ -1,7 +1,7 @@
 extends VBoxContainer
 
-@onready var square_icon: Polygon2D = $squareCenterContainer/squareIcon
-@onready var square_label: Label = $squareLabel
+# @onready var square_icon: Polygon2D = $squareCenterContainer/squareIcon
+# @onready var square_label: Label = $squareLabel
 @onready var player: Player = $"/root/Game/Player"
 @onready var animation_player: AnimationPlayer = $"../../../../../AnimationPlayer"
 
@@ -19,9 +19,9 @@ func _ready() -> void:
 func updateScore(pickup_type:String, pieces:int):
 	
 	
-	var iconStr:String = "../"+pickup_type+"VBoxContainer/"+pickup_type+"CenterContainer/" + pickup_type + "Icon"
+	# var iconStr:String = "../"+pickup_type+"VBoxContainer/"+pickup_type+"CenterContainer/" + pickup_type + "Icon"
 
-	var icon:Polygon2D =get_node(iconStr)
+	# var icon:Polygon2D = get_node(iconStr)
 	
 	var labelStr:String = "../" + pickup_type + "VBoxContainer/" + pickup_type + "Label"
 	var label:Label =  get_node(labelStr)	
