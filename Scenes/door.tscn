@@ -1,0 +1,183 @@
+[gd_scene load_steps=8 format=3 uid="uid://6lvklwfapt1y"]
+
+[ext_resource type="Texture2D" uid="uid://ctn80d6ky0qlf" path="res://Resources/door-shine.tres" id="1_w6aom"]
+[ext_resource type="Texture2D" uid="uid://bbbjj3vno5khc" path="res://Sprites/1x16_tiles.png" id="2_p0e35"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fahql"]
+atlas = ExtResource("2_p0e35")
+region = Rect2(0, 0, 512, 512)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v6xrn"]
+size = Vector2(52, 154)
+
+[sub_resource type="Gradient" id="Gradient_w6aom"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_p0e35"]
+gradient = SubResource("Gradient_w6aom")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_w6aom"]
+lifetime_randomness = 0.71
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(0, 0.985, 0)
+emission_shape_scale = Vector3(32, 66, 1)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+angle_min = -566.8
+angle_max = -438.1
+velocity_pivot = Vector3(20.02, 22.11, 0)
+direction = Vector3(17.58, 131.96, 0)
+spread = 63.702
+initial_velocity_min = 46.81
+initial_velocity_max = 46.81
+angular_velocity_min = -306.19
+angular_velocity_max = -211.54
+gravity = Vector3(-100, 103.15, 0)
+scale_max = 4.0
+scale_over_velocity_min = 768.09
+scale_over_velocity_max = 768.09
+color_ramp = SubResource("GradientTexture1D_p0e35")
+turbulence_enabled = true
+turbulence_noise_strength = 1.84
+turbulence_noise_scale = 7.608
+turbulence_noise_speed = Vector3(22.17, 0, 0)
+
+[node name="Door" type="Node2D"]
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="trianglePolygon2" type="Polygon2D" parent="Area2D"]
+z_index = 1
+position = Vector2(2, -45)
+rotation = -1.5708
+scale = Vector2(0.844, 1)
+color = Color(0, 0, 0, 1)
+offset = Vector2(-2.57, 2.54)
+texture_scale = Vector2(61.65, 61.65)
+polygon = PackedVector2Array(-0.984501, 24.46, 65.3662, 3.46, -0.984501, -17.54)
+vertex_colors = PackedColorArray(0, 0, 0, 1)
+
+[node name="squarePolygon" type="Polygon2D" parent="Area2D"]
+position = Vector2(-13, -42.32)
+scale = Vector2(0.844, 2.4464)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-8.58307e-06, 0.130812, 49.763, 0.130812, 49.763, 50, -8.58307e-06, 50)
+
+[node name="Sprite2D" type="Sprite2D" parent="Area2D"]
+position = Vector2(0, 72)
+texture = SubResource("AtlasTexture_fahql")
+region_enabled = true
+region_rect = Rect2(88, 112, 16, 16)
+
+[node name="Sprite2D2" type="Sprite2D" parent="Area2D"]
+position = Vector2(16, 72)
+texture = SubResource("AtlasTexture_fahql")
+region_enabled = true
+region_rect = Rect2(88, 112, 16, 16)
+
+[node name="Sprite2D3" type="Sprite2D" parent="Area2D"]
+position = Vector2(0, 56)
+texture = SubResource("AtlasTexture_fahql")
+region_enabled = true
+region_rect = Rect2(88, 112, 16, 16)
+
+[node name="Sprite2D4" type="Sprite2D" parent="Area2D"]
+position = Vector2(16, 56)
+texture = SubResource("AtlasTexture_fahql")
+region_enabled = true
+region_rect = Rect2(88, 112, 16, 16)
+
+[node name="Sprite2D5" type="Sprite2D" parent="Area2D"]
+position = Vector2(0, 40)
+texture = SubResource("AtlasTexture_fahql")
+region_enabled = true
+region_rect = Rect2(88, 112, 16, 16)
+
+[node name="Sprite2D6" type="Sprite2D" parent="Area2D"]
+position = Vector2(16, 40)
+texture = SubResource("AtlasTexture_fahql")
+region_enabled = true
+region_rect = Rect2(88, 112, 16, 16)
+
+[node name="Sprite2D7" type="Sprite2D" parent="Area2D"]
+position = Vector2(0, 24)
+texture = SubResource("AtlasTexture_fahql")
+region_enabled = true
+region_rect = Rect2(88, 112, 16, 16)
+
+[node name="Sprite2D8" type="Sprite2D" parent="Area2D"]
+position = Vector2(16, 24)
+texture = SubResource("AtlasTexture_fahql")
+region_enabled = true
+region_rect = Rect2(88, 112, 16, 16)
+
+[node name="Sprite2D9" type="Sprite2D" parent="Area2D"]
+position = Vector2(0, 8)
+texture = SubResource("AtlasTexture_fahql")
+region_enabled = true
+region_rect = Rect2(88, 112, 16, 16)
+
+[node name="Sprite2D10" type="Sprite2D" parent="Area2D"]
+position = Vector2(16, 8)
+texture = SubResource("AtlasTexture_fahql")
+region_enabled = true
+region_rect = Rect2(88, 112, 16, 16)
+
+[node name="Sprite2D11" type="Sprite2D" parent="Area2D"]
+position = Vector2(0, -8)
+texture = SubResource("AtlasTexture_fahql")
+region_enabled = true
+region_rect = Rect2(88, 112, 16, 16)
+
+[node name="Sprite2D12" type="Sprite2D" parent="Area2D"]
+position = Vector2(16, -8)
+texture = SubResource("AtlasTexture_fahql")
+region_enabled = true
+region_rect = Rect2(88, 112, 16, 16)
+
+[node name="Sprite2D13" type="Sprite2D" parent="Area2D"]
+position = Vector2(0, -24)
+texture = SubResource("AtlasTexture_fahql")
+region_enabled = true
+region_rect = Rect2(88, 112, 16, 16)
+
+[node name="Sprite2D14" type="Sprite2D" parent="Area2D"]
+position = Vector2(16, -24)
+texture = SubResource("AtlasTexture_fahql")
+region_enabled = true
+region_rect = Rect2(88, 112, 16, 16)
+
+[node name="Sprite2D15" type="Sprite2D" parent="Area2D"]
+position = Vector2(0, -40)
+texture = SubResource("AtlasTexture_fahql")
+region_enabled = true
+region_rect = Rect2(88, 112, 16, 16)
+
+[node name="Sprite2D16" type="Sprite2D" parent="Area2D"]
+position = Vector2(16, -40)
+texture = SubResource("AtlasTexture_fahql")
+region_enabled = true
+region_rect = Rect2(88, 112, 16, 16)
+
+[node name="squarePolygon2" type="Polygon2D" parent="Area2D"]
+position = Vector2(-160, 14)
+scale = Vector2(3.798, 2.4464)
+color = Color(0, 0, 0, 1)
+offset = Vector2(8.58307e-06, -23.0216)
+texture = ExtResource("1_w6aom")
+polygon = PackedVector2Array(-3.15957, -51.7822, 44.4971, -22.3512, 49.763, 0.130812, 49.763, 50, -2.89628, 85.9712)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
+position = Vector2(2, 3)
+shape = SubResource("RectangleShape2D_v6xrn")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Area2D"]
+position = Vector2(-22, -1)
+amount = 64
+lifetime = 6.66
+explosiveness = 0.22
+randomness = 0.17
+fixed_fps = 24
+collision_base_size = 16.55
+visibility_rect = Rect2(-100, -100, 200, 184.485)
+process_material = SubResource("ParticleProcessMaterial_w6aom")

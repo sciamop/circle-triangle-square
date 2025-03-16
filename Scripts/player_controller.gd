@@ -481,7 +481,7 @@ func handle_combat(delta: float) -> void:
 
 func handle_pickups(delta: float) -> void:
 	# Get all pickups in the area
-	
+		
 	var pickups = get_tree().get_nodes_in_group("pickup_group")
 	
 	for pickup in pickups:
@@ -506,6 +506,10 @@ func handle_pickups(delta: float) -> void:
 			# Check if pickup is close enough to collect
 			if distance < 1.2:
 				collect_pickup(pickup)
+		else:
+			var pickup_parent: RigidBody2D = pickup.get_parent()
+			pickup_parent.set_deferred("freeze", false)
+			pickup_parent.get_node("RBCollShape2D").set_deferred("disabled",false)
 		
 
 func collect_pickup(pickup) -> void:

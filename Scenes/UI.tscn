@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dm4ey0iltuo33" path="res://Scripts/UI.gd" id="1_w371h"]
 [ext_resource type="Script" uid="uid://y63jp0cst87s" path="res://Scripts/polygon_2d.gd" id="2_nxvpl"]
 [ext_resource type="FontFile" uid="uid://dbb1aunswvl1g" path="res://Fonts/circle-triangle-square-Regular.otf" id="3_dewlx"]
-[ext_resource type="Script" uid="uid://dnyl3fayamem0" path="res://Scenes/pickup_tracker.gd" id="4_hfhsn"]
+[ext_resource type="Script" uid="uid://dnyl3fayamem0" path="res://Scripts/pickup_tracker.gd" id="4_hfhsn"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_hfhsn"]
 font = ExtResource("3_dewlx")
@@ -211,7 +211,7 @@ layout_mode = 2
 position = Vector2(25, 24)
 scale = Vector2(1.14861, 1.08698)
 color = Color(0, 0, 0, 1)
-polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34788e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46958e-15, -10.3923, -6, -6, -10.3923, -2.20436e-15, -12, 6, -10.3923, 10.3923, -6)
+polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
 script = ExtResource("2_nxvpl")
 radius = 12.0
 segments = 12
@@ -220,7 +220,7 @@ segments = 12
 custom_minimum_size = Vector2(25, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "1"
+text = "0"
 label_settings = SubResource("LabelSettings_hfhsn")
 horizontal_alignment = 1
 
@@ -243,7 +243,7 @@ polygon = PackedVector2Array(-1216.78, 59.4238, 1001.33, 59.424, -101.033, -30.5
 custom_minimum_size = Vector2(25, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "1"
+text = "0"
 label_settings = SubResource("LabelSettings_qwshj")
 horizontal_alignment = 1
 
@@ -266,7 +266,7 @@ polygon = PackedVector2Array(-39.6514, 18.9757, 38.8253, 18.9757, 38.8253, -1.55
 custom_minimum_size = Vector2(25, 0)
 layout_mode = 2
 size_flags_horizontal = 3
-text = "1"
+text = "0"
 label_settings = SubResource("LabelSettings_48q88")
 horizontal_alignment = 1
 
