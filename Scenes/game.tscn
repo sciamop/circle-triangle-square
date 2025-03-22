@@ -1,14 +1,15 @@
-[gd_scene load_steps=14 format=4 uid="uid://1jgi6tcbrn7v"]
+[gd_scene load_steps=15 format=4 uid="uid://1jgi6tcbrn7v"]
 
 [ext_resource type="Texture2D" uid="uid://43q28fbloexy" path="res://Sprites/1x16_tiles-trimmed.png" id="1_8ruqu"]
 [ext_resource type="Script" uid="uid://l3cbc1e4asf3" path="res://Scripts/game_manager.gd" id="1_wowpa"]
 [ext_resource type="PackedScene" uid="uid://bmlknwmevbp4p" path="res://Scenes/player.tscn" id="2_a8p0r"]
 [ext_resource type="PackedScene" uid="uid://ciw2l5tkuxw2a" path="res://Scenes/enemy.tscn" id="3_wrm1d"]
 [ext_resource type="PackedScene" uid="uid://dl0ufnqft2gc1" path="res://Scenes/killzone.tscn" id="4_3dryh"]
+[ext_resource type="PackedScene" uid="uid://sfxm05vlge3f" path="res://Scenes/projectile_triangle.tscn" id="5_ldgsr"]
 [ext_resource type="PackedScene" uid="uid://ch4o0guerbahn" path="res://Scenes/UI.tscn" id="6_1l0tm"]
 [ext_resource type="PackedScene" uid="uid://6lvklwfapt1y" path="res://Scenes/door.tscn" id="8_h4fw4"]
 [ext_resource type="Texture2D" uid="uid://dokj2kx84i3mx" path="res://Sprites/triangle_circle_square-logo-004.png" id="8_v158k"]
-[ext_resource type="PackedScene" uid="uid://b7jqy8oqlu47w" path="res://Scenes/mcguffin.tscn" id="9_h4fw4"]
+[ext_resource type="PackedScene" uid="uid://b1wsyjbjsnp5o" path="res://Scenes/_mcguffin.tscn" id="10_ldgsr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_na51i"]
 texture = ExtResource("1_8ruqu")
@@ -527,7 +528,10 @@ navigation_enabled = false
 [node name="Player" parent="." instance=ExtResource("2_a8p0r")]
 position = Vector2(195, -215)
 collision_mask = 7
-max_health = 10
+ranged_damage = 5
+ranged_unlocked = true
+max_health = 40
+projectile_scene = ExtResource("5_ldgsr")
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(-92, 42)
@@ -560,14 +564,14 @@ enable_effects = false
 
 [node name="Parallax2D" type="Parallax2D" parent="."]
 scroll_scale = Vector2(1.73, 1.73)
-scroll_offset = Vector2(14.78, 0)
+scroll_offset = Vector2(17, -29)
 
 [node name="Sprite2D" type="Sprite2D" parent="Parallax2D"]
 position = Vector2(-113, -705)
 texture = SubResource("AtlasTexture_h4fw4")
 
-[node name="mcguffin" parent="." instance=ExtResource("9_h4fw4")]
-position = Vector2(481, -307)
-scale = Vector2(0.509599, 0.509599)
+[node name="mcguffin2" parent="." instance=ExtResource("10_ldgsr")]
+position = Vector2(592, -273)
+scale = Vector2(0.591808, 0.591808)
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -33,7 +33,7 @@ class_name Player
 @export var melee_cooldown: float = 0.5
 @export var ranged_damage: int = 8
 @export var ranged_cooldown: float = 0.7
-@export var ranged_projectile_speed: float = 600.0
+@export var ranged_projectile_speed: float = 900.0
 @export var ranged_unlocked: bool = false
 
 # Pickup parameters
@@ -80,6 +80,7 @@ var has_exploded:bool 			= false
 var attacking: bool = false
 var melee_cooldown_timer: float = 0.0
 var ranged_cooldown_timer: float = 0.0
+var active_projectile_shape: String = "triangle"
 
 # Pickups tracking
 var circle_pieces: int = 0
@@ -133,6 +134,8 @@ var trail_points = []
 
 signal on_pickup(type, amount)
 signal on_attack(attack_type)
+signal on_activate(shape_type)
+signal on_empty(shape_type)
 
 #func _on_pickup():
 	#print("pickedup")
@@ -285,6 +288,16 @@ func handle_input() -> void:
 	
 	if Input.is_action_just_pressed("attack_ranged") and ranged_cooldown_timer <= 0 and ranged_unlocked:
 		perform_ranged_attack()
+		
+	if Input.is_action_just_pressed("activate_triangle"):
+		update_activation("triangle")		
+		
+	if Input.is_action_just_pressed("activate_circle"):
+		update_activation("circle")
+				
+	if Input.is_action_just_pressed("activate_square"):
+		update_activation("square")
+	
 
 func apply_gravity(delta: float) -> void:
 	if is_wall_sliding:
@@ -446,6 +459,33 @@ func perform_melee_attack() -> void:
 	attacking = false
 	emit_signal("on_attack", "melee")
 
+func has_ammo() -> bool:
+	#if (circle_pieces == 0 && square_pieces == 0 && triangle_pieces == 0):
+		#return false
+		
+	match active_projectile_shape:
+		"circle":
+			if (circle_pieces == 0):
+				emit_signal("on_empty", active_projectile_shape)
+				return false
+			circle_pieces -= 1
+			emit_signal("on_pickup", active_projectile_shape, circle_pieces)
+		"square":
+			if (square_pieces == 0):
+				print("nope")
+				emit_signal("on_empty", active_projectile_shape)
+				return false
+			square_pieces -= 1
+			emit_signal("on_pickup", active_projectile_shape, square_pieces)
+		"triangle":
+			if (triangle_pieces == 0):
+				emit_signal("on_empty", active_projectile_shape)
+				return false
+			triangle_pieces -= 1
+			emit_signal("on_pickup", active_projectile_shape, triangle_pieces)
+	
+	return true
+	
 func perform_ranged_attack() -> void:
 	if attacking or not ranged_unlocked:
 		return
@@ -458,11 +498,14 @@ func perform_ranged_attack() -> void:
 		animation_player.play("ranged_attack")
 	
 	# Spawn projectile
-	if projectile_scene:
+	if projectile_scene && has_ammo() == true:
 		var projectile = projectile_scene.instantiate()
+		projectile.shape = active_projectile_shape
+		print("pew pew pew")
 		get_parent().add_child(projectile)
-		projectile.global_position = global_position + Vector2(20 * facing_direction, -10)
-		projectile.direction = facing_direction
+		projectile.global_position = global_position + Vector2(20 * facing_direction, 50)
+		projectile.direction = Vector2(facing_direction,0)
+		print(str(facing_direction))
 		projectile.speed = ranged_projectile_speed
 		projectile.damage = ranged_damage
 	
@@ -474,6 +517,15 @@ func perform_ranged_attack() -> void:
 	await animation_player.animation_finished
 	attacking = false
 	emit_signal("on_attack", "ranged")
+
+func update_activation(shape: String) -> void:
+	emit_signal("on_activate", shape)
+	switch_projectile(shape)
+	pass
+
+func switch_projectile(shape: String) -> void:
+	active_projectile_shape = shape
+	
 
 func handle_combat(delta: float) -> void:
 	# This function can be expanded to handle more complex combat logic
@@ -644,6 +696,7 @@ func update_animation() -> void:
 
 func _on_pickup_area_entered(body: Node2D) -> void:
 	print("pickup area entered - player")
+
 	if body.is_in_group("pickup_group"):
 		collect_pickup(body)
 
