@@ -286,8 +286,12 @@ func handle_input() -> void:
 	if Input.is_action_just_pressed("slash") and melee_cooldown_timer <= 0:
 		perform_melee_attack()
 	
-	if Input.is_action_just_pressed("attack_ranged") and ranged_cooldown_timer <= 0 and ranged_unlocked:
+	if Input.is_action_just_pressed("attack_ranged") and ranged_cooldown_timer <= 0 and ranged_unlocked and active_projectile_shape != "circle":
 		perform_ranged_attack()
+
+	if Input.is_action_just_pressed("attack_ranged") and ranged_cooldown_timer <= 0 and ranged_unlocked and active_projectile_shape == "circle":
+		# perform_ranged_attack()
+		perform_insight()
 		
 	if Input.is_action_just_pressed("activate_triangle"):
 		update_activation("triangle")		
@@ -485,6 +489,11 @@ func has_ammo() -> bool:
 			emit_signal("on_pickup", active_projectile_shape, triangle_pieces)
 	
 	return true
+
+func perform_insight() -> void:
+	if attacking or not ranged_unlocked:
+		return
+	pass
 	
 func perform_ranged_attack() -> void:
 	if attacking or not ranged_unlocked:
