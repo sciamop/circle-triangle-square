@@ -1,10 +1,11 @@
-[gd_scene load_steps=15 format=4 uid="uid://1jgi6tcbrn7v"]
+[gd_scene load_steps=16 format=4 uid="uid://1jgi6tcbrn7v"]
 
 [ext_resource type="Texture2D" uid="uid://43q28fbloexy" path="res://Sprites/1x16_tiles-trimmed.png" id="1_8ruqu"]
 [ext_resource type="Script" uid="uid://l3cbc1e4asf3" path="res://Scripts/game_manager.gd" id="1_wowpa"]
 [ext_resource type="PackedScene" uid="uid://bmlknwmevbp4p" path="res://Scenes/player.tscn" id="2_a8p0r"]
 [ext_resource type="PackedScene" uid="uid://ciw2l5tkuxw2a" path="res://Scenes/enemy.tscn" id="3_wrm1d"]
 [ext_resource type="PackedScene" uid="uid://dl0ufnqft2gc1" path="res://Scenes/killzone.tscn" id="4_3dryh"]
+[ext_resource type="PackedScene" uid="uid://bml7qnybucr18" path="res://Scenes/insight_items.tscn" id="4_o5yvi"]
 [ext_resource type="PackedScene" uid="uid://sfxm05vlge3f" path="res://Scenes/projectile_triangle.tscn" id="5_ldgsr"]
 [ext_resource type="PackedScene" uid="uid://ch4o0guerbahn" path="res://Scenes/UI.tscn" id="6_1l0tm"]
 [ext_resource type="PackedScene" uid="uid://6lvklwfapt1y" path="res://Scenes/door.tscn" id="8_h4fw4"]
@@ -516,6 +517,18 @@ tile_set = SubResource("TileSet_0q5gb")
 
 [node name="Door" parent="mid" instance=ExtResource("8_h4fw4")]
 position = Vector2(514, -304)
+
+[node name="insight_node" type="Node2D" parent="mid" groups=["insight_item"]]
+
+[node name="insight_items" parent="mid/insight_node" instance=ExtResource("4_o5yvi")]
+position = Vector2(383, -121)
+rotation = 1.02974
+scale = Vector2(0.125, 0.125)
+
+[node name="insight_items2" parent="mid/insight_node" instance=ExtResource("4_o5yvi")]
+position = Vector2(408, -121)
+rotation = 1.02974
+scale = Vector2(0.125, 0.125)
 
 [node name="background" type="TileMapLayer" parent="."]
 use_parent_material = true

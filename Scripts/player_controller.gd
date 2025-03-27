@@ -137,6 +137,20 @@ signal on_attack(attack_type)
 signal on_activate(shape_type)
 signal on_empty(shape_type)
 
+# Insight parameters
+@export var insight_radius: float = 300.0
+@export var insight_duration: float = 3.0
+@export var insight_color: Color = Color(0.5, 0.5, 0.5, 0.2)  # Semi-transparent gray
+@export var insight_grow_time: float = 0.3  # Time to grow to full size
+@export var insight_contract_time: float = 0.5  # Time to contract before disappearing
+@export var insight_max_radius: float = 400.0  # Maximum radius during growth
+var insight_timer: float = 0.0
+var insight_area: Area2D = null
+var insight_circle: Polygon2D = null
+var insight_animation_phase: String = "grow"  # "grow", "hold", "contract"
+var insight_animation_timer: float = 0.0
+var is_insight_active: bool = false  # Track if insight is currently active
+
 #func _on_pickup():
 	#print("pickedup")
 	#
@@ -177,6 +191,10 @@ func _ready() -> void:
 
 	# Initialize player health
 	current_health = max_health
+	
+#	hide all secret insight areas
+	for item in get_tree().get_nodes_in_group("insight_item"):
+		item.visible = false
 
 func _physics_process(delta: float) -> void:
 	# Update timers
@@ -258,6 +276,13 @@ func update_timers(delta: float) -> void:
 	# Update squash/stretch timer
 	if squash_stretch_timer > 0:
 		squash_stretch_timer -= delta
+		
+	# Update insight timer and animation
+	if insight_timer > 0:
+		insight_timer -= delta
+		update_insight_animation(delta)
+		if insight_timer <= 0:
+			end_insight()
 
 func handle_input() -> void:
 	# Get horizontal input
@@ -491,10 +516,57 @@ func has_ammo() -> bool:
 	return true
 
 func perform_insight() -> void:
-	if attacking or not ranged_unlocked:
+	if attacking or not ranged_unlocked or not has_ammo():
 		return
-	pass
+		
+	attacking = true
+	ranged_cooldown_timer = ranged_cooldown
 	
+	# Play attack animation
+	if animation_player:
+		animation_player.play("ranged_attack")
+	
+	# Create insight area if it doesn't exist
+	if not insight_area:
+		insight_area = Area2D.new()
+		insight_area.name = "InsightArea"
+		
+		var collision = CollisionShape2D.new()
+		collision.name = "insightCollisionShape"
+		var circle = CircleShape2D.new()
+		circle.radius = insight_radius
+		collision.shape = circle
+		
+		# Create visual circle
+		insight_circle = Polygon2D.new()
+		insight_circle.color = insight_color
+		insight_circle.show_behind_parent = true
+		
+		insight_area.add_child(insight_circle)
+		insight_area.add_child(collision)
+		add_child(insight_area)
+		
+		# Connect area signals
+		insight_area.area_entered.connect(_on_insight_area_entered)
+		insight_area.area_exited.connect(_on_insight_area_exited)
+	
+	# Start insight effect
+	insight_timer = insight_duration
+	insight_animation_timer = 0.0
+	insight_animation_phase = "grow"
+	insight_area.monitoring = true
+	insight_circle.visible = true
+	is_insight_active = true
+	
+	# Play sound
+	if audio_player and attack_ranged_sound:
+		audio_player.stream = attack_ranged_sound
+		audio_player.play()
+	
+	await animation_player.animation_finished
+	attacking = false
+	emit_signal("on_attack", "insight")
+
 func perform_ranged_attack() -> void:
 	if attacking or not ranged_unlocked:
 		return
@@ -506,15 +578,34 @@ func perform_ranged_attack() -> void:
 	if animation_player:
 		animation_player.play("ranged_attack")
 	
-	# Spawn projectile
+	# If insight is active, check for insight items in range
+	if is_insight_active and has_ammo():
+		var insight_items = get_tree().get_nodes_in_group("insight_item")
+		for item in insight_items:
+			if item.visible and item.has_meta("shape_type"):
+				var distance = global_position.distance_to(item.global_position)
+				if distance <= insight_radius:
+					# Check if shapes match
+					if item.get_meta("shape_type") == active_projectile_shape:
+						# Make the item permanent
+						item.set_meta("is_permanent", true)
+						# Consume the ammo
+						has_ammo()  # This will consume the ammo
+						# Play success effect
+						if pickup_particles_scene:
+							var particles = pickup_particles_scene.instantiate()
+							item.add_child(particles)
+							particles.global_position = item.global_position
+							particles.emitting = true
+						return
+	
+	# If no matching insight items or insight not active, perform normal ranged attack
 	if projectile_scene && has_ammo() == true:
 		var projectile = projectile_scene.instantiate()
 		projectile.shape = active_projectile_shape
-		print("pew pew pew")
 		get_parent().add_child(projectile)
 		projectile.global_position = global_position + Vector2(20 * facing_direction, 50)
 		projectile.direction = Vector2(facing_direction,0)
-		print(str(facing_direction))
 		projectile.speed = ranged_projectile_speed
 		projectile.damage = ranged_damage
 	
@@ -526,6 +617,27 @@ func perform_ranged_attack() -> void:
 	await animation_player.animation_finished
 	attacking = false
 	emit_signal("on_attack", "ranged")
+
+func end_insight() -> void:
+	if insight_area:
+		insight_area.monitoring = false
+		if insight_circle:
+			insight_circle.visible = false
+		is_insight_active = false
+		# Hide all insight items that aren't permanent
+		for item in get_tree().get_nodes_in_group("insight_item"):
+			if not item.has_meta("is_permanent") or not item.get_meta("is_permanent"):
+				item.visible = false
+
+func _on_insight_area_entered(area: Area2D) -> void:
+	# Check if the area is part of an insight item
+	if area.get_parent().is_in_group("insight_item"):
+		area.get_parent().visible = true
+
+func _on_insight_area_exited(area: Area2D) -> void:
+	# Check if the area is part of an insight item
+	if area.get_parent().is_in_group("insight_item"):
+		area.get_parent().visible = false
 
 func update_activation(shape: String) -> void:
 	emit_signal("on_activate", shape)
@@ -828,3 +940,53 @@ func print_debug_info() -> void:
 	print("Melee Cooldown: ", melee_cooldown_timer)
 	print("Ranged Cooldown: ", ranged_cooldown_timer)
 	print("Pieces - Circle: ", circle_pieces, " Triangle: ", triangle_pieces, " Square: ", square_pieces)
+
+func update_insight_animation(delta: float) -> void:
+	if not insight_circle or not insight_circle.visible:
+		return
+		
+	insight_animation_timer += delta
+	
+	match insight_animation_phase:
+		"grow":
+			# Rapidly grow to max radius
+			var progress = insight_animation_timer / insight_grow_time
+			if progress >= 1.0:
+				progress = 1.0
+				insight_animation_phase = "hold"
+				insight_animation_timer = 0.0
+			
+			var current_radius = lerp(0.0, insight_max_radius, progress)
+			update_circle_radius(current_radius)
+			
+		"hold":
+			# Hold at full radius until near the end
+			if insight_timer <= insight_contract_time:
+				insight_animation_phase = "contract"
+				insight_animation_timer = 0.0
+			
+		"contract":
+			# Contract before disappearing
+			var progress = insight_animation_timer / insight_contract_time
+			if progress >= 1.0:
+				progress = 1.0
+			
+			var current_radius = lerp(insight_max_radius, 0.0, progress)
+			update_circle_radius(current_radius)
+
+func update_circle_radius(radius: float) -> void:
+	if not insight_circle:
+		return
+		
+	var points = []
+	var segments = 32
+	for i in range(segments):
+		var angle = (i * 2.0 * PI) / segments
+		points.append(Vector2(cos(angle) * radius, sin(angle) * radius))
+	insight_circle.polygon = PackedVector2Array(points)
+	
+	# Update collision shape radius
+	if insight_area:
+		var collision = insight_area.get_node("insightCollisionShape")
+		if collision and collision.shape is CircleShape2D:
+			collision.shape.radius = radius
