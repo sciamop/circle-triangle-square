@@ -1,8 +1,10 @@
-[gd_scene load_steps=29 format=3 uid="uid://bmlknwmevbp4p"]
+[gd_scene load_steps=30 format=3 uid="uid://bmlknwmevbp4p"]
 
 [ext_resource type="Script" uid="uid://yihmtfufsxsp" path="res://Scripts/player_controller.gd" id="1_vgqql"]
 [ext_resource type="Script" uid="uid://y63jp0cst87s" path="res://Scripts/polygon_2d.gd" id="2_256ay"]
 [ext_resource type="PackedScene" uid="uid://dqgxiqht64kh0" path="res://Scenes/square_pickup.tscn" id="2_vgqql"]
+[ext_resource type="Material" uid="uid://dxcjk68dg22vd" path="res://Resources/player-particles.tres" id="4_fkybt"]
+[ext_resource type="Material" uid="uid://b8o43bl42cg1p" path="res://Resources/projectile_particles.tres" id="4_vgqql"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5w4a4"]
 height = 68.0
@@ -830,19 +832,6 @@ emission_curve = SubResource("CurveTexture_5kwmq")
 [sub_resource type="CircleShape2D" id="CircleShape2D_6t5aa"]
 radius = 74.25
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vgqql"]
-particle_flag_disable_z = true
-emission_shape_offset = Vector3(0.465, 0.155, 0)
-emission_shape = 3
-emission_box_extents = Vector3(1, 1, 1)
-angle_min = -16.9
-angle_max = -16.9
-velocity_pivot = Vector3(1, 0, 0)
-initial_velocity_min = 126.76
-initial_velocity_max = 126.76
-gravity = Vector3(0, 98, 0)
-color = Color(0.824737, 0.594357, 0.316889, 1)
-
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_layer = 2
 collision_mask = 3
@@ -852,6 +841,8 @@ ranged_damage = 1
 max_health = 1000
 enable_juice = false
 projectile_scene = ExtResource("2_vgqql")
+insight_duration = 10.0
+insight_contract_time = 10.0
 
 [node name="HatPolygon" type="Polygon2D" parent="."]
 z_index = 1
@@ -878,6 +869,7 @@ segments = 12
 z_index = 1
 position = Vector2(3, 80)
 rotation = -1.69385
+scale = Vector2(1, 1)
 color = Color(0, 0, 0, 1)
 offset = Vector2(-1.235, 4.365)
 texture_scale = Vector2(61.65, 61.65)
@@ -911,6 +903,7 @@ vertex_colors = PackedColorArray(0, 0, 0, 1)
 z_index = 1
 position = Vector2(-3.00159, 79.9435)
 rotation = 1.51425
+scale = Vector2(1, 1)
 color = Color(0, 0, 0, 1)
 offset = Vector2(-0.335, 14.865)
 texture_scale = Vector2(61.65, 61.65)
@@ -1115,15 +1108,17 @@ rotation = 6.28319
 randomness = 0.12
 visibility_rect = Rect2(-105.97, -195.545, 200, 200)
 trail_enabled = true
-process_material = SubResource("ParticleProcessMaterial_vgqql")
+process_material = ExtResource("4_fkybt")
 
 [node name="ParticlesJump" type="GPUParticles2D" parent="."]
+visible = false
 position = Vector2(15, 99)
-process_material = SubResource("ParticleProcessMaterial_vgqql")
+process_material = ExtResource("4_vgqql")
 
 [node name="ParticlesLand" type="GPUParticles2D" parent="."]
+visible = false
 position = Vector2(15, 99)
-process_material = SubResource("ParticleProcessMaterial_vgqql")
+process_material = ExtResource("4_vgqql")
 
 [node name="Trail" type="Line2D" parent="."]
 default_color = Color(0, 0, 0, 1)

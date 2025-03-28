@@ -1,0 +1,77 @@
+[gd_scene load_steps=2 format=3 uid="uid://bml7qnybucr18"]
+
+[ext_resource type="Script" uid="uid://je8fbuxldskd" path="res://Scripts/insight_items.gd" id="1_ik3oi"]
+
+[node name="insight_items" type="Area2D"]
+collision_mask = 5
+script = ExtResource("1_ik3oi")
+
+[node name="RBCollShape2D3" type="CollisionPolygon2D" parent="."]
+position = Vector2(-0.341818, -0.341816)
+scale = Vector2(0.919697, 0.919697)
+polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+
+[node name="insight_triangle" type="Area2D" parent="." groups=["insight_item"]]
+collision_mask = 7
+metadata/shape_type = "triangle"
+metadata/is_permanent = false
+
+[node name="Line2D" type="Line2D" parent="insight_triangle"]
+points = PackedVector2Array(1, -82, -83, 59, 88, 59)
+closed = true
+default_color = Color(1, 0, 0, 1)
+joint_mode = 1
+
+[node name="Polygon2D" type="Polygon2D" parent="insight_triangle"]
+visible = false
+color = Color(0.760784, 0, 0, 1)
+polygon = PackedVector2Array(-92, 64, 97, 64, 0, -94)
+
+[node name="RBCollShape2D" type="CollisionPolygon2D" parent="insight_triangle"]
+position = Vector2(7, -20)
+rotation = -0.046246
+scale = Vector2(0.0619551, 1.02638)
+polygon = PackedVector2Array(-132.955, -64.558, -1541.96, 72.4818, 1254.78, 80.2464)
+
+[node name="insight_square" type="Area2D" parent="." groups=["insight_item"]]
+collision_mask = 3
+metadata/shape_type = "square"
+metadata/is_permanent = false
+
+[node name="Line2D" type="Line2D" parent="insight_square"]
+visible = false
+points = PackedVector2Array(-83, -80, 77, -80, 76, 66, -83, 66)
+closed = true
+
+[node name="Polygon2D2" type="Polygon2D" parent="insight_square"]
+visible = false
+color = Color(0.760784, 0, 0, 1)
+polygon = PackedVector2Array(-89, 71, 81, 72, 82, -85, -90, -85)
+
+[node name="RBCollShape2D2" type="CollisionPolygon2D" parent="insight_square"]
+visible = false
+position = Vector2(-4.76837e-07, 1)
+scale = Vector2(1.70814, 4.95016)
+polygon = PackedVector2Array(-51.7876, -17.3769, -50.7307, 14.067, 46.5032, 14.067, 47.5601, -17.3769)
+
+[node name="insight_circle" type="Area2D" parent="." groups=["insight_item"]]
+collision_mask = 3
+metadata/shape_type = "circle"
+metadata/is_permanent = false
+
+[node name="RBCollShape2D2" type="CollisionPolygon2D" parent="insight_circle"]
+visible = false
+position = Vector2(-0.341818, -0.341816)
+scale = Vector2(8.12265, 8.12265)
+polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+
+[node name="circleOutline" type="Line2D" parent="insight_circle"]
+visible = false
+points = PackedVector2Array(-82, -47, -48, -80, 0, -93, 48, -80, 83, -46, 96, 1, 83, 48, 48, 81, 0, 94, -48, 81, -83, 48, -96, 0)
+closed = true
+width = 7.04
+
+[node name="Polygon2D3" type="Polygon2D" parent="insight_circle"]
+visible = false
+color = Color(0.760784, 0, 0, 1)
+polygon = PackedVector2Array(-100, 2, -86, 50, -50, 85, 0, 99, 50, 84, 86, 51, 100, 1, 88, -48, 51, -83, -1, -97, -50, -83, -86, -48)

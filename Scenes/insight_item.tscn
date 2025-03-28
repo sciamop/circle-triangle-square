@@ -1,0 +1,60 @@
+[gd_scene load_steps=2 format=3 uid="uid://d4m3wbwdxl68"]
+
+[ext_resource type="Script" uid="uid://c21tcsscyumfc" path="res://Scripts/projectile.gd" id="1_uha10"]
+
+[node name="projectile" type="Area2D"]
+collision_mask = 5
+script = ExtResource("1_uha10")
+
+[node name="RBCollShape2D3" type="CollisionPolygon2D" parent="."]
+position = Vector2(-0.341818, -0.341816)
+scale = Vector2(0.919697, 0.919697)
+polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+
+[node name="projectile_triangle" type="Area2D" parent="."]
+visible = false
+metadata/shape_type = "triangle"
+
+[node name="triangleShape" type="Polygon2D" parent="projectile_triangle"]
+position = Vector2(-0.583328, -0.000247955)
+rotation = -0.046246
+scale = Vector2(0.00957257, 0.19851)
+color = Color(0, 0, 0, 1)
+offset = Vector2(115.781, -22.0741)
+polygon = PackedVector2Array(-1202.32, 55.538, 983.629, 60.4163, -101.033, -30.5611)
+
+[node name="RBCollShape2D" type="CollisionPolygon2D" parent="projectile_triangle"]
+position = Vector2(0.418098, -2.82059)
+rotation = -0.046246
+scale = Vector2(0.00748197, 0.124719)
+polygon = PackedVector2Array(-132.955, -64.558, -1541.96, 72.4818, 1254.78, 80.2464)
+
+[node name="projectile_square" type="Area2D" parent="."]
+visible = false
+metadata/shape_type = "square"
+
+[node name="squareShape" type="Polygon2D" parent="projectile_square"]
+position = Vector2(0, -9)
+scale = Vector2(0.304682, 1.06906)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-39.6514, 18.9757, 38.8253, 18.9757, 38.8253, -1.55965, -38.8253, -1.55965)
+
+[node name="RBCollShape2D2" type="CollisionPolygon2D" parent="projectile_square"]
+position = Vector2(-4.76837e-07, 1)
+scale = Vector2(0.218741, 0.633906)
+polygon = PackedVector2Array(-51.7876, -17.3769, -50.7307, 14.067, 46.5032, 14.067, 47.5601, -17.3769)
+
+[node name="projectile_circle" type="Area2D" parent="."]
+visible = false
+metadata/shape_type = "circle"
+
+[node name="circleShape" type="Polygon2D" parent="projectile_circle"]
+position = Vector2(0.0181831, 0.0181828)
+scale = Vector2(0.904134, 0.881204)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+
+[node name="RBCollShape2D2" type="CollisionPolygon2D" parent="projectile_circle"]
+position = Vector2(-0.341818, -0.341816)
+scale = Vector2(0.919697, 0.919697)
+polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)

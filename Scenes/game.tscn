@@ -518,17 +518,20 @@ tile_set = SubResource("TileSet_0q5gb")
 [node name="Door" parent="mid" instance=ExtResource("8_h4fw4")]
 position = Vector2(514, -304)
 
-[node name="insight_node" type="Node2D" parent="mid" groups=["insight_item"]]
+[node name="insight_node" type="Node2D" parent="mid"]
+position = Vector2(371, -98)
 
 [node name="insight_items" parent="mid/insight_node" instance=ExtResource("4_o5yvi")]
-position = Vector2(383, -121)
+position = Vector2(-20, -4)
 rotation = 1.02974
-scale = Vector2(0.125, 0.125)
+scale = Vector2(0.191589, 0.191589)
+collision_mask = 7
 
 [node name="insight_items2" parent="mid/insight_node" instance=ExtResource("4_o5yvi")]
-position = Vector2(408, -121)
+position = Vector2(23, -4)
 rotation = 1.02974
-scale = Vector2(0.125, 0.125)
+scale = Vector2(0.191589, 0.191589)
+collision_mask = 7
 
 [node name="background" type="TileMapLayer" parent="."]
 use_parent_material = true
@@ -544,6 +547,7 @@ collision_mask = 7
 ranged_damage = 5
 ranged_unlocked = true
 max_health = 40
+enable_juice = true
 projectile_scene = ExtResource("5_ldgsr")
 
 [node name="Camera2D" type="Camera2D" parent="Player"]

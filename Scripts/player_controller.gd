@@ -83,8 +83,8 @@ var ranged_cooldown_timer: float = 0.0
 var active_projectile_shape: String = "triangle"
 
 # Pickups tracking
-var circle_pieces: int = 0
-var triangle_pieces: int = 0
+var circle_pieces: int = 100
+var triangle_pieces: int = 1000
 var square_pieces: int = 0
 
 # Timers for mechanics
@@ -171,6 +171,10 @@ func _ready() -> void:
 			trail_points.append(position)
 			trail.add_point(Vector2.ZERO)
 
+	# Set collision layer and mask for player
+	collision_layer = 1  # Player layer
+	collision_mask = 1   # Collide with environment and permanent shapes
+	
 	#initialize 
 	pieces_scene = preload("res://Scenes/brokenPlayer.tscn").instantiate() 
 	
@@ -192,7 +196,7 @@ func _ready() -> void:
 	# Initialize player health
 	current_health = max_health
 	
-#	hide all secret insight areas
+	# Hide all secret insight areas
 	for item in get_tree().get_nodes_in_group("insight_item"):
 		item.visible = false
 
@@ -303,9 +307,9 @@ func handle_input() -> void:
 	if Input.is_action_just_released("jump") and velocity.y < 0 and is_jumping:
 		velocity.y *= jump_cut_height
 	
-	# Dash input
-	if Input.is_action_just_pressed("dash") and dash_cooldown_timer <= 0:
-		start_dash()
+	# # Dash input
+	# if Input.is_action_just_pressed("dash") and dash_cooldown_timer <= 0:
+	# 	start_dash()
 	
 	# Combat inputs
 	if Input.is_action_just_pressed("slash") and melee_cooldown_timer <= 0:
@@ -501,7 +505,7 @@ func has_ammo() -> bool:
 			emit_signal("on_pickup", active_projectile_shape, circle_pieces)
 		"square":
 			if (square_pieces == 0):
-				print("nope")
+				# print("nope")
 				emit_signal("on_empty", active_projectile_shape)
 				return false
 			square_pieces -= 1
@@ -568,55 +572,63 @@ func perform_insight() -> void:
 	emit_signal("on_attack", "insight")
 
 func perform_ranged_attack() -> void:
-	if attacking or not ranged_unlocked:
+	if not ranged_unlocked or attacking:
 		return
 	
+	# Start attack state
 	attacking = true
 	ranged_cooldown_timer = ranged_cooldown
 	
-	# Play attack animation
-	if animation_player:
-		animation_player.play("ranged_attack")
+	# Emit attack signal
+	emit_signal("on_attack", "ranged")
 	
-	# If insight is active, check for insight items in range
-	if is_insight_active and has_ammo():
-		var insight_items = get_tree().get_nodes_in_group("insight_item")
-		for item in insight_items:
-			if item.visible and item.has_meta("shape_type"):
-				var distance = global_position.distance_to(item.global_position)
-				if distance <= insight_radius:
-					# Check if shapes match
-					if item.get_meta("shape_type") == active_projectile_shape:
-						# Make the item permanent
-						item.set_meta("is_permanent", true)
-						# Consume the ammo
-						has_ammo()  # This will consume the ammo
-						# Play success effect
-						if pickup_particles_scene:
-							var particles = pickup_particles_scene.instantiate()
-							item.add_child(particles)
-							particles.global_position = item.global_position
-							particles.emitting = true
-						return
-	
-	# If no matching insight items or insight not active, perform normal ranged attack
-	if projectile_scene && has_ammo() == true:
-		var projectile = projectile_scene.instantiate()
-		projectile.shape = active_projectile_shape
-		get_parent().add_child(projectile)
-		projectile.global_position = global_position + Vector2(20 * facing_direction, 50)
-		projectile.direction = Vector2(facing_direction,0)
-		projectile.speed = ranged_projectile_speed
-		projectile.damage = ranged_damage
-	
-	# Play sound
+	# Play attack sound
 	if audio_player and attack_ranged_sound:
 		audio_player.stream = attack_ranged_sound
 		audio_player.play()
 	
-	await animation_player.animation_finished
-	attacking = false
-	emit_signal("on_attack", "ranged")
+	# Check for insight items in range
+	var found_match = false
+	for item in get_tree().get_nodes_in_group("insight_item"):
+		if item.visible:
+			var item_shape = item.get_parent().name
+			print("Checking item shape: ", item_shape)
+			print("Active projectile shape: ", active_projectile_shape)
+			if item_shape == "insight_" + active_projectile_shape:
+				print("Found matching shape!")
+				# Make the item permanent
+				item.set_meta("is_permanent", true)
+				
+				# Get the Line2D and Polygon2D nodes
+				var line_node = item.get_node_or_null("Line2D")
+				var poly_node = item.get_node_or_null("Polygon2D")
+				var collision_node = item.get_node_or_null("CollisionShape2D")
+				
+				if line_node:
+					line_node.visible = false
+				if poly_node:
+					poly_node.visible = true
+				if collision_node:
+					collision_node.disabled = false
+					# Set collision layer and mask for player interaction
+					item.collision_layer = 1  # Same layer as environment
+					item.collision_mask = 1   # Collide with player
+				
+				found_match = true
+				break
+	
+	if found_match:
+		# Reset attack state and emit signal
+		attacking = false
+		emit_signal("on_attack", "ranged")
+	else:
+		# Spawn projectile if no match found
+		var projectile = projectile_scene.instantiate()
+		projectile.set_meta("shape_type", active_projectile_shape)
+		projectile.global_position = global_position
+		projectile.direction = Vector2(facing_direction, 0)
+		projectile.speed = ranged_projectile_speed
+		get_parent().add_child(projectile)
 
 func end_insight() -> void:
 	if insight_area:
@@ -627,17 +639,33 @@ func end_insight() -> void:
 		# Hide all insight items that aren't permanent
 		for item in get_tree().get_nodes_in_group("insight_item"):
 			if not item.has_meta("is_permanent") or not item.get_meta("is_permanent"):
+				# For non-permanent items, hide the parent node
 				item.visible = false
+			else:
+				# For permanent items, ensure the Polygon2D is visible and Line2D is hidden
+				var line2d = item.get_node("Line2D")
+				var polygon2d = item.get_node("Polygon2D")
+				if line2d and polygon2d:
+					line2d.visible = false
+					polygon2d.visible = true
+				# Keep the parent node visible and ensure collision is enabled
+				item.get_parent().visible = true
+				item.visible = true
+				var collision_shape = item.get_node("CollisionShape2D")
+				if collision_shape:
+					collision_shape.disabled = false
 
 func _on_insight_area_entered(area: Area2D) -> void:
 	# Check if the area is part of an insight item
-	if area.get_parent().is_in_group("insight_item"):
-		area.get_parent().visible = true
+	if area.is_in_group("insight_item"):
+		area.visible = true
 
 func _on_insight_area_exited(area: Area2D) -> void:
 	# Check if the area is part of an insight item
-	if area.get_parent().is_in_group("insight_item"):
-		area.get_parent().visible = false
+	if area.is_in_group("insight_item"):
+		# Only hide if the item is not permanent
+		if not area.has_meta("is_permanent") or not area.get_meta("is_permanent"):
+			area.visible = false
 
 func update_activation(shape: String) -> void:
 	emit_signal("on_activate", shape)
@@ -816,7 +844,7 @@ func update_animation() -> void:
 			animation_player.play(anim_name)
 
 func _on_pickup_area_entered(body: Node2D) -> void:
-	print("pickup area entered - player")
+	# print("pickup area entered - player")
 
 	if body.is_in_group("pickup_group"):
 		collect_pickup(body)
@@ -827,7 +855,7 @@ func _on_vacuum_area_entered(area):
 		
 func add_score(value):
 	score += value
-	print("Score: ", score)
+	# print("Score: ", score)
 	# Update your UI here
 
 # Function to handle taking damage with knockback

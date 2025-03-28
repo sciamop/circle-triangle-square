@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://sfxm05vlge3f"]
+[gd_scene load_steps=3 format=3 uid="uid://sfxm05vlge3f"]
 
 [ext_resource type="Script" uid="uid://c21tcsscyumfc" path="res://Scripts/projectile.gd" id="1_a8fiy"]
+[ext_resource type="Material" uid="uid://b8o43bl42cg1p" path="res://Resources/projectile_particles.tres" id="2_acy1t"]
 
 [node name="projectile" type="Area2D"]
 collision_mask = 5
@@ -13,6 +14,7 @@ polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6,
 
 [node name="projectile_triangle" type="Area2D" parent="."]
 visible = false
+metadata/shape_type = "triangle"
 
 [node name="triangleShape" type="Polygon2D" parent="projectile_triangle"]
 position = Vector2(-0.583328, -0.000247955)
@@ -21,15 +23,18 @@ scale = Vector2(0.00957257, 0.19851)
 color = Color(0, 0, 0, 1)
 offset = Vector2(115.781, -22.0741)
 polygon = PackedVector2Array(-1202.32, 55.538, 983.629, 60.4163, -101.033, -30.5611)
+metadata/shape_type = "triangle"
 
 [node name="RBCollShape2D" type="CollisionPolygon2D" parent="projectile_triangle"]
 position = Vector2(0.418098, -2.82059)
 rotation = -0.046246
 scale = Vector2(0.00748197, 0.124719)
 polygon = PackedVector2Array(-132.955, -64.558, -1541.96, 72.4818, 1254.78, 80.2464)
+metadata/shape_type = "triangle"
 
 [node name="projectile_square" type="Area2D" parent="."]
 visible = false
+metadata/shape_type = "square"
 
 [node name="squareShape" type="Polygon2D" parent="projectile_square"]
 position = Vector2(0, -9)
@@ -44,6 +49,7 @@ polygon = PackedVector2Array(-51.7876, -17.3769, -50.7307, 14.067, 46.5032, 14.0
 
 [node name="projectile_circle" type="Area2D" parent="."]
 visible = false
+metadata/shape_type = "circle"
 
 [node name="circleShape" type="Polygon2D" parent="projectile_circle"]
 position = Vector2(0.0181831, 0.0181828)
@@ -55,3 +61,8 @@ polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6,
 position = Vector2(-0.341818, -0.341816)
 scale = Vector2(0.919697, 0.919697)
 polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+amount = 32
+lifetime = 0.25
+process_material = ExtResource("2_acy1t")
