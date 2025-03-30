@@ -72,7 +72,7 @@ var is_jumping: bool = false
 var is_wall_sliding: bool = false
 var is_dashing: bool = false
 var direction: int = 0
-var facing_direction: int = 1
+@export var facing_direction: int = 1
 var current_wall_direction: int = 0
 var has_exploded:bool 			= false
 
@@ -104,8 +104,8 @@ var current_squash_stretch: float = 0.0
 @onready var pickup_area: Area2D = $PickupArea
 #@onready var melee_hitbox: Area2D = $MeleeHitbox
 #@onready var melee_hitbox: Area2D = $MeleeHitbox
-@onready var melee_hitbox: Area2D = $Skeleton2D/HipBone/BodyBone/HeadBone/upperArmBone/lowerArmBone/MeleeHitbox2
-#@onready var _melee_hitbox: RigidBody2D = $ArmHurtBoxWrapper
+# @onready var melee_hitbox: Area2D = $Skeleton2D/HipBone/BodyBone/HeadBone/upperArmBone/lowerArmBone/MeleeHitbox2
+@onready var melee_hitbox: Area2D = $Skeleton2D/HipBone/BodyBone/HeadBone/upperArmBone/lowerArmBone/ArmHurtBoxWrapper
 @onready var particles_run: GPUParticles2D = $ParticlesRun
 @onready var particles_jump: GPUParticles2D = $ParticlesJump
 @onready var particles_land: GPUParticles2D = $ParticlesLand
@@ -151,9 +151,12 @@ var insight_animation_phase: String = "grow"  # "grow", "hold", "contract"
 var insight_animation_timer: float = 0.0
 var is_insight_active: bool = false  # Track if insight is currently active
 
-#func _on_pickup():
-	#print("pickedup")
-	#
+# Add this new helper function
+func set_static_body_collision(item: Node2D, enabled: bool) -> void:
+	var static_body = item.find_child("StaticBody2D")
+	if static_body and static_body is StaticBody2D:
+		static_body.collision_layer = 1 if enabled else 0
+		static_body.collision_mask = 1 if enabled else 0
 
 func _ready() -> void:
 	# Initial setup
@@ -196,9 +199,10 @@ func _ready() -> void:
 	# Initialize player health
 	current_health = max_health
 	
-	# Hide all secret insight areas
+	# Hide all secret insight areas and disable their collision
 	for item in get_tree().get_nodes_in_group("insight_item"):
 		item.visible = false
+		set_static_body_collision(item, false)
 
 func _physics_process(delta: float) -> void:
 	# Update timers
@@ -291,12 +295,11 @@ func update_timers(delta: float) -> void:
 func handle_input() -> void:
 	# Get horizontal input
 	direction = Input.get_axis("move_left", "move_right")
-	#sprite.scale.x = direction
+	
 	# Update facing direction when moving
 	if direction != 0:
 		facing_direction = direction
 		# Flip sprite based on direction
-		#sprite.flip_h = facing_direction < 0
 		sprite.scale.x = -direction
 	
 	# Jump input
@@ -307,10 +310,6 @@ func handle_input() -> void:
 	if Input.is_action_just_released("jump") and velocity.y < 0 and is_jumping:
 		velocity.y *= jump_cut_height
 	
-	# # Dash input
-	# if Input.is_action_just_pressed("dash") and dash_cooldown_timer <= 0:
-	# 	start_dash()
-	
 	# Combat inputs
 	if Input.is_action_just_pressed("slash") and melee_cooldown_timer <= 0:
 		perform_melee_attack()
@@ -319,7 +318,6 @@ func handle_input() -> void:
 		perform_ranged_attack()
 
 	if Input.is_action_just_pressed("attack_ranged") and ranged_cooldown_timer <= 0 and ranged_unlocked and active_projectile_shape == "circle":
-		# perform_ranged_attack()
 		perform_insight()
 		
 	if Input.is_action_just_pressed("activate_triangle"):
@@ -330,7 +328,6 @@ func handle_input() -> void:
 				
 	if Input.is_action_just_pressed("activate_square"):
 		update_activation("square")
-	
 
 func apply_gravity(delta: float) -> void:
 	if is_wall_sliding:
@@ -361,6 +358,8 @@ func handle_movement(delta: float) -> void:
 		if is_on_floor() and enable_juice and particles_run:
 			if not particles_run.emitting:
 				particles_run.emitting = true
+			# Update particle direction based on movement direction
+			particles_run.process_material.direction = Vector3(-direction, 0, 0)
 	else:
 		# Apply different friction when in air vs on ground
 		var current_friction = friction if is_on_floor() else air_friction
@@ -479,10 +478,22 @@ func perform_melee_attack() -> void:
 	# Enable hitbox for the duration of the attack
 	if melee_hitbox:
 		melee_hitbox.monitoring = true
+		melee_hitbox.monitorable = true
+		
+		# Update hitbox position and scale based on facing direction
+		melee_hitbox.scale.x = facing_direction
+		# Keep the original position values but flip them based on facing direction
+		var hitbox_collision = melee_hitbox.get_node("ArmHurtBox")
+		hitbox_collision.disabled = false
+		# var base_position = Vector2(40.4641, -27.0979)  # Original position from scene
+		#hitbox_collision.position = base_position * Vector2(facing_direction, 1)
 		
 		# Wait for animation to finish then disable hitbox
 		await animation_player.animation_finished
+		
 		melee_hitbox.monitoring = false
+		melee_hitbox.monitorable = false
+		hitbox_collision.disabled = true
 	
 	# Play sound
 	if audio_player and attack_melee_sound:
@@ -574,6 +585,9 @@ func perform_insight() -> void:
 func perform_ranged_attack() -> void:
 	if not ranged_unlocked or attacking:
 		return
+	# Check ammo before proceeding
+	if not has_ammo():
+		return
 	
 	# Start attack state
 	attacking = true
@@ -589,33 +603,46 @@ func perform_ranged_attack() -> void:
 	
 	# Check for insight items in range
 	var found_match = false
-	for item in get_tree().get_nodes_in_group("insight_item"):
-		if item.visible:
-			var item_shape = item.get_parent().name
-			print("Checking item shape: ", item_shape)
-			print("Active projectile shape: ", active_projectile_shape)
-			if item_shape == "insight_" + active_projectile_shape:
-				print("Found matching shape!")
-				# Make the item permanent
-				item.set_meta("is_permanent", true)
-				
-				# Get the Line2D and Polygon2D nodes
-				var line_node = item.get_node_or_null("Line2D")
-				var poly_node = item.get_node_or_null("Polygon2D")
-				var collision_node = item.get_node_or_null("CollisionShape2D")
-				
-				if line_node:
-					line_node.visible = false
-				if poly_node:
-					poly_node.visible = true
-				if collision_node:
-					collision_node.disabled = false
-					# Set collision layer and mask for player interaction
-					item.collision_layer = 1  # Same layer as environment
-					item.collision_mask = 1   # Collide with player
-				
-				found_match = true
-				break
+	print("Checking for insight items with shape: ", active_projectile_shape)
+	
+	# Only check for insight items if the insight circle is active
+	if is_insight_active:
+		for item in get_tree().get_nodes_in_group("insight_item"):
+			print("Found insight item: ", item.name)
+			# Check both the item and its parent for visibility
+			var parent = item.get_parent()
+			if item.visible or (parent and parent.visible):
+				var item_shape = item.get_meta("shape_type", "")
+				print("Item shape type: ", item_shape)
+				print("Looking for: ", active_projectile_shape)
+				if item_shape == active_projectile_shape and not item.get_meta("is_permanent"):
+					print("Found matching shape!")
+					# Make the item permanent
+					item.set_meta("is_permanent", true)
+					
+					# Get the Line2D and Polygon2D nodes
+					var line_node = item.get_node_or_null("Line2D")
+					var poly_node = item.get_node_or_null("Polygon2D")
+					
+					if line_node:
+						line_node.visible = false
+					if poly_node:
+						poly_node.visible = true
+					
+					# Enable collision on the StaticBody2D
+					set_static_body_collision(item, true)
+					
+					# Ensure both the item and its parent are visible
+					item.visible = true
+					if parent:
+						parent.visible = true
+					
+					found_match = true
+					break
+				else:
+					print("Shape mismatch - expected: " + active_projectile_shape + ", got: " + item_shape)
+			else:
+				print("Item and parent not visible")
 	
 	if found_match:
 		# Reset attack state and emit signal
@@ -625,10 +652,13 @@ func perform_ranged_attack() -> void:
 		# Spawn projectile if no match found
 		var projectile = projectile_scene.instantiate()
 		projectile.set_meta("shape_type", active_projectile_shape)
-		projectile.global_position = global_position
+		# Spawn slightly in front of the player based on facing direction
+		projectile.global_position = global_position + Vector2(facing_direction * 20, 40)
 		projectile.direction = Vector2(facing_direction, 0)
 		projectile.speed = ranged_projectile_speed
 		get_parent().add_child(projectile)
+		# Reset attack state after projectile is fired
+		attacking = false
 
 func end_insight() -> void:
 	if insight_area:
@@ -639,8 +669,9 @@ func end_insight() -> void:
 		# Hide all insight items that aren't permanent
 		for item in get_tree().get_nodes_in_group("insight_item"):
 			if not item.has_meta("is_permanent") or not item.get_meta("is_permanent"):
-				# For non-permanent items, hide the parent node
+				# For non-permanent items, hide the item and disable collision
 				item.visible = false
+				set_static_body_collision(item, false)
 			else:
 				# For permanent items, ensure the Polygon2D is visible and Line2D is hidden
 				var line2d = item.get_node("Line2D")
@@ -648,24 +679,25 @@ func end_insight() -> void:
 				if line2d and polygon2d:
 					line2d.visible = false
 					polygon2d.visible = true
-				# Keep the parent node visible and ensure collision is enabled
-				item.get_parent().visible = true
+				# Keep the item visible and ensure collision is enabled
 				item.visible = true
-				var collision_shape = item.get_node("CollisionShape2D")
-				if collision_shape:
-					collision_shape.disabled = false
+				set_static_body_collision(item, true)
 
 func _on_insight_area_entered(area: Area2D) -> void:
 	# Check if the area is part of an insight item
 	if area.is_in_group("insight_item"):
 		area.visible = true
+		# Only enable collision if the item is permanent
+		if area.has_meta("is_permanent") and area.get_meta("is_permanent"):
+			set_static_body_collision(area, true)
 
 func _on_insight_area_exited(area: Area2D) -> void:
 	# Check if the area is part of an insight item
 	if area.is_in_group("insight_item"):
-		# Only hide if the item is not permanent
+		# Only hide and disable collision if the item is not permanent
 		if not area.has_meta("is_permanent") or not area.get_meta("is_permanent"):
 			area.visible = false
+			set_static_body_collision(area, false)
 
 func update_activation(shape: String) -> void:
 	emit_signal("on_activate", shape)

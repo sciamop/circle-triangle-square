@@ -29,6 +29,7 @@ window/size/viewport_height=720
 pickup_group=""
 player=""
 insight_item=""
+player_attack=""
 
 [input]
 

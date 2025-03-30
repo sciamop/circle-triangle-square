@@ -53,8 +53,7 @@ var spawn_point: Node2D = null
 @onready var respawn_timer: Timer = $RespawnTimer
 
 # References to nodes
-#@onready var sprite: Sprite2D = $Sprite2D
-@onready var sprite: Polygon2D = $Polygon2D
+@onready var sprite: Area2D = $Polygon2D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var hitbox: Area2D = $Hitbox
 @onready var hurtbox: Area2D = $Hurtbox
@@ -67,6 +66,7 @@ var spawn_point: Node2D = null
 @onready var hit_flash_timer: Timer = $HitFlashTimer
 @onready var audio_player: AudioStreamPlayer2D = $AudioPlayer
 @onready var attack_area: Area2D = $AttackArea
+@onready var player: Player = $"../Player"
 
 # Resources
 @export var circle_pickup: PackedScene
@@ -90,7 +90,7 @@ var attack_ready: bool = true
 var is_aggro: bool = false
 var was_on_floor: bool = false
 var is_hurting: bool = false
-var original_modulate: Color = Color.BLACK
+var original_color: Color = Color.BLACK
 
 # Signals
 signal enemy_died()
@@ -106,8 +106,7 @@ func _ready() -> void:
 	current_health = max_health
 	
 	# Store original color for flash effects
-	if sprite:
-		original_modulate = sprite.modulate
+	original_color = Color.BLACK
 	
 	# Initialize timers
 	if attack_timer:
@@ -143,10 +142,12 @@ func _ready() -> void:
 	if spawn_point_path:
 		spawn_point = get_node(spawn_point_path)
 	
-	# Setup respawn timer
-
-
-	
+	# Set initial color to red for all Polygon2D children
+	for child in sprite.get_children():
+		if child is Polygon2D:
+			child.color = Color(1, 0.3, 0.3, 1)
+			var tween = create_tween()
+			tween.tween_property(child, "color", original_color, 0.5)
 
 func _physics_process(delta: float) -> void:
 	# Skip if dead
@@ -178,6 +179,7 @@ func _physics_process(delta: float) -> void:
 		
 		EnemyState.HURT:
 			_process_hurt_state(delta)
+
 	
 	# Handle ledge detection
 	if is_on_floor() and current_state != EnemyState.HURT:
@@ -232,10 +234,21 @@ func change_state(new_state: int) -> void:
 			emit_signal("on_enemy_attack")
 		
 		EnemyState.HURT:
+			print("Hurt state")
 			is_hurting = true
+			# Stop any current animation
 			if animation_player:
-				animation_player.play("hurt")
-				await animation_player.animation_finished
+				animation_player.stop()
+				# Check if hurt animation exists
+				if animation_player.has_animation("hurt"):
+					print("Playing hurt animation")
+					animation_player.play("hurt")
+					await animation_player.animation_finished
+					animation_player.play("RESET")
+				else:
+					print("No hurt animation found")
+					# If no hurt animation, just wait a short time
+					await get_tree().create_timer(0.2).timeout
 				is_hurting = false
 				
 				# Return to chase if was chasing before, otherwise patrol
@@ -243,6 +256,12 @@ func change_state(new_state: int) -> void:
 					change_state(EnemyState.CHASE)
 				else:
 					change_state(EnemyState.PATROL)
+			else:
+				print("No animation player found")
+				# If no animation player, just wait a short time
+				await get_tree().create_timer(0.2).timeout
+				is_hurting = false
+				change_state(EnemyState.PATROL)
 		
 		EnemyState.DEAD:
 			# Disable collisions
@@ -257,6 +276,11 @@ func change_state(new_state: int) -> void:
 			
 			# Stop movement
 			velocity = Vector2.ZERO
+			
+			# Hide all Polygon2D children
+			for child in sprite.get_children():
+				if child is Polygon2D:
+					child.visible = false
 			
 			# Play death animation if you have one
 			if animation_player and animation_player.has_animation("death"):
@@ -278,31 +302,19 @@ func change_state(new_state: int) -> void:
 			
 			is_alive = false
 			emit_signal("enemy_died")
-			# Disable collision
-			$CollisionShape2D.set_deferred("disabled", true)
 			
-		
-			# Disable any AI or state machine
-			#set_process(false)
-			#set_physics_process(false)
-
 			# Handle respawn
 			if should_respawn:
 				respawn_timer.start(respawn_time)
-				
-				
 			else:
 				# If enemy doesn't respawn, free it after animation
 				await get_tree().create_timer(0.5).timeout
 				queue_free()
 		
 		EnemyState.RESPAWN:
-			
-
 			# Reset health
 			current_health = max_health
 			is_alive = true
-			#$Polygon2D.color = Color(1,1,1,1)
 			
 			# Respawn at appropriate position
 			if spawn_point != null:
@@ -322,15 +334,22 @@ func change_state(new_state: int) -> void:
 			modulate.a = 1.0
 			visible = true
 			$CollisionShape2D.set_deferred("disabled", false)
+			
+			# Show and set initial color to red for all Polygon2D children
+			for child in sprite.get_children():
+				if child is Polygon2D:
+					child.visible = true
+					child.color = Color(1, 0.3, 0.3, 1)
+					var tween = create_tween()
+					tween.tween_property(child, "color", original_color, 0.5)
+			
 			#If we have a respawn animation lets play it
 			if animation_player and animation_player.has_animation("respawn"):
 				animation_player.play("respawn")
 				await animation_player.animation_finished
 				
-				# Reset visual state
+				# Create a tween to transition from red to black
 				
-				
-				$Polygon2D.color = Color(0,0,0,1)
 				
 				# Enable collisions
 				if hitbox:
@@ -341,8 +360,6 @@ func change_state(new_state: int) -> void:
 					hurtbox.set_deferred("monitorable", true)
 			
 				set_physics_process(true)
-				
-				
 				
 				change_state(EnemyState.IDLE)
 
@@ -463,44 +480,36 @@ func _apply_hit_flash() -> void:
 	if not sprite or not enable_effects:
 		return
 	
-	sprite.modulate = Color(1, 0.3, 0.3, 1)
+	# Get all Polygon2D children of the Area2D
+	for child in sprite.get_children():
+		if child is Polygon2D:
+			child.color = Color(1, 0.3, 0.3, 1)
+
+		
 	if hit_flash_timer:
 		hit_flash_timer.start(hit_flash_duration)
 
-func take_damage(damage: int, knockback_dir: Vector2 = Vector2.ZERO) -> void:
+func take_damage(damage: float, knockback_direction: Vector2) -> void:
 	if current_state == EnemyState.DEAD:
 		return
-	
-	# Apply damage
-	current_health -= damage
-	emit_signal("on_enemy_hit", damage)
-	
-	# Apply hit effects
-	if enable_effects:
-		_apply_hit_flash()
-	
-	# Play hit sound
-	if audio_player and hit_sound:
-		audio_player.stream = hit_sound
-		audio_player.play()
-	
-	# Check for death
-	if current_health <= 0:
-		change_state(EnemyState.DEAD)
-
-		return
+		
+	health -= damage
 	
 	# Apply knockback
-	if knockback_dir != Vector2.ZERO:
-		velocity = knockback_dir * knockback_force
+	if knockback_direction != Vector2.ZERO:
+		velocity = knockback_direction * knockback_force
+		# Wait for knockback to complete before changing state
+		await get_tree().create_timer(0.5).timeout
+	
+	if health <= 0:
+		health = 0
+		change_state(EnemyState.DEAD)
+		emit_signal("on_death")
+		# Start respawn timer
+		respawn_timer.start(respawn_time)
 	else:
-		# Default knockback direction
-		velocity.x = -direction * knockback_force * 0.7
-		velocity.y = -knockback_force * 0.5
-	
-	# Enter hurt state
-	change_state(EnemyState.HURT)
-	
+		change_state(EnemyState.HURT)
+
 func _spawn_pickups() -> void:
 	# Determine number of drops
 	var drop_count = randi_range(min_drops, max_drops)
@@ -604,9 +613,9 @@ func _update_animation() -> void:
 		animation_player.play(anim_name)
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
-	
 	# Check if hit by player attack
 	if area.is_in_group("player_attack"):
+		print("hurtbox entered")
 		var damage = melee_damage
 		var knockback_dir = Vector2.ZERO
 		
@@ -615,9 +624,9 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 			damage = area.get_parent().get_damage()
 		
 		# Calculate knockback direction
-		if area.get_parent().has_method("get_facing_direction"):
-			var player_dir = area.get_parent().get_facing_direction()
-			knockback_dir = Vector2(player_dir, -0.5).normalized()
+		# if area.get_parent().has_method("get_facing_direction"):
+		var player_dir = player.facing_direction
+		knockback_dir = Vector2(player_dir, -0.5).normalized()
 		
 		# Apply damage
 		take_damage(damage, knockback_dir)
@@ -645,7 +654,10 @@ func _on_aggro_timer_timeout() -> void:
 
 func _on_hit_flash_timer_timeout() -> void:
 	if sprite:
-		sprite.modulate = original_modulate
+		# Reset color for all Polygon2D children
+		for child in sprite.get_children():
+			if child is Polygon2D:
+				child.color = original_color
 
 
 # Respawn the enemy

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://ciw2l5tkuxw2a"]
+[gd_scene load_steps=14 format=3 uid="uid://ciw2l5tkuxw2a"]
 
 [ext_resource type="Script" uid="uid://di56q66dxdj4c" path="res://Scripts/enemy_controller.gd" id="1_hghv2"]
 [ext_resource type="PackedScene" uid="uid://dtoyjmhtnlybu" path="res://Scenes/circle_pickup.tscn" id="2_287tu"]
@@ -8,88 +8,41 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hghv2"]
 size = Vector2(92, 287.604)
 
-[sub_resource type="Animation" id="Animation_auwsv"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Polygon2D:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0, 0, 0, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_1f0kj"]
-resource_name = "attack"
-
-[sub_resource type="Animation" id="Animation_afpow"]
-resource_name = "death"
-length = 0.125
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Polygon2D:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.125),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0, 0, 0, 1), Color(1, 0, 0, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_1dp5w"]
+[sub_resource type="Animation" id="Animation_287tu"]
 resource_name = "fall"
 
-[sub_resource type="Animation" id="Animation_hghv2"]
-resource_name = "hurt"
-
-[sub_resource type="Animation" id="Animation_287tu"]
-resource_name = "idle"
-
-[sub_resource type="Animation" id="Animation_8uf12"]
-resource_name = "respawn"
-length = 0.4
-step = 0.125
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Polygon2D:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.125, 0.375),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Color(1, 0, 0, 0), Color(0.501961, 0, 0, 1), Color(0, 0, 0, 1)]
-}
+[sub_resource type="Animation" id="Animation_0830c"]
+resource_name = "death"
 
 [sub_resource type="Animation" id="Animation_ghaa6"]
-resource_name = "run"
+resource_name = "idle"
 
-[sub_resource type="Animation" id="Animation_0830c"]
+[sub_resource type="Animation" id="Animation_1dp5w"]
+resource_name = "aggro"
+
+[sub_resource type="Animation" id="Animation_auwsv"]
+resource_name = "attack"
+
+[sub_resource type="Animation" id="Animation_8uf12"]
 resource_name = "walk"
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_auwsv"]
+[sub_resource type="Animation" id="Animation_po0sg"]
+resource_name = "run"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8uf12"]
 _data = {
-&"RESET": SubResource("Animation_auwsv"),
-&"attack": SubResource("Animation_1f0kj"),
-&"death": SubResource("Animation_afpow"),
-&"fall": SubResource("Animation_1dp5w"),
-&"hurt": SubResource("Animation_hghv2"),
-&"idle": SubResource("Animation_287tu"),
-&"respawn": SubResource("Animation_8uf12"),
-&"run": SubResource("Animation_ghaa6"),
-&"walk": SubResource("Animation_0830c")
+&"aggro": SubResource("Animation_1dp5w"),
+&"attack": SubResource("Animation_auwsv"),
+&"death": SubResource("Animation_0830c"),
+&"fall": SubResource("Animation_287tu"),
+&"idle": SubResource("Animation_ghaa6"),
+&"run": SubResource("Animation_po0sg"),
+&"walk": SubResource("Animation_8uf12")
 }
 
 [node name="enemy" type="CharacterBody2D"]
-collision_layer = 4
-collision_mask = 3
+collision_layer = 2
+collision_mask = 7
 script = ExtResource("1_hghv2")
 max_health = 10
 knockback_force = 500.0
@@ -103,7 +56,7 @@ square_pickup = ExtResource("4_ghaa6")
 
 [node name="Hitbox" type="Area2D" parent="."]
 collision_layer = 4
-collision_mask = 3
+collision_mask = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2(17, -2)
@@ -111,6 +64,8 @@ scale = Vector2(1.05673, 0.292151)
 shape = SubResource("RectangleShape2D_hghv2")
 
 [node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 17
+collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 position = Vector2(-17, -2)
@@ -145,12 +100,108 @@ collide_with_areas = true
 
 [node name="AudioPlayer" type="AudioStreamPlayer2D" parent="."]
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
+[node name="Polygon2D" type="Area2D" parent="."]
+
+[node name="enemyBody" type="Polygon2D" parent="Polygon2D"]
 show_behind_parent = true
-position = Vector2(-2, -36)
-scale = Vector2(1.21055, 3.84702)
+position = Vector2(-29, -36)
+scale = Vector2(0.411511, 1.38662)
 color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(-39.6514, 18.9757, 38.8253, 18.9757, 38.8253, -1.55965, -38.8253, -1.55965)
+
+[node name="enemyBody2" type="Polygon2D" parent="Polygon2D"]
+show_behind_parent = true
+position = Vector2(31, 6)
+rotation = 0.017242
+scale = Vector2(0.411511, 1.38662)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-39.6514, 18.9757, 38.8253, 18.9757, 38.8253, -1.55965, -38.8253, -1.55965)
+
+[node name="enemyBody3" type="Polygon2D" parent="Polygon2D"]
+show_behind_parent = true
+position = Vector2(-23, 6)
+scale = Vector2(0.411511, 1.38662)
+color = Color(0, 0, 0, 1)
+offset = Vector2(0, -9.37531)
+polygon = PackedVector2Array(-39.6514, 18.9757, 38.8253, 18.9757, 38.8253, -1.55965, -38.8253, -1.55965)
+
+[node name="enemyBody9" type="Polygon2D" parent="Polygon2D"]
+show_behind_parent = true
+position = Vector2(6, -19)
+scale = Vector2(0.411511, 1.38662)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-39.6514, 18.9757, 38.8253, 18.9757, 38.8253, -1.55965, -38.8253, -1.55965)
+
+[node name="enemyBody4" type="Polygon2D" parent="Polygon2D"]
+show_behind_parent = true
+position = Vector2(5, -35)
+scale = Vector2(0.411511, 1.38662)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-39.6514, 18.9757, 38.8253, 18.9757, -38.8253, -1.55965)
+
+[node name="enemyBody6" type="Polygon2D" parent="Polygon2D"]
+show_behind_parent = true
+position = Vector2(31, -15)
+rotation = 3.10741
+scale = Vector2(0.411511, 1.38662)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-39.6514, 18.9757, 38.8253, 18.9757, -38.8253, -1.55965)
+
+[node name="enemyBody7" type="Polygon2D" parent="Polygon2D"]
+show_behind_parent = true
+position = Vector2(20, 17)
+rotation = 4.69221
+scale = Vector2(0.411511, 1.38662)
+color = Color(0, 0, 0, 1)
+offset = Vector2(17.0639, -12.7678)
+polygon = PackedVector2Array(-39.6514, 18.9757, 38.8253, 18.9757, -38.8253, -1.55965)
+
+[node name="enemyBody8" type="Polygon2D" parent="Polygon2D"]
+show_behind_parent = true
+position = Vector2(-28, 6)
+rotation = 6.26808
+scale = Vector2(0.411511, 1.38662)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-39.6514, 18.9757, 38.8253, 18.9757, -38.8253, -1.55965)
+
+[node name="enemyBody5" type="Polygon2D" parent="Polygon2D"]
+show_behind_parent = true
+position = Vector2(4, -14)
+rotation = -3.16929
+scale = Vector2(0.411511, 1.38662)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-39.6514, 18.9757, 38.8253, 18.9757, -38.8253, -1.55965)
+
+[node name="enemyJawUpper" type="Polygon2D" parent="Polygon2D"]
+show_behind_parent = true
+position = Vector2(47, -46)
+scale = Vector2(0.611746, 0.860987)
+color = Color(0, 0, 0, 1)
+offset = Vector2(39.232, -17.4219)
+polygon = PackedVector2Array(-39.6514, 18.9757, 24.52, 18.5833, 24.52, 8.13021, -39.232, 2.32291)
+
+[node name="enemyJawLower" type="Polygon2D" parent="Polygon2D"]
+show_behind_parent = true
+position = Vector2(48, -37)
+rotation = 0.165817
+scale = Vector2(0.611746, 0.860987)
+color = Color(0, 0, 0, 1)
+offset = Vector2(37.9694, -0.301517)
+polygon = PackedVector2Array(-39.6514, 18.9757, 22.6466, 19.2166, 22.4143, -1.68901, -38.8253, -1.55965)
+
+[node name="HeadPolygon" type="Polygon2D" parent="Polygon2D"]
+position = Vector2(-3, 21)
+rotation = -1.40764
+scale = Vector2(1.11671, 1.11671)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+
+[node name="HeadPolygon2" type="Polygon2D" parent="Polygon2D"]
+position = Vector2(30, -11)
+rotation = -1.40764
+scale = Vector2(1.11671, 1.11671)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
 position = Vector2(3, 1)
@@ -163,7 +214,7 @@ one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-&"": SubResource("AnimationLibrary_auwsv")
+&"": SubResource("AnimationLibrary_8uf12")
 }
 
 [connection signal="timeout" from="RespawnTimer" to="." method="_on_respawn_timer_timeout"]

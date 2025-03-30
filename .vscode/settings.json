@@ -1,3 +1,20 @@
 {
-    "godotTools.editorPath.godot4": "/Applications/Godot.app"
+    "godotTools.editorPath.godot4": "/Applications/Godot.app",
+    "godotFiles.godotCachePath": {
+        "win32": [
+            "${env:LOCALAPPDATA}/Godot/",
+            "~/AppData/Local/Godot/",
+            "${env:TEMP}/Godot/"
+        ],
+        "darwin": [
+            "~/Library/Caches/Godot/"
+        ],
+        "linux": [
+            "~/.cache/godot/",
+            "~/.var/app/org.godotengine.GodotSharp/cache/godot/",
+            "~/.var/app/org.godotengine.Godot3Sharp/cache/godot/",
+            "~/.var/app/org.godotengine.Godot/cache/godot/",
+            "~/.var/app/org.godotengine.Godot3/cache/godot/"
+        ]
+    }
 }

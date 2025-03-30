@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://bmlknwmevbp4p"]
+[gd_scene load_steps=29 format=3 uid="uid://bmlknwmevbp4p"]
 
 [ext_resource type="Script" uid="uid://yihmtfufsxsp" path="res://Scripts/player_controller.gd" id="1_vgqql"]
 [ext_resource type="Script" uid="uid://y63jp0cst87s" path="res://Scripts/polygon_2d.gd" id="2_256ay"]
@@ -54,9 +54,6 @@ modifications/1 = SubResource("SkeletonModification2DTwoBoneIK_v6nfe")
 modifications/2 = SubResource("SkeletonModification2DTwoBoneIK_mlksc")
 modifications/3 = SubResource("SkeletonModification2DTwoBoneIK_akpe4")
 modifications/4 = SubResource("SkeletonModification2DTwoBoneIK_cvnsp")
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vgqql"]
-size = Vector2(77, 39.3293)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5uiyf"]
 size = Vector2(38.1691, 15.6157)
@@ -889,10 +886,10 @@ vertex_colors = PackedColorArray(0, 0, 0, 1)
 
 [node name="ArmPolygon" type="Polygon2D" parent="."]
 z_index = 1
-position = Vector2(7.43191, 50.0069)
+position = Vector2(7.4319, 50.0069)
 rotation = -2.52939
-scale = Vector2(0.999732, 0.999724)
-skew = -0.00332904
+scale = Vector2(0.999732, 0.999723)
+skew = -0.00334322
 color = Color(0, 0, 0, 1)
 texture_scale = Vector2(61.65, 61.65)
 skeleton = NodePath("../Leg01Polygon")
@@ -991,41 +988,25 @@ bone_angle = 0.0
 position = Vector2(0.023839, 5.06)
 rotation = -0.193316
 scale = Vector2(0.999881, 0.999873)
-skew = -0.00332904
+skew = -0.00334311
 rest = Transform2D(0.981256, -0.192091, 0.194993, 0.980675, 0.023839, 5.06)
 auto_calculate_length_and_angle = false
 length = 34.685
 bone_angle = -129.488
 editor_settings/show_bone_gizmo = false
 
-[node name="MeleeHitbox2" type="Area2D" parent="Skeleton2D/HipBone/BodyBone/HeadBone/upperArmBone/lowerArmBone" groups=["player_attack"]]
-position = Vector2(40.4641, -27.0979)
-rotation = 2.53048
-scale = Vector2(1.00184, 0.998714)
-skew = 0.00114799
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Skeleton2D/HipBone/BodyBone/HeadBone/upperArmBone/lowerArmBone/MeleeHitbox2"]
-position = Vector2(44, 22)
-rotation = -1.56868
-scale = Vector2(0.602075, 0.606349)
-shape = SubResource("RectangleShape2D_vgqql")
-
-[node name="ArmHurtBoxWrapper" type="RigidBody2D" parent="Skeleton2D/HipBone/BodyBone/HeadBone/upperArmBone/lowerArmBone"]
+[node name="ArmHurtBoxWrapper" type="Area2D" parent="Skeleton2D/HipBone/BodyBone/HeadBone/upperArmBone/lowerArmBone" groups=["player_attack"]]
 position = Vector2(-8.83179, -12.0543)
 rotation = -2.25523
 scale = Vector2(1.00156, 0.999186)
-collision_layer = 0
-collision_mask = 14
-sleeping = true
-can_sleep = false
-max_contacts_reported = 4
-constant_force = Vector2(51.465, 0)
+collision_layer = 5
+collision_mask = 31
 
-[node name="ArmHurtBox" type="CollisionShape2D" parent="Skeleton2D/HipBone/BodyBone/HeadBone/upperArmBone/lowerArmBone/ArmHurtBoxWrapper"]
+[node name="ArmHurtBox" type="CollisionShape2D" parent="Skeleton2D/HipBone/BodyBone/HeadBone/upperArmBone/lowerArmBone/ArmHurtBoxWrapper" groups=["player_attack"]]
 physics_interpolation_mode = 2
 position = Vector2(3.8147e-06, -7.62939e-06)
 rotation = 0.000279848
-scale = Vector2(0.998255, 1.00205)
+scale = Vector2(2.528, 1.002)
 skew = -0.00183654
 shape = SubResource("RectangleShape2D_5uiyf")
 disabled = true
@@ -1091,16 +1072,8 @@ position = Vector2(0, 10)
 collision_mask = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
-position = Vector2(2.5, 33.5)
+position = Vector2(4, 18)
 shape = SubResource("CircleShape2D_6t5aa")
-
-[node name="MeleeHitbox" type="Area2D" parent="."]
-monitoring = false
-monitorable = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="MeleeHitbox"]
-position = Vector2(2, 43.25)
-shape = SubResource("RectangleShape2D_vgqql")
 
 [node name="ParticlesRun" type="GPUParticles2D" parent="."]
 position = Vector2(15, 99)

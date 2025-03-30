@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://1jgi6tcbrn7v"]
+[gd_scene load_steps=17 format=4 uid="uid://1jgi6tcbrn7v"]
 
 [ext_resource type="Texture2D" uid="uid://43q28fbloexy" path="res://Sprites/1x16_tiles-trimmed.png" id="1_8ruqu"]
 [ext_resource type="Script" uid="uid://l3cbc1e4asf3" path="res://Scripts/game_manager.gd" id="1_wowpa"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dl0ufnqft2gc1" path="res://Scenes/killzone.tscn" id="4_3dryh"]
 [ext_resource type="PackedScene" uid="uid://bml7qnybucr18" path="res://Scenes/insight_items.tscn" id="4_o5yvi"]
 [ext_resource type="PackedScene" uid="uid://sfxm05vlge3f" path="res://Scenes/projectile_triangle.tscn" id="5_ldgsr"]
+[ext_resource type="PackedScene" uid="uid://d08slbcvxu1gg" path="res://Scenes/checkpoint.tscn" id="5_rku1e"]
 [ext_resource type="PackedScene" uid="uid://ch4o0guerbahn" path="res://Scenes/UI.tscn" id="6_1l0tm"]
 [ext_resource type="PackedScene" uid="uid://6lvklwfapt1y" path="res://Scenes/door.tscn" id="8_h4fw4"]
 [ext_resource type="Texture2D" uid="uid://dokj2kx84i3mx" path="res://Sprites/triangle_circle_square-logo-004.png" id="8_v158k"]
@@ -523,15 +524,8 @@ position = Vector2(371, -98)
 
 [node name="insight_items" parent="mid/insight_node" instance=ExtResource("4_o5yvi")]
 position = Vector2(-20, -4)
-rotation = 1.02974
+rotation = 3.14159
 scale = Vector2(0.191589, 0.191589)
-collision_mask = 7
-
-[node name="insight_items2" parent="mid/insight_node" instance=ExtResource("4_o5yvi")]
-position = Vector2(23, -4)
-rotation = 1.02974
-scale = Vector2(0.191589, 0.191589)
-collision_mask = 7
 
 [node name="background" type="TileMapLayer" parent="."]
 use_parent_material = true
@@ -573,9 +567,11 @@ one_shot = true
 ignore_time_scale = true
 
 [node name="enemy" parent="." instance=ExtResource("3_wrm1d")]
-position = Vector2(-259, -82)
+position = Vector2(-260, -82)
+scale = Vector2(0.947398, 0.947398)
 knockback_force = 666.0
 enable_effects = false
+should_respawn = false
 
 [node name="UI" parent="." instance=ExtResource("6_1l0tm")]
 
@@ -590,5 +586,9 @@ texture = SubResource("AtlasTexture_h4fw4")
 [node name="mcguffin2" parent="." instance=ExtResource("10_ldgsr")]
 position = Vector2(592, -273)
 scale = Vector2(0.591808, 0.591808)
+
+[node name="checkpoint" parent="." instance=ExtResource("5_rku1e")]
+position = Vector2(418, -323)
+scale = Vector2(0.878668, 0.456082)
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
