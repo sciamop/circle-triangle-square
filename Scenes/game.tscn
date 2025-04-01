@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://1jgi6tcbrn7v"]
+[gd_scene load_steps=19 format=4 uid="uid://1jgi6tcbrn7v"]
 
 [ext_resource type="Texture2D" uid="uid://43q28fbloexy" path="res://Sprites/1x16_tiles-trimmed.png" id="1_8ruqu"]
 [ext_resource type="Script" uid="uid://l3cbc1e4asf3" path="res://Scripts/game_manager.gd" id="1_wowpa"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://6lvklwfapt1y" path="res://Scenes/door.tscn" id="8_h4fw4"]
 [ext_resource type="Texture2D" uid="uid://dokj2kx84i3mx" path="res://Sprites/triangle_circle_square-logo-004.png" id="8_v158k"]
 [ext_resource type="PackedScene" uid="uid://b1wsyjbjsnp5o" path="res://Scenes/_mcguffin.tscn" id="10_ldgsr"]
+[ext_resource type="Script" uid="uid://b5u5t4ir8jilt" path="res://Scripts/mcguffin.gd" id="13_1phco"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_na51i"]
 texture = ExtResource("1_8ruqu")
@@ -588,6 +589,7 @@ texture = SubResource("AtlasTexture_h4fw4")
 [node name="mcguffin" parent="." instance=ExtResource("10_ldgsr")]
 position = Vector2(592, -273)
 scale = Vector2(0.591808, 0.591808)
+script = ExtResource("13_1phco")
 
 [node name="checkpoint" parent="." groups=["checkpoint"] instance=ExtResource("5_rku1e")]
 position = Vector2(418, -323)

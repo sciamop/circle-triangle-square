@@ -169,6 +169,9 @@ func set_static_body_collision(item: Node2D, enabled: bool) -> void:
 @export var traveling_shape_scene: PackedScene
 
 func _ready() -> void:
+	# Add player to the player group
+	add_to_group("player")
+	
 	# Initial setup
 	if animation_player:
 		animation_player.play("idle")
@@ -1129,13 +1132,15 @@ func handle_checkpoint(checkpoint: Node2D) -> void:
 		await get_tree().create_timer(0.5).timeout
 		
 		# Handle mcguffin meow sequence
+	
 		await mcguffin.play_meow_sequence()
 		
 		# Zoom back out
 		tween = create_tween()
 		tween.tween_property(camera, "global_position", original_camera_pos, 0.5)
 		tween.parallel().tween_property(camera, "zoom", original_camera_zoom, 0.5)
-		
+		# Wait for zoom
+		await get_tree().create_timer(1.25).timeout
 		# Move mcguffin to door
 		await mcguffin.move_to_door(door)
 		
