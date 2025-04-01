@@ -2,11 +2,12 @@ extends CharacterBody2D
 
 class_name Player
 
+
 # Movement parameters
 @export var move_speed: float = 300.0
-@export var acceleration: float = 2000.0
-@export var friction: float = 1000.0
-@export var air_friction: float = 200.0
+@export var acceleration: float = 1500.0
+@export var friction: float = 1300.0
+@export var air_friction: float = 400.0
 
 # Jump parameters
 @export var jump_force: float = 600.0
@@ -54,6 +55,9 @@ var knockback_direction: Vector2 = Vector2.ZERO
 var is_being_knocked_back: bool = false
 var knockback_timer: float = 0.0
 var pieces_scene: Node
+var original_collision_mask: int  # Store original collision mask
+var post_knockback_invincibility_timer: float = 0.0  # New timer for post-knockback invincibility
+var is_post_knockback_invincible: bool = false  # New state for post-knockback invincibility
 
 # Juice parameters
 @export_group("Visual Juice")
@@ -75,6 +79,7 @@ var direction: int = 0
 @export var facing_direction: int = 1
 var current_wall_direction: int = 0
 var has_exploded:bool 			= false
+var is_disabled: bool = false  # New state to track when player is disabled
 
 # Combat state
 var attacking: bool = false
@@ -102,9 +107,7 @@ var current_squash_stretch: float = 0.0
 @onready var wall_check_left: RayCast2D = $WallCheckLeft
 @onready var wall_check_right: RayCast2D = $WallCheckRight
 @onready var pickup_area: Area2D = $PickupArea
-#@onready var melee_hitbox: Area2D = $MeleeHitbox
-#@onready var melee_hitbox: Area2D = $MeleeHitbox
-# @onready var melee_hitbox: Area2D = $Skeleton2D/HipBone/BodyBone/HeadBone/upperArmBone/lowerArmBone/MeleeHitbox2
+@onready var camera: Camera2D = $Camera2D
 @onready var melee_hitbox: Area2D = $Skeleton2D/HipBone/BodyBone/HeadBone/upperArmBone/lowerArmBone/ArmHurtBoxWrapper
 @onready var particles_run: GPUParticles2D = $ParticlesRun
 @onready var particles_jump: GPUParticles2D = $ParticlesJump
@@ -112,6 +115,7 @@ var current_squash_stretch: float = 0.0
 @onready var trail: Line2D = $Trail
 @onready var audio_player: AudioStreamPlayer2D = $AudioPlayer
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
+@onready var game_manager: Node2D = $"/root/Game"
 
 # Resources
 @export var projectile_scene: PackedScene
@@ -151,12 +155,18 @@ var insight_animation_phase: String = "grow"  # "grow", "hold", "contract"
 var insight_animation_timer: float = 0.0
 var is_insight_active: bool = false  # Track if insight is currently active
 
+#checkpoint stuff
+@onready var mcguffin: Node2D = $"/root/Game/mcguffin"
+@onready var door: Node2D = $"/root/Game/mid/Door"
+
 # Add this new helper function
 func set_static_body_collision(item: Node2D, enabled: bool) -> void:
 	var static_body = item.find_child("StaticBody2D")
 	if static_body and static_body is StaticBody2D:
 		static_body.collision_layer = 1 if enabled else 0
 		static_body.collision_mask = 1 if enabled else 0
+
+@export var traveling_shape_scene: PackedScene
 
 func _ready() -> void:
 	# Initial setup
@@ -175,8 +185,9 @@ func _ready() -> void:
 			trail.add_point(Vector2.ZERO)
 
 	# Set collision layer and mask for player
-	collision_layer = 1  # Player layer
-	collision_mask = 1   # Collide with environment and permanent shapes
+	collision_layer = 2  # Player layer
+	collision_mask = 1   # Collide with environment layer
+	original_collision_mask = collision_mask  # Store original mask
 	
 	#initialize 
 	pieces_scene = preload("res://Scenes/brokenPlayer.tscn").instantiate() 
@@ -205,6 +216,10 @@ func _ready() -> void:
 		set_static_body_collision(item, false)
 
 func _physics_process(delta: float) -> void:
+	# Skip all physics if player is disabled
+	if is_disabled:
+		return
+	
 	# Update timers
 	update_timers(delta)
 	
@@ -236,16 +251,30 @@ func _physics_process(delta: float) -> void:
 	# Update animation
 	update_animation()
 	
+	# Handle knockback and post-knockback invincibility
 	if is_being_knocked_back:
-		# Apply knockback force
-		velocity = knockback_direction * knockback_force
-		
-		# Update knockback timer
 		knockback_timer -= delta
 		if knockback_timer <= 0:
 			is_being_knocked_back = false
-			
-		move_and_slide()
+			knockback_direction = Vector2.ZERO
+			# Start post-knockback invincibility
+			is_post_knockback_invincible = true
+			post_knockback_invincibility_timer = 0.75
+			# Keep playing hurt animation during post-knockback invincibility
+			if animation_player:
+				animation_player.play("hurt")
+		else:
+			velocity = knockback_direction * knockback_force
+			move_and_slide()
+	elif is_post_knockback_invincible:
+		post_knockback_invincibility_timer -= delta
+		if post_knockback_invincibility_timer <= 0:
+			is_post_knockback_invincible = false
+			# Restore original collision mask
+			collision_mask = original_collision_mask
+			# Return to idle animation
+			if animation_player:
+				animation_player.play("idle")
 	
 	# Debug info
 	if debug_mode:
@@ -293,6 +322,10 @@ func update_timers(delta: float) -> void:
 			end_insight()
 
 func handle_input() -> void:
+	# Skip input handling if player is disabled
+	if is_disabled:
+		return
+		
 	# Get horizontal input
 	direction = Input.get_axis("move_left", "move_right")
 	
@@ -637,6 +670,17 @@ func perform_ranged_attack() -> void:
 					if parent:
 						parent.visible = true
 					
+					# Spawn traveling shape from UI to insight item
+					if traveling_shape_scene:
+	
+						var traveling_shape = traveling_shape_scene.instantiate()
+						get_tree().root.add_child(traveling_shape)
+						
+						# Get the UI position for the current shape
+						var ui_shape = get_tree().get_first_node_in_group("shape_" + active_projectile_shape)
+						if ui_shape:
+							traveling_shape.init(ui_shape.global_position, item.global_position, active_projectile_shape)
+					
 					found_match = true
 					break
 				else:
@@ -849,8 +893,8 @@ func apply_stretch() -> void:
 
 func update_animation() -> void:
 	if animation_player:
-		# Don't interrupt attack animations
-		if animation_player.current_animation == "melee_attack" or animation_player.current_animation == "ranged_attack":
+		# Don't interrupt attack animations or hurt animation during knockback/invincibility
+		if animation_player.current_animation == "melee_attack" or animation_player.current_animation == "ranged_attack" or is_being_knocked_back or is_post_knockback_invincible:
 			if not animation_player.is_playing():
 				animation_player.play("idle")
 			return
@@ -869,9 +913,6 @@ func update_animation() -> void:
 			elif direction < 0:
 				anim_name = "run_left"
 			
-		
-		#if animation_player.current_animation != anim_name and not animation_player.is_playing():
-		
 		if animation_player.current_animation != anim_name:
 			animation_player.play(anim_name)
 
@@ -891,27 +932,40 @@ func add_score(value):
 	# Update your UI here
 
 # Function to handle taking damage with knockback
-func take_damage(amount: int, source_position: Vector2 = Vector2.ZERO) -> void:
-	if not is_alive:
+func take_damage(damage: int, knockback_direction: Vector2 = Vector2.ZERO) -> void:
+	if not is_alive or is_being_knocked_back or is_post_knockback_invincible:
 		return
 		
-	current_health = max(0, current_health - amount)
+	current_health -= damage
 	emit_signal("health_changed", current_health)
-	
-	# Apply knockback if source position is provided
-	if source_position != Vector2.ZERO:
-		apply_knockback(source_position)
 	
 	if current_health <= 0:
 		die()
+	else:
+		# Apply knockback if direction is provided
+		if knockback_direction != Vector2.ZERO:
+			apply_knockback(knockback_direction)
+
 # Apply knockback based on source position
-func apply_knockback(source_position: Vector2) -> void:
-	# Calculate direction away from source
-	knockback_direction = (global_position - source_position).normalized()
-	
-	# Start knockback
+func apply_knockback(direction: Vector2) -> void:
+	if is_being_knocked_back or is_post_knockback_invincible:  # Don't apply new knockback during knockback or post-knockback invincibility
+		return
+		
 	is_being_knocked_back = true
+	knockback_direction = direction
 	knockback_timer = knockback_duration
+	
+	# Store original collision mask if not already stored
+	if original_collision_mask == 0:
+		original_collision_mask = collision_mask
+	
+	# Only disable collision with enemies and projectiles during knockback
+	# Keep collision with environment (layer 1)
+	collision_mask = 1  # Only collide with environment
+	
+	# Play hurt animation if available
+	if animation_player:
+		animation_player.play("hurt")
 
 # Function to heal the player
 func heal(amount: int) -> void:
@@ -942,21 +996,19 @@ func die() -> void:
 		# Or just implement basic death behavior
 		modulate.a = 0.5  # Make the player semi-transparent
 	
-	# Optional: add a timer to handle respawn or game over
-	var timer = get_tree().create_timer(2.0)
-	
 	if has_exploded:
 		return  # Stop if already exploded
 
-	
+	# Spawn pieces immediately
 	pieces_scene.global_position = global_position
-	get_parent().call_deferred("add_child",pieces_scene)
-	
-	has_exploded = true  # Mark explosion as happened  # Add pieces to the scene
+	get_parent().call_deferred("add_child", pieces_scene)
+	has_exploded = true  # Mark explosion as happened
+
+	# Create a shorter timer for scene reload
+	var timer = get_tree().create_timer(0.5)  # Reduced from 2.0 to 0.5 seconds
+	timer.timeout.connect(_on_death_timer_timeout)
 
 	queue_free()  # Remove the character
-	
-	timer.timeout.connect(_on_death_timer_timeout)
 
 # Called when death timer expires
 func _on_death_timer_timeout() -> void:
@@ -979,6 +1031,7 @@ func respawn() -> void:
 	
 	# Reset appearance
 	modulate.a = 1.0
+	
 	
 	# Play respawn animation if you have one
 	if animation_player and animation_player.has_animation("respawn"):
@@ -1050,3 +1103,41 @@ func update_circle_radius(radius: float) -> void:
 		var collision = insight_area.get_node("insightCollisionShape")
 		if collision and collision.shape is CircleShape2D:
 			collision.shape.radius = radius
+
+func handle_checkpoint(checkpoint: Node2D) -> void:
+	# Disable player movement and actions
+	is_disabled = true
+	print("Player disabled")
+
+	
+	if mcguffin and door:
+		# Store original camera position and zoom
+		var original_camera_pos = camera.global_position
+		var original_camera_zoom = camera.zoom
+		
+		print("Original camera pos: ", original_camera_pos)
+		print("Original camera zoom: ", original_camera_zoom)
+		
+		# Zoom to mcguffin
+		var tween = create_tween()
+		tween.tween_property(camera, "global_position", mcguffin.global_position, 0.5)
+		tween.parallel().tween_property(camera, "zoom", Vector2(4.2, 4.2), 0.5)
+		
+		print("Started camera tween")
+		
+		# Wait for zoom
+		await get_tree().create_timer(0.5).timeout
+		
+		# Handle mcguffin meow sequence
+		await mcguffin.play_meow_sequence()
+		
+		# Zoom back out
+		tween = create_tween()
+		tween.tween_property(camera, "global_position", original_camera_pos, 0.5)
+		tween.parallel().tween_property(camera, "zoom", original_camera_zoom, 0.5)
+		
+		# Move mcguffin to door
+		await mcguffin.move_to_door(door)
+		
+		# Re-enable player movement and actions
+		is_disabled = false

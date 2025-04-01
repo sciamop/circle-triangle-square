@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://bmlknwmevbp4p"]
+[gd_scene load_steps=30 format=3 uid="uid://bmlknwmevbp4p"]
 
 [ext_resource type="Script" uid="uid://yihmtfufsxsp" path="res://Scripts/player_controller.gd" id="1_vgqql"]
 [ext_resource type="Script" uid="uid://y63jp0cst87s" path="res://Scripts/polygon_2d.gd" id="2_256ay"]
@@ -191,6 +191,18 @@ tracks/10/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [-0.928432]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath(".:visible")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_fkybt"]
@@ -785,11 +797,29 @@ tracks/6/keys = {
 "values": [-0.118089, -1.48414]
 }
 
+[sub_resource type="Animation" id="Animation_3smsa"]
+resource_name = "hurt"
+length = 0.75
+step = 0.0625
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0625, 0.125, 0.1875, 0.25, 0.3125, 0.375, 0.5, 0.5625, 0.625, 0.6875, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, false, true, false, true, false, true, true, false, true]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nq0pq"]
 _data = {
 &"RESET": SubResource("Animation_te0kc"),
 &"dash": SubResource("Animation_fkybt"),
 &"fall": SubResource("Animation_vgqql"),
+&"hurt": SubResource("Animation_3smsa"),
 &"idle": SubResource("Animation_1sckd"),
 &"jump": SubResource("Animation_6t5aa"),
 &"melee_attack": SubResource("Animation_vwe64"),
@@ -888,7 +918,7 @@ vertex_colors = PackedColorArray(0, 0, 0, 1)
 z_index = 1
 position = Vector2(7.4319, 50.0069)
 rotation = -2.52939
-scale = Vector2(0.999732, 0.999723)
+scale = Vector2(0.999732, 0.999724)
 skew = -0.00334322
 color = Color(0, 0, 0, 1)
 texture_scale = Vector2(61.65, 61.65)
@@ -988,7 +1018,7 @@ bone_angle = 0.0
 position = Vector2(0.023839, 5.06)
 rotation = -0.193316
 scale = Vector2(0.999881, 0.999873)
-skew = -0.00334311
+skew = -0.00334322
 rest = Transform2D(0.981256, -0.192091, 0.194993, 0.980675, 0.023839, 5.06)
 auto_calculate_length_and_angle = false
 length = 34.685

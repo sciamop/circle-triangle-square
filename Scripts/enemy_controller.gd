@@ -3,7 +3,7 @@ extends CharacterBody2D
 class_name Enemy
 
 # Basic parameters
-@export var max_health: int = 50
+@export var max_health: int = 20
 @export var move_speed: float = 150.0
 @export var gravity: float = 1500.0
 @export var max_fall_speed: float = 800.0
@@ -277,10 +277,7 @@ func change_state(new_state: int) -> void:
 			# Stop movement
 			velocity = Vector2.ZERO
 			
-			# Hide all Polygon2D children
-			for child in sprite.get_children():
-				if child is Polygon2D:
-					child.visible = false
+
 			
 			# Play death animation if you have one
 			if animation_player and animation_player.has_animation("death"):
@@ -289,6 +286,11 @@ func change_state(new_state: int) -> void:
 			else:
 				# Or just basic death visuals
 				modulate.a = 0.5  # Make semi-transparent
+
+			# Hide all Polygon2D children
+			for child in sprite.get_children():
+				if child is Polygon2D:
+					child.visible = false
 				
 			# Spawn death effects
 			_spawn_death_effects()
@@ -580,6 +582,7 @@ func _update_animation() -> void:
 	
 	# Update sprite direction
 	sprite.scale.x = direction
+	hitbox.scale.x = direction
 	
 	# Don't interrupt hurt, attack or death animations
 	if animation_player.current_animation == "respawn" or animation_player.current_animation == "hurt" or animation_player.current_animation == "attack" or animation_player.current_animation == "death":

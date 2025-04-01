@@ -1,5 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://b7jqy8oqlu47w"]
+[gd_scene load_steps=10 format=3 uid="uid://b7jqy8oqlu47w"]
 
+[ext_resource type="Script" uid="uid://b5u5t4ir8jilt" path="res://Scripts/mcguffin.gd" id="1_obnv1"]
 [ext_resource type="AudioStream" uid="uid://dpd3dur7knw5i" path="res://Sounds/cat-meow.mp3" id="2_jpcxv"]
 [ext_resource type="FontFile" uid="uid://dbb1aunswvl1g" path="res://Fonts/circle-triangle-square-Regular.otf" id="3_obnv1"]
 
@@ -188,6 +189,7 @@ font_color = Color(0, 0, 0, 1)
 radius = 7.87268
 
 [node name="mcguffin" type="Node2D"]
+script = ExtResource("1_obnv1")
 
 [node name="torsoGroup" type="Area2D" parent="."]
 

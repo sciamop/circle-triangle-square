@@ -8,7 +8,6 @@ extends HBoxContainer
 @onready var square_icon: Polygon2D = $squareVBoxContainer/squareCenterContainer/squareIcon
 @onready var animation_player: AnimationPlayer = $"../../../../AnimationPlayer"
 
-
 var square_score:int = 0
 var triangle_score:int = 0
 var circle_score:int = 0
@@ -18,10 +17,14 @@ var enabled_color:Color = Color(0,0,0,1.0);
 @export var active_color:Color = Color(1,0,0,1.0);
 var currently_activated:String = "triangle"
 
-
 signal on_score(circle_score,triangle_score,square_score)
 
 func _ready() -> void:
+	# Add shape groups to icons
+	circle_icon.add_to_group("shape_circle")
+	triangle_icon.add_to_group("shape_triangle")
+	square_icon.add_to_group("shape_square")
+	
 	var _updateScore = Callable(self, "updateScore") 
 	player.connect("on_pickup", _updateScore)
 	
@@ -32,8 +35,6 @@ func _ready() -> void:
 	player.connect("on_empty", _no_projectile)
 		
 	checkStatus()	
-
-
 
 func checkForActivated(shape:String) -> void:
 	print(shape)

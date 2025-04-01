@@ -24,7 +24,7 @@ func _physics_process(delta):
 func _on_body_entered(body):
 	# Check what was hit
 	if body.has_method("take_damage"):
-		body.take_damage(damage)
+		body.take_damage(damage,direction)
 	
 	# Destroy the projectile
 	queue_free()
