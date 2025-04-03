@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://sfxm05vlge3f"]
 
 [ext_resource type="Script" uid="uid://c21tcsscyumfc" path="res://Scripts/projectile.gd" id="1_a8fiy"]
-[ext_resource type="Material" uid="uid://b8o43bl42cg1p" path="res://Resources/projectile_particles.tres" id="2_acy1t"]
+[ext_resource type="Material" uid="uid://bktyivkiltmw1" path="res://Resources/blueprint_particles.tres" id="2_acy1t"]
 
 [node name="projectile" type="Area2D"]
 collision_mask = 6

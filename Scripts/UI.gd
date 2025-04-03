@@ -42,3 +42,20 @@ extends CanvasLayer
 			
 	
 	
+
+@onready var oob_dialogue = $CanvasLayer/Control/OOB
+
+func _ready() -> void:
+	# Only show the dialogue if this is the first start
+	if not Global.has_seen_onboarding:
+		oob_dialogue.show()
+		Global.has_seen_onboarding = true
+	else:
+		oob_dialogue.hide()
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and oob_dialogue.visible:
+		oob_dialogue.hide()
+		get_viewport().set_input_as_handled()
+	
+	

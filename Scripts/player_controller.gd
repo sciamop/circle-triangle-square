@@ -39,11 +39,22 @@ class_name Player
 
 # Pickup parameters
 @export var pickup_detection_radius: float = 150.0
-@export var pickup_magnet_speed: float = 200.0
+@export var pickup_magnet_speed: float = 600.0
 
 # Health Parameters
 signal health_changed(new_health)
 signal player_died()
+
+# Blueprint tracking
+var collected_blueprints: Array = []
+var current_blueprint: Blueprint = null
+var is_building: bool = false
+
+# Signals
+signal blueprint_collected(blueprint: Blueprint)
+signal blueprint_building_started(blueprint: Blueprint)
+signal blueprint_building_completed(blueprint: Blueprint, result_item: String)
+signal blueprint_building_failed(blueprint: Blueprint)
 
 @export_group("Health")
 @export var max_health: int = 100
@@ -88,9 +99,9 @@ var ranged_cooldown_timer: float = 0.0
 var active_projectile_shape: String = "triangle"
 
 # Pickups tracking
-var circle_pieces: int = 100
-var triangle_pieces: int = 1000
-var square_pieces: int = 0
+var circle_pieces: int = 10
+var triangle_pieces: int = 10
+var square_pieces: int = 10
 
 # Timers for mechanics
 var jump_buffer_timer: float = 0.0
@@ -140,7 +151,7 @@ signal on_pickup(type, amount)
 signal on_attack(attack_type)
 signal on_activate(shape_type)
 signal on_empty(shape_type)
-
+signal shape_count_changed(shape_type, amount)
 # Insight parameters
 @export var insight_radius: float = 300.0
 @export var insight_duration: float = 3.0
@@ -168,7 +179,34 @@ func set_static_body_collision(item: Node2D, enabled: bool) -> void:
 
 @export var traveling_shape_scene: PackedScene
 
+# Shape tracking
+var shape_counts: Dictionary = {
+	"circle": 0,
+	"triangle": 0,
+	"square": 0
+}
+
+# Player states
+enum PlayerState {
+	IDLE,
+	WALKING,
+	JUMPING,
+	FALLING,
+	ATTACKING,
+	HURT,
+	DEAD,
+	DISABLED,
+	BUILDING
+}
+
+var current_state: int = PlayerState.IDLE
+
 func _ready() -> void:
+	
+	shape_counts["square"] = square_pieces
+	shape_counts["triangle"] = triangle_pieces
+	shape_counts["circle"] = circle_pieces
+	
 	# Add player to the player group
 	add_to_group("player")
 	
@@ -624,6 +662,18 @@ func perform_ranged_attack() -> void:
 	# Check ammo before proceeding
 	if not has_ammo():
 		return
+
+	# Check if player is in a blueprint zone and has a square
+	if active_projectile_shape == "square" and shape_counts["square"] > 0:
+		var blueprint_areas = get_tree().get_nodes_in_group("blueprint_zone")
+		for area in blueprint_areas:
+			print(area.name)
+			if area.overlaps_area(pickup_area):
+				# Start blueprint building instead of firing projectile
+				var blueprint = area.get_parent()
+				if blueprint and blueprint.has_method("start_blueprint_building"):
+					start_blueprint_building(blueprint)
+					return
 	
 	# Start attack state
 	attacking = true
@@ -699,8 +749,8 @@ func perform_ranged_attack() -> void:
 		# Spawn projectile if no match found
 		var projectile = projectile_scene.instantiate()
 		projectile.set_meta("shape_type", active_projectile_shape)
-		# Spawn slightly in front of the player based on facing direction
-		projectile.global_position = global_position + Vector2(facing_direction * 20, 40)
+		# Spawn in front of the player based on facing direction, with enough distance to avoid collision
+		projectile.global_position = global_position + Vector2(facing_direction * 50, 40)
 		projectile.direction = Vector2(facing_direction, 0)
 		projectile.speed = ranged_projectile_speed
 		get_parent().add_child(projectile)
@@ -797,7 +847,7 @@ func collect_pickup(pickup) -> void:
 	var pickup_parent: RigidBody2D = pickup.get_parent()
 	
 	var pickup_type = pickup_parent.get_child(0).name.replace("Shape","")
-	# print(pickup.name)
+	
 	# Add to player inventory
 	match pickup_type:
 		"circle":
@@ -808,8 +858,12 @@ func collect_pickup(pickup) -> void:
 			emit_signal("on_pickup", pickup_type, triangle_pieces)
 		"square":
 			square_pieces += 1
-			#on_pickup.emit(pickup_type, square_pieces)# Emit signal
 			emit_signal("on_pickup", pickup_type, square_pieces)
+		"blueprint":
+			var blueprint_name = pickup_parent.get_meta("blueprint_name", "unknown")
+			if not collected_blueprints.has(blueprint_name):
+				collected_blueprints.append(blueprint_name)
+				emit_signal("blueprint_collected", blueprint_name)
 	
 	# Play collection effect
 	if pickup_particles_scene:
@@ -824,10 +878,7 @@ func collect_pickup(pickup) -> void:
 		audio_player.play()
 	
 	# Remove pickup
-	# pickup.queue_free()
 	pickup_parent.queue_free()
-	
-	
 	
 	# Check if ranged attack should be unlocked
 	check_ranged_unlock()
@@ -1112,14 +1163,14 @@ func handle_checkpoint(checkpoint: Node2D) -> void:
 	is_disabled = true
 	print("Player disabled")
 
-	
-	if mcguffin and door:
+	# Cancel insight circle if active
+	if is_insight_active:
+		end_insight()
+
+	if mcguffin and door and mcguffin.visible:
 		# Store original camera position and zoom
 		var original_camera_pos = camera.global_position
 		var original_camera_zoom = camera.zoom
-		
-		print("Original camera pos: ", original_camera_pos)
-		print("Original camera zoom: ", original_camera_zoom)
 		
 		# Zoom to mcguffin
 		var tween = create_tween()
@@ -1132,7 +1183,6 @@ func handle_checkpoint(checkpoint: Node2D) -> void:
 		await get_tree().create_timer(0.5).timeout
 		
 		# Handle mcguffin meow sequence
-	
 		await mcguffin.play_meow_sequence()
 		
 		# Zoom back out
@@ -1143,6 +1193,199 @@ func handle_checkpoint(checkpoint: Node2D) -> void:
 		await get_tree().create_timer(1.25).timeout
 		# Move mcguffin to door
 		await mcguffin.move_to_door(door)
+	else:
+		# If no mcguffin or it's not visible, just re-enable player movement
+		print("No mcguffin found or not visible")
+	
+	# Re-enable player movement and actions
+	is_disabled = false
+
+func collect_blueprint(blueprint: Blueprint) -> void:
+	if not collected_blueprints.has(blueprint):
+		collected_blueprints.append(blueprint)
+		emit_signal("blueprint_collected", blueprint)
+
+func start_blueprint_building(blueprint: Blueprint) -> void:
+	if is_building or current_blueprint != null:
+		return
 		
-		# Re-enable player movement and actions
-		is_disabled = false
+	# Check if player has a square to spend
+	if shape_counts["square"] <= 0:
+		emit_signal("blueprint_building_failed", blueprint)
+		return
+		
+	# Spend a square
+	shape_counts["square"] -= 1
+	emit_signal("shape_count_changed", "square", shape_counts["square"])
+	
+	# Start building
+	current_blueprint = blueprint
+	is_building = true
+	emit_signal("blueprint_building_started", blueprint)
+	
+	# Enter building state
+	change_state(PlayerState.BUILDING)
+	
+
+func place_shape_on_blueprint(shape_type: String) -> void:
+	if not is_building or current_blueprint == null:
+		return
+		
+	# Check if shape is required and available
+	var required_shapes = current_blueprint.get_required_shapes()
+	if required_shapes[shape_type] <= 0 or shape_counts[shape_type] <= 0:
+		return
+		
+	# Spend the shape
+	shape_counts[shape_type] -= 1
+	emit_signal("shape_count_changed", shape_type, shape_counts[shape_type])
+	
+	# Update required shapes
+	required_shapes[shape_type] -= 1
+	
+	# Check if blueprint is complete
+	var is_complete = true
+	for count in required_shapes.values():
+		if count > 0:
+			is_complete = false
+			break
+			
+	if is_complete:
+		# Complete the blueprint
+		var result_item = current_blueprint.get_result_item()
+		# Add result item to inventory
+		# TODO: Implement inventory system
+		
+		emit_signal("blueprint_building_completed", current_blueprint, result_item)
+		current_blueprint = null
+		is_building = false
+		change_state(PlayerState.IDLE)
+
+func _process_state(delta: float) -> void:
+	match current_state:
+		PlayerState.IDLE:
+			_process_idle_state(delta)
+		PlayerState.WALKING:
+			_process_walking_state(delta)
+		PlayerState.JUMPING:
+			_process_jumping_state(delta)
+		PlayerState.FALLING:
+			_process_falling_state(delta)
+		PlayerState.ATTACKING:
+			_process_attacking_state(delta)
+		PlayerState.HURT:
+			_process_hurt_state(delta)
+		PlayerState.DEAD:
+			_process_dead_state(delta)
+		PlayerState.DISABLED:
+			_process_disabled_state(delta)
+		PlayerState.BUILDING:
+			_process_building_state(delta)
+
+func _process_building_state(delta: float) -> void:
+	# Stop player movement during building
+	velocity = Vector2.ZERO
+	
+	# Disable shape spawning
+	if Input.is_action_just_pressed("projectile"):
+		return  # Prevent square spawning
+	
+	# Handle other inputs
+	_process_movement(delta)
+	_process_jump(delta)
+	_process_attack(delta)
+
+func _process_idle_state(delta: float) -> void:
+	# Handle idle state
+	pass
+
+func _process_walking_state(delta: float) -> void:
+	# Handle walking state
+	pass
+
+func _process_jumping_state(delta: float) -> void:
+	# Handle jumping state
+	pass
+
+func _process_falling_state(delta: float) -> void:
+	# Handle falling state
+	pass
+
+func _process_attacking_state(delta: float) -> void:
+	# Handle attacking state
+	pass
+
+func _process_hurt_state(delta: float) -> void:
+	# Handle hurt state
+	pass
+
+func _process_dead_state(delta: float) -> void:
+	# Handle dead state
+	pass
+
+func _process_disabled_state(delta: float) -> void:
+	# Handle disabled state
+	pass
+
+func _process_movement(delta: float) -> void:
+	# Handle movement state
+	pass
+
+func _process_jump(delta: float) -> void:
+	# Handle jump state
+	pass
+
+func _process_attack(delta: float) -> void:
+	# Handle attack state
+	pass
+
+func change_state(new_state: PlayerState) -> void:
+	# Don't allow state changes while in HURT state
+	if current_state == PlayerState.HURT:
+		return
+		
+	# Exit current state
+	match current_state:
+		PlayerState.IDLE:
+			pass
+		PlayerState.WALKING:
+			pass
+		PlayerState.JUMPING:
+			pass
+		PlayerState.FALLING:
+			pass
+		PlayerState.ATTACKING:
+			pass
+		PlayerState.HURT:
+			pass
+		PlayerState.DEAD:
+			pass
+		PlayerState.DISABLED:
+			pass
+		PlayerState.BUILDING:
+			# Clean up building state
+			current_blueprint = null
+			is_building = false
+			
+	# Enter new state
+	current_state = new_state
+	match new_state:
+		PlayerState.IDLE:
+			pass
+		PlayerState.WALKING:
+			pass
+		PlayerState.JUMPING:
+			pass
+		PlayerState.FALLING:
+			pass
+		PlayerState.ATTACKING:
+			pass
+		PlayerState.HURT:
+			pass
+		PlayerState.DEAD:
+			pass
+		PlayerState.DISABLED:
+			pass
+		PlayerState.BUILDING:
+			# Initialize building state
+			velocity = Vector2.ZERO

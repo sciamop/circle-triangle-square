@@ -19,6 +19,10 @@ boot_splash/use_filter=false
 boot_splash/image="uid://dokj2kx84i3mx"
 config/icon="res://icon.svg"
 
+[autoload]
+
+Global="*res://Scripts/global.gd"
+
 [display]
 
 window/size/viewport_width=1440
@@ -30,6 +34,8 @@ pickup_group=""
 player=""
 insight_item=""
 player_attack=""
+blueprint_zone=""
+blueprint_item=""
 
 [input]
 

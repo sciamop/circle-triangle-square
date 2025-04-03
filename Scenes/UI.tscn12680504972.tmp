@@ -1,0 +1,874 @@
+[gd_scene load_steps=20 format=3 uid="uid://ch4o0guerbahn"]
+
+[ext_resource type="Script" uid="uid://dm4ey0iltuo33" path="res://Scripts/UI.gd" id="1_w371h"]
+[ext_resource type="LabelSettings" uid="uid://pjukfu4qrdup" path="res://Resources/blueprint_label_settings.tres" id="2_qwshj"]
+[ext_resource type="FontFile" uid="uid://dbb1aunswvl1g" path="res://Fonts/circle-triangle-square-Regular.otf" id="3_dewlx"]
+[ext_resource type="Script" uid="uid://dnyl3fayamem0" path="res://Scripts/pickup_tracker.gd" id="4_hfhsn"]
+[ext_resource type="Script" uid="uid://bfkruun4ft5qx" path="res://Scenes/life_indicator.gd" id="5_qwshj"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_xjg7p"]
+font_size = 24
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_hfhsn"]
+font = ExtResource("3_dewlx")
+font_size = 20
+font_color = Color(0.0214346, 0.0214346, 0.0214346, 1)
+shadow_color = Color(1, 1, 1, 0.835294)
+
+[sub_resource type="LabelSettings" id="LabelSettings_qwshj"]
+font = ExtResource("3_dewlx")
+font_size = 20
+font_color = Color(0, 0, 0, 1)
+shadow_color = Color(1, 1, 1, 0.733333)
+
+[sub_resource type="LabelSettings" id="LabelSettings_48q88"]
+font = ExtResource("3_dewlx")
+font_size = 20
+font_color = Color(0, 0, 0, 1)
+outline_color = Color(0.0383972, 0.0383972, 0.0383972, 1)
+shadow_color = Color(1, 1, 1, 0.788235)
+
+[sub_resource type="Animation" id="Animation_qwshj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer/circleCenterContainer/circleIcon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(25, 24)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer/circleCenterContainer/circleIcon:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer/circleCenterContainer/circleIcon:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1.14861, 1.08698)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/triangleVBoxContainer/CenterContainer/triangleIcon:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.0154851, 0.292801)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/squareVBoxContainer/squareCenterContainer/squareIcon:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.359038, 1.25978)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer0/lifeCenterContainer/circleIcon:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(24, 37)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer0/lifeCenterContainer/circleIcon:rotation")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer0/lifeCenterContainer/triangleIcon:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(25, 19)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer0/lifeCenterContainer/triangleIcon:rotation")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer3/lifeCenterContainer/circleIcon:position")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(24, 37)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer3/lifeCenterContainer/circleIcon:rotation")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer3/lifeCenterContainer/triangleIcon:position")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(25, 19)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer3/lifeCenterContainer/triangleIcon:rotation")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer3/lifeCenterContainer/triangleIcon:scale")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.0109501, 0.206528)]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer3/lifeCenterContainer/circleIcon:scale")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.812225, 0.766703)]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/triangleVBoxContainer/CenterContainer/triangleIcon:position")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(25, 20)]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/triangleVBoxContainer/CenterContainer/triangleIcon:rotation")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/squareVBoxContainer/squareCenterContainer/squareIcon:position")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(25, 13)]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/squareVBoxContainer/squareCenterContainer/squareIcon:rotation")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_j04uc"]
+resource_name = "circle_deny"
+length = 0.5
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer/circleCenterContainer/circleIcon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(6, 24), Vector2(41, 24), Vector2(6, 24), Vector2(41, 24), Vector2(6, 24)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer/circleCenterContainer/circleIcon:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 0.0, 0.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_hfhsn"]
+resource_name = "circle_update"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer/circleCenterContainer/circleIcon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(25, 24)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer/circleCenterContainer/circleIcon:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer/circleCenterContainer/circleIcon:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = false
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1.14861, 1.08698), Vector2(1.784, 1.688), Vector2(1.14861, 1.08698)]
+}
+
+[sub_resource type="Animation" id="Animation_b1goy"]
+resource_name = "square_deny"
+length = 0.5
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/squareVBoxContainer/squareCenterContainer/squareIcon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 13), Vector2(49, 13), Vector2(1, 13), Vector2(49, 13), Vector2(25, 13)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/squareVBoxContainer/squareCenterContainer/squareIcon:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 0.0, 0.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_xjg7p"]
+resource_name = "square_update"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/squareVBoxContainer/squareCenterContainer/squareIcon:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.359038, 1.25978), Vector2(0.479, 1.681), Vector2(0.359038, 1.25978)]
+}
+
+[sub_resource type="Animation" id="Animation_mg6lk"]
+resource_name = "take_damage_0"
+length = 0.25
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer0/lifeCenterContainer/circleIcon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(21, 35), Vector2(25, 41), Vector2(20, 37)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer0/lifeCenterContainer/circleIcon:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer0/lifeCenterContainer/triangleIcon:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(25, 19), Vector2(25, 7), Vector2(33, 13)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer0/lifeCenterContainer/triangleIcon:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [-0.191215, 0.0, 0.350774]
+}
+
+[sub_resource type="Animation" id="Animation_wunin"]
+resource_name = "take_damage_3"
+length = 0.5
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer3/lifeCenterContainer/circleIcon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.375, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(17, 34), Vector2(14, 39), Vector2(6, 32), Vector2(6, 32)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer3/lifeCenterContainer/circleIcon:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.375, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 0.0, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer3/lifeCenterContainer/triangleIcon:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.375, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(30, 17), Vector2(21, 12), Vector2(21, 12), Vector2(21, 12)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer3/lifeCenterContainer/triangleIcon:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.375, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.157356, 0.435694, 0.804172, 0.804172]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer3/lifeCenterContainer/triangleIcon:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.125, 0.375, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.0290982, 0.548817), Vector2(0.0109501, 0.206528), Vector2(0.0109501, 0.206528)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer3/lifeCenterContainer/circleIcon:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.125, 0.375, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(3.43847, 3.24575), Vector2(0.812225, 0.766703), Vector2(0.812225, 0.766703)]
+}
+
+[sub_resource type="Animation" id="Animation_vqx31"]
+resource_name = "triangle_deny"
+length = 0.5
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/triangleVBoxContainer/CenterContainer/triangleIcon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(10, 20), Vector2(41, 20), Vector2(11, 20), Vector2(44, 20), Vector2(9, 20)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/triangleVBoxContainer/CenterContainer/triangleIcon:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 0.0, 0.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_48q88"]
+resource_name = "triangle_update"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/triangleVBoxContainer/CenterContainer/triangleIcon:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.0154851, 0.292801), Vector2(0.02, 0.391), Vector2(0.0154851, 0.292801)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_48q88"]
+_data = {
+&"RESET": SubResource("Animation_qwshj"),
+&"circle_deny": SubResource("Animation_j04uc"),
+&"circle_update": SubResource("Animation_hfhsn"),
+&"square_deny": SubResource("Animation_b1goy"),
+&"square_update": SubResource("Animation_xjg7p"),
+&"take_damage_0": SubResource("Animation_mg6lk"),
+&"take_damage_3": SubResource("Animation_wunin"),
+&"triangle_deny": SubResource("Animation_vqx31"),
+&"triangle_update": SubResource("Animation_48q88")
+}
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_w371h")
+metadata/_edit_horizontal_guides_ = [626.0, 600.0]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="OOB" type="ColorRect" parent="CanvasLayer/Control"]
+offset_left = 339.0
+offset_top = 81.0
+offset_right = 737.0
+offset_bottom = 283.0
+scale = Vector2(2.13412, 2.28433)
+color = Color(1, 1, 1, 0.65098)
+
+[node name="Instructions" type="Label" parent="CanvasLayer/Control/OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -188.0
+offset_top = -42.9999
+offset_right = 9.0
+offset_bottom = 44.0001
+grow_horizontal = 2
+grow_vertical = 2
+text = "[SPACE]             JUMP
+[CONTROL]      MELEE ATTACK
+[1]                      SELECT CIRCLE - ACTIVATES INSIGHT
+[2]                      SELECT TRIANGLE - FIRES PROJECTILE
+[3]                      SELECT SQUARE - ??????
+[B]                      ACTIVATE SHAPE "
+label_settings = ExtResource("2_qwshj")
+
+[node name="Instructions2" type="Label" parent="CanvasLayer/Control/OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -188.0
+offset_top = 67.0001
+offset_right = -27.0
+offset_bottom = 87.0001
+grow_horizontal = 2
+grow_vertical = 2
+text = "PRESS ANY KEY TO START"
+label_settings = ExtResource("2_qwshj")
+
+[node name="blueprint" type="Label" parent="CanvasLayer/Control/OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -193.0
+offset_top = -88.0932
+offset_right = 177.0
+offset_bottom = -43.0932
+grow_horizontal = 2
+grow_vertical = 2
+text = "INSTRUCTIONS"
+label_settings = ExtResource("2_qwshj")
+
+[node name="grappling hook" type="Label" parent="CanvasLayer/Control/OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -194.0
+offset_top = -81.1385
+offset_right = 176.0
+offset_bottom = -36.1385
+grow_horizontal = 2
+grow_vertical = 2
+text = "WELCOME"
+label_settings = SubResource("LabelSettings_xjg7p")
+
+[node name="CIR" type="Area2D" parent="CanvasLayer/Control/OOB"]
+position = Vector2(25, 123)
+scale = Vector2(0.0569521, 0.0569521)
+collision_mask = 3
+
+[node name="SQ" type="Line2D" parent="CanvasLayer/Control/OOB/CIR"]
+position = Vector2(111.111, 27.5981)
+points = PackedVector2Array(-83, -80, 77, -80, 76, 66, -83, 66)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="TR" type="Area2D" parent="CanvasLayer/Control/OOB"]
+position = Vector2(35, 107)
+scale = Vector2(0.0135777, 0.0135777)
+
+[node name="TRI" type="Line2D" parent="CanvasLayer/Control/OOB/TR"]
+position = Vector2(-291.288, 231.52)
+scale = Vector2(4.12913, 4.12913)
+points = PackedVector2Array(1, -82, -83, 59, 88, 59)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+joint_mode = 1
+
+[node name="SQU" type="Area2D" parent="CanvasLayer/Control/OOB"]
+position = Vector2(29, 97)
+scale = Vector2(0.0135777, 0.0135777)
+collision_mask = 3
+
+[node name="SQ" type="Line2D" parent="CanvasLayer/Control/OOB/SQU"]
+position = Vector2(116.513, -57.8791)
+scale = Vector2(3.26719, 3.26719)
+points = PackedVector2Array(-82, -47, -48, -80, 0, -93, 48, -80, 83, -46, 96, 1, 83, 48, 48, 81, 0, 94, -48, 81, -83, 48, -96, 0)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="BoxContainer" type="CenterContainer" parent="CanvasLayer/Control"]
+layout_direction = 2
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 653.0
+offset_top = 584.0
+offset_right = 811.0
+offset_bottom = 649.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/BoxContainer"]
+layout_mode = 2
+script = ExtResource("4_hfhsn")
+active_color = Color(0.698712, 0, 0.0298413, 1)
+
+[node name="circleVBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/BoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+
+[node name="circleCenterContainer" type="CenterContainer" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="circleIcon" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer/circleCenterContainer"]
+position = Vector2(25, 24)
+scale = Vector2(1.14861, 1.08698)
+color = Color(0, 0, 0, 1)
+offset = Vector2(8.01086e-05, -3.8147e-05)
+polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+
+[node name="circleLabel" type="Label" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+label_settings = SubResource("LabelSettings_hfhsn")
+horizontal_alignment = 1
+
+[node name="triangleVBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/BoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/triangleVBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="triangleIcon" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/triangleVBoxContainer/CenterContainer"]
+position = Vector2(25, 20)
+scale = Vector2(0.0154851, 0.292801)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-1216.78, 59.4238, 1001.33, 59.424, -101.033, -30.5611)
+
+[node name="triangleLabel" type="Label" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/triangleVBoxContainer"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+label_settings = SubResource("LabelSettings_qwshj")
+horizontal_alignment = 1
+
+[node name="squareVBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/BoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+
+[node name="squareCenterContainer" type="CenterContainer" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/squareVBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="squareIcon" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/squareVBoxContainer/squareCenterContainer"]
+position = Vector2(25, 13)
+scale = Vector2(0.359038, 1.25978)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-39.6514, 18.9757, 38.8253, 18.9757, 38.8253, -1.55965, -38.8253, -1.55965)
+
+[node name="squareLabel" type="Label" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/squareVBoxContainer"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+label_settings = SubResource("LabelSettings_48q88")
+horizontal_alignment = 1
+
+[node name="lifeBoxContainer" type="BoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 15.0
+offset_right = 222.0
+offset_bottom = 74.0
+
+[node name="lifeHBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/lifeBoxContainer"]
+layout_mode = 2
+script = ExtResource("5_qwshj")
+
+[node name="lifeVBoxContainer0" type="VBoxContainer" parent="CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+
+[node name="lifeCenterContainer" type="CenterContainer" parent="CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer0"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="circleIcon" type="Polygon2D" parent="CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer0/lifeCenterContainer"]
+position = Vector2(24, 37)
+scale = Vector2(0.812225, 0.766703)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(12.3119, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12.3119, 0, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+
+[node name="triangleIcon" type="Polygon2D" parent="CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer0/lifeCenterContainer"]
+position = Vector2(25, 19)
+scale = Vector2(0.0109501, 0.206528)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-913.234, 82.3134, 730.588, 82.3134, -91.3232, -121.049)
+
+[node name="lifeVBoxContainer1" type="VBoxContainer" parent="CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+
+[node name="lifeCenterContainer" type="CenterContainer" parent="CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer1"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="circleIcon" type="Polygon2D" parent="CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer1/lifeCenterContainer"]
+position = Vector2(24, 37)
+scale = Vector2(0.812225, 0.766703)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(12.3119, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12.3119, 0, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+
+[node name="triangleIcon" type="Polygon2D" parent="CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer1/lifeCenterContainer"]
+position = Vector2(25, 19)
+scale = Vector2(0.0109501, 0.206528)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-913.234, 82.3134, 730.588, 82.3134, -91.3232, -121.049)
+
+[node name="lifeVBoxContainer2" type="VBoxContainer" parent="CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+
+[node name="lifeCenterContainer" type="CenterContainer" parent="CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer2"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="circleIcon" type="Polygon2D" parent="CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer2/lifeCenterContainer"]
+position = Vector2(24, 37)
+scale = Vector2(0.812225, 0.766703)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(12.3119, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12.3119, 0, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+
+[node name="triangleIcon" type="Polygon2D" parent="CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer2/lifeCenterContainer"]
+position = Vector2(25, 19)
+scale = Vector2(0.0109501, 0.206528)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-913.234, 82.3134, 730.588, 82.3134, -91.3232, -121.049)
+
+[node name="lifeVBoxContainer3" type="VBoxContainer" parent="CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+
+[node name="lifeCenterContainer" type="CenterContainer" parent="CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer3"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="circleIcon" type="Polygon2D" parent="CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer3/lifeCenterContainer"]
+position = Vector2(24, 37)
+scale = Vector2(0.812225, 0.766703)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(12.3119, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12.3119, 0, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+
+[node name="triangleIcon" type="Polygon2D" parent="CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer3/lifeCenterContainer"]
+position = Vector2(25, 19)
+scale = Vector2(0.0109501, 0.206528)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-913.234, 82.3134, 730.588, 82.3134, -91.3232, -121.049)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_48q88")
+}

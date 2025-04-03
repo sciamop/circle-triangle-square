@@ -5,6 +5,7 @@ var end_pos: Vector2
 var travel_time: float = 0.5
 var elapsed_time: float = 0.0
 var curve: Curve = Curve.new()
+signal animation_finished()
 
 func _ready():
 	# Create a smooth curve for the animation

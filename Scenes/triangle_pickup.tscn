@@ -8,6 +8,8 @@ collision_mask = 7
 mass = 0.125
 inertia = 11.0
 script = ExtResource("1_wm5mj")
+max_speed = 600.0
+acceleration = 2000.0
 metadata/_edit_vertical_guides_ = [-99.0]
 
 [node name="triangleShape" type="Polygon2D" parent="."]

@@ -22,6 +22,6 @@ func play_meow_sequence() -> void:
 
 func move_to_door(door: Node2D) -> void:
 	var tween = create_tween()
-	tween.tween_property(self, "global_position", door.global_position, 0.5)
+	tween.tween_property(self, "global_position", Vector2(door.global_position.x,global_position.y), 0.5)
 	await tween.finished
 	visible = false 

@@ -1,9 +1,14 @@
-[gd_scene load_steps=18 format=3 uid="uid://ch4o0guerbahn"]
+[gd_scene load_steps=20 format=3 uid="uid://ch4o0guerbahn"]
 
 [ext_resource type="Script" uid="uid://dm4ey0iltuo33" path="res://Scripts/UI.gd" id="1_w371h"]
+[ext_resource type="LabelSettings" uid="uid://pjukfu4qrdup" path="res://Resources/blueprint_label_settings.tres" id="2_qwshj"]
 [ext_resource type="FontFile" uid="uid://dbb1aunswvl1g" path="res://Fonts/circle-triangle-square-Regular.otf" id="3_dewlx"]
 [ext_resource type="Script" uid="uid://dnyl3fayamem0" path="res://Scripts/pickup_tracker.gd" id="4_hfhsn"]
 [ext_resource type="Script" uid="uid://bfkruun4ft5qx" path="res://Scenes/life_indicator.gd" id="5_qwshj"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_xjg7p"]
+font_size = 24
+font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_hfhsn"]
 font = ExtResource("3_dewlx")
@@ -568,6 +573,121 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="OOB" type="ColorRect" parent="CanvasLayer/Control"]
+offset_left = 339.0
+offset_top = 81.0
+offset_right = 737.0
+offset_bottom = 283.0
+scale = Vector2(2.13412, 2.28433)
+color = Color(1, 1, 1, 0.937255)
+
+[node name="Instructions" type="Label" parent="CanvasLayer/Control/OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -188.0
+offset_top = -42.9999
+offset_right = 9.0
+offset_bottom = 44.0001
+grow_horizontal = 2
+grow_vertical = 2
+text = "[SPACE]             JUMP
+[CONTROL]      MELEE ATTACK
+[1]                      SELECT CIRCLE - ACTIVATES INSIGHT
+[2]                      SELECT TRIANGLE - FIRES PROJECTILE
+[3]                      SELECT SQUARE - ??????
+[B]                      ACTIVATE SHAPE "
+label_settings = ExtResource("2_qwshj")
+
+[node name="Instructions2" type="Label" parent="CanvasLayer/Control/OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -188.0
+offset_top = 67.0001
+offset_right = -27.0
+offset_bottom = 87.0001
+grow_horizontal = 2
+grow_vertical = 2
+text = "PRESS ANY KEY TO START"
+label_settings = ExtResource("2_qwshj")
+
+[node name="blueprint" type="Label" parent="CanvasLayer/Control/OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -193.0
+offset_top = -88.0932
+offset_right = 177.0
+offset_bottom = -43.0932
+grow_horizontal = 2
+grow_vertical = 2
+text = "INSTRUCTIONS"
+label_settings = ExtResource("2_qwshj")
+
+[node name="grappling hook" type="Label" parent="CanvasLayer/Control/OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -194.0
+offset_top = -81.1385
+offset_right = 176.0
+offset_bottom = -36.1385
+grow_horizontal = 2
+grow_vertical = 2
+text = "WELCOME"
+label_settings = SubResource("LabelSettings_xjg7p")
+
+[node name="CIR" type="Area2D" parent="CanvasLayer/Control/OOB"]
+position = Vector2(25, 123)
+scale = Vector2(0.0569521, 0.0569521)
+collision_mask = 3
+
+[node name="SQ" type="Line2D" parent="CanvasLayer/Control/OOB/CIR"]
+position = Vector2(111.111, 27.5981)
+points = PackedVector2Array(-83, -80, 77, -80, 76, 66, -83, 66)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="TR" type="Area2D" parent="CanvasLayer/Control/OOB"]
+position = Vector2(35, 107)
+scale = Vector2(0.0135777, 0.0135777)
+
+[node name="TRI" type="Line2D" parent="CanvasLayer/Control/OOB/TR"]
+position = Vector2(-291.288, 231.52)
+scale = Vector2(4.12913, 4.12913)
+points = PackedVector2Array(1, -82, -83, 59, 88, 59)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+joint_mode = 1
+
+[node name="SQU" type="Area2D" parent="CanvasLayer/Control/OOB"]
+position = Vector2(29, 97)
+scale = Vector2(0.0135777, 0.0135777)
+collision_mask = 3
+
+[node name="SQ" type="Line2D" parent="CanvasLayer/Control/OOB/SQU"]
+position = Vector2(116.513, -57.8791)
+scale = Vector2(3.26719, 3.26719)
+points = PackedVector2Array(-82, -47, -48, -80, 0, -93, 48, -80, 83, -46, 96, 1, 83, 48, 48, 81, 0, 94, -48, 81, -83, 48, -96, 0)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
 
 [node name="BoxContainer" type="CenterContainer" parent="CanvasLayer/Control"]
 layout_direction = 2

@@ -1,0 +1,8 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://pjukfu4qrdup"]
+
+[sub_resource type="SystemFont" id="SystemFont_wlm2b"]
+
+[resource]
+font = SubResource("SystemFont_wlm2b")
+font_size = 8
+font_color = Color(0, 0, 0, 1)
