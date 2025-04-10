@@ -1,61 +1,54 @@
 extends CanvasLayer
-
-#var slider_scene
-#var slider:HSlider
-#var label:Label
-#
-#var slider_data:Array = ["forceX","forceY","dirX","dirY"]
-#var slider_scene_height = 40
-#var sliders_size:int 
-#
-#@onready var arm_hurt_box: AnimatableBody2D = $"/root/Game/Player/ArmHurtBoxWrapper"
-#@onready var polygon_2d: Polygon2D = $Polygon2D
-#
-#func _ready() -> void:
-	#sliders_size = slider_data.size()
-	#var counter:int = 0
-#
-	#for items in slider_data:
-		#slider_scene = preload("res://Scenes/slider.tscn").instantiate() 
-		#slider_scene.global_position.y = slider_scene_height * counter
-		#counter = counter + 1
-		#
-		#add_child(slider_scene)
-		#
-		#
-	#polygon_2d.scale.y = sliders_size
-	#
-#
-#func set_slider_data() -> void:
-	#var kids = get_children()
-	#for kid in kids:
-		#if kid is HSlider:
-			#var hslider = kid
-			#hslider.max_value = 1000
-			#hslider.min_value = 10
-			#hslider._on_value_changed.connect(_on_value_changed.bind(100))
-#
-#func _on_value_changed(val:int):
-	#print(val)
-	#
-			
-			
-	
 	
 
 @onready var oob_dialogue = $CanvasLayer/Control/OOB
+@onready var designintent_dialogue: ColorRect = $CanvasLayer/Control/DESIGNINTENT
+var key_presses: int = 0
 
 func _ready() -> void:
 	# Only show the dialogue if this is the first start
 	if not Global.has_seen_onboarding:
-		oob_dialogue.show()
-		Global.has_seen_onboarding = true
+		oob_dialogue.hide()
+		slide_dialog(null, designintent_dialogue)
 	else:
 		oob_dialogue.hide()
+		designintent_dialogue.hide()
+
+func slide_dialog( out_dialog: ColorRect, in_dialog: ColorRect) -> void:
+	var tween = create_tween()
+	if (out_dialog):
+
+		var out_dialog_target_position_x:int = out_dialog.global_position.x - 1100
+		out_dialog.show()
+		tween.tween_property(out_dialog, "global_position", Vector2(out_dialog_target_position_x, out_dialog.global_position.y), 0.25)
+		await tween.finished
+		out_dialog.hide()
+	
+	if (in_dialog):
+		tween = create_tween()
+		var in_dialog_target_position: Vector2 = in_dialog.global_position
+		in_dialog.global_position.x = in_dialog.global_position.x + 1100
+		in_dialog.show()
+		tween.tween_property(in_dialog, "global_position", in_dialog_target_position, 0.25)
+		await tween.finished
+		
+	
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventKey and event.pressed and oob_dialogue.visible:
-		oob_dialogue.hide()
-		get_viewport().set_input_as_handled()
+	
+	if event is InputEventKey and event.pressed:
+		if (key_presses > 0):
+			slide_dialog(oob_dialogue, null)
+			designintent_dialogue.hide()
+			get_viewport().set_input_as_handled()
+			 #and oob_dialogue.visible
+		if (key_presses == 0):
+			slide_dialog(designintent_dialogue, oob_dialogue)
+			key_presses = 1
+			get_viewport().set_input_as_handled()
+			Global.has_seen_onboarding = true
+			
+			
+			
 	
 	

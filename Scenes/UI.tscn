@@ -575,6 +575,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="OOB" type="ColorRect" parent="CanvasLayer/Control"]
+layout_mode = 0
 offset_left = 339.0
 offset_top = 81.0
 offset_right = 737.0
@@ -603,22 +604,6 @@ text = "[SPACE]             JUMP
 [B]                      ACTIVATE SHAPE "
 label_settings = ExtResource("2_qwshj")
 
-[node name="Instructions2" type="Label" parent="CanvasLayer/Control/OOB"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -188.0
-offset_top = 67.0001
-offset_right = -27.0
-offset_bottom = 87.0001
-grow_horizontal = 2
-grow_vertical = 2
-text = "PRESS ANY KEY TO START"
-label_settings = ExtResource("2_qwshj")
-
 [node name="blueprint" type="Label" parent="CanvasLayer/Control/OOB"]
 layout_mode = 1
 anchors_preset = 8
@@ -632,7 +617,7 @@ offset_right = 177.0
 offset_bottom = -43.0932
 grow_horizontal = 2
 grow_vertical = 2
-text = "INSTRUCTIONS"
+text = "WELCOME"
 label_settings = ExtResource("2_qwshj")
 
 [node name="grappling hook" type="Label" parent="CanvasLayer/Control/OOB"]
@@ -648,7 +633,7 @@ offset_right = 176.0
 offset_bottom = -36.1385
 grow_horizontal = 2
 grow_vertical = 2
-text = "WELCOME"
+text = "CONTROLS"
 label_settings = SubResource("LabelSettings_xjg7p")
 
 [node name="CIR" type="Area2D" parent="CanvasLayer/Control/OOB"]
@@ -682,6 +667,124 @@ scale = Vector2(0.0135777, 0.0135777)
 collision_mask = 3
 
 [node name="SQ" type="Line2D" parent="CanvasLayer/Control/OOB/SQU"]
+position = Vector2(116.513, -57.8791)
+scale = Vector2(3.26719, 3.26719)
+points = PackedVector2Array(-82, -47, -48, -80, 0, -93, 48, -80, 83, -46, 96, 1, 83, 48, 48, 81, 0, 94, -48, 81, -83, 48, -96, 0)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="Instructions3" type="Label" parent="CanvasLayer/Control/OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 24.9799
+offset_top = 81.5481
+offset_right = 186.98
+offset_bottom = 98.5481
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 8
+text = "PRESS ANY KEY TO START"
+horizontal_alignment = 2
+autowrap_mode = 1
+
+[node name="DESIGNINTENT" type="ColorRect" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 339.0
+offset_top = 81.0
+offset_right = 737.0
+offset_bottom = 283.0
+scale = Vector2(2.13412, 2.28433)
+color = Color(1, 1, 1, 0.937255)
+
+[node name="Instructions" type="Label" parent="CanvasLayer/Control/DESIGNINTENT"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -190.0
+offset_top = -48.0
+offset_right = 185.0
+offset_bottom = 89.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "The core idea that I want to explore in O /\\ [ ] (“circle triangle square”) is ‘building under pressure’.  The player is tasked with reuniting (capturing?) a cat that is out-of-reach at the beginning of the level. In this geometric world, the player can harvest shapes from enemies that will allow them to do two things: build the environment and build items. These builds will help the player to overcome obstacles (ie a too-high platform or a hitherto undefeatable enemy) to gain access to the cat. What is currently available in the demo is just the core mechanics of building environment and building an item. The next step is to add the “under pressure” (and puzzle solving) bits which will be expressed in the level design. Building, puzzle-solving, pressure, discovery: this comprises the core gameplay loop of O /\\ [ ]"
+label_settings = ExtResource("2_qwshj")
+autowrap_mode = 1
+
+[node name="Instructions2" type="Label" parent="CanvasLayer/Control/DESIGNINTENT"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 24.9799
+offset_top = 81.5481
+offset_right = 186.98
+offset_bottom = 98.5481
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 8
+text = "PRESS ANY KEY FOR CONTROLS"
+horizontal_alignment = 2
+autowrap_mode = 1
+
+[node name="grappling hook" type="Label" parent="CanvasLayer/Control/DESIGNINTENT"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -194.0
+offset_top = -81.0
+offset_right = 47.0
+offset_bottom = -36.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "DESIGN INTENT"
+label_settings = SubResource("LabelSettings_xjg7p")
+
+[node name="CIR" type="Area2D" parent="CanvasLayer/Control/DESIGNINTENT"]
+position = Vector2(39.0576, 16.623)
+scale = Vector2(0.0569521, 0.0569521)
+collision_mask = 3
+
+[node name="SQ" type="Line2D" parent="CanvasLayer/Control/DESIGNINTENT/CIR"]
+position = Vector2(111.111, 27.5981)
+points = PackedVector2Array(-83, -80, 77, -80, 76, 66, -83, 66)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="TR" type="Area2D" parent="CanvasLayer/Control/DESIGNINTENT"]
+position = Vector2(30.3135, 15.0696)
+scale = Vector2(0.0135777, 0.0135777)
+
+[node name="TRI" type="Line2D" parent="CanvasLayer/Control/DESIGNINTENT/TR"]
+position = Vector2(-291.288, 231.52)
+scale = Vector2(4.12913, 4.12913)
+points = PackedVector2Array(1, -82, -83, 59, 88, 59)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+joint_mode = 1
+
+[node name="SQU" type="Area2D" parent="CanvasLayer/Control/DESIGNINTENT"]
+position = Vector2(9.78613, 19.0776)
+scale = Vector2(0.0135777, 0.0135777)
+collision_mask = 3
+
+[node name="SQ" type="Line2D" parent="CanvasLayer/Control/DESIGNINTENT/SQU"]
 position = Vector2(116.513, -57.8791)
 scale = Vector2(3.26719, 3.26719)
 points = PackedVector2Array(-82, -47, -48, -80, 0, -93, 48, -80, 83, -46, 96, 1, 83, 48, 48, 81, 0, 94, -48, 81, -83, 48, -96, 0)

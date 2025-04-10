@@ -108,7 +108,7 @@ func start_building() -> void:
 	# Zoom to mcguffin
 	tween = create_tween()
 	tween.tween_property(camera, "global_position", camera_target, 0.5)
-	tween.parallel().tween_property(camera, "zoom", Vector2(4.2, 4.2), 0.5)
+	tween.parallel().tween_property(camera, "zoom", Vector2(3.2, 3.2), 0.5)
 
 
 	# Show the panel but keep it at 1px width

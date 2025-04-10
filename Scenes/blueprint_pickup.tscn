@@ -78,6 +78,7 @@ collision_mask = 0
 script = ExtResource("1_2k4m3")
 glow_color = Color(0.831373, 0.721569, 0.0588235, 1)
 glow_intensity = 1.0
+metadata/_edit_vertical_guides_ = [-324.0]
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 scale = Vector2(1.03963, 1.03963)
@@ -106,13 +107,83 @@ libraries = {
 autoplay = "idle"
 
 [node name="BuildingPanel" type="ColorRect" parent="."]
-visible = false
 offset_left = -199.0
 offset_top = -157.961
 offset_right = 199.0
 offset_bottom = 44.0389
 
+[node name="Square" type="HBoxContainer" parent="BuildingPanel"]
+layout_mode = 2
+offset_left = 204.0
+offset_top = 168.89
+offset_right = 364.0
+offset_bottom = 180.89
+alignment = 1
+
+[node name="Count" type="Label" parent="BuildingPanel/Square"]
+layout_mode = 2
+text = "0/0"
+label_settings = ExtResource("3_wl3ot")
+
+[node name="Triangle" type="HBoxContainer" parent="BuildingPanel"]
+layout_mode = 2
+offset_left = 140.0
+offset_top = 167.896
+offset_right = 300.0
+offset_bottom = 179.896
+alignment = 1
+
+[node name="Count" type="Label" parent="BuildingPanel/Triangle"]
+layout_mode = 2
+text = "0/0"
+label_settings = ExtResource("3_wl3ot")
+
+[node name="Circle" type="HBoxContainer" parent="BuildingPanel"]
+layout_mode = 2
+offset_left = 77.0
+offset_top = 168.89
+offset_right = 237.0
+offset_bottom = 180.89
+alignment = 1
+
+[node name="Count" type="Label" parent="BuildingPanel/Circle"]
+layout_mode = 2
+text = "0/0"
+label_settings = ExtResource("3_wl3ot")
+
 [node name="ShapeCounts" type="VBoxContainer" parent="BuildingPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -104.0
+offset_top = -55.307
+offset_right = 56.0
+offset_bottom = 64.693
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Instructions" type="Label" parent="BuildingPanel"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -78.0
+offset_top = 66.8962
+offset_right = 83.0
+offset_bottom = 86.8962
+grow_horizontal = 2
+grow_vertical = 2
+text = " [1]                         [2]                        [3]"
+label_settings = ExtResource("3_wl3ot")
+
+[node name="Instructions2" type="Label" parent="BuildingPanel"]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -121,83 +192,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -80.0
-offset_top = -60.0
-offset_right = 80.0
-offset_bottom = 60.0
-grow_horizontal = 2
-grow_vertical = 2
-alignment = 1
-
-[node name="Circle" type="HBoxContainer" parent="BuildingPanel/ShapeCounts"]
-layout_mode = 2
-alignment = 1
-
-[node name="Label" type="Label" parent="BuildingPanel/ShapeCounts/Circle"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "Circles:"
-label_settings = ExtResource("3_wl3ot")
-
-[node name="Count" type="Label" parent="BuildingPanel/ShapeCounts/Circle"]
-layout_mode = 2
-text = "0/0"
-label_settings = ExtResource("3_wl3ot")
-
-[node name="Triangle" type="HBoxContainer" parent="BuildingPanel/ShapeCounts"]
-layout_mode = 2
-alignment = 1
-
-[node name="Label" type="Label" parent="BuildingPanel/ShapeCounts/Triangle"]
-layout_mode = 2
-text = "Triangles:"
-label_settings = ExtResource("3_wl3ot")
-
-[node name="Count" type="Label" parent="BuildingPanel/ShapeCounts/Triangle"]
-layout_mode = 2
-text = "0/0"
-label_settings = ExtResource("3_wl3ot")
-
-[node name="Square" type="HBoxContainer" parent="BuildingPanel/ShapeCounts"]
-layout_mode = 2
-alignment = 1
-
-[node name="Label" type="Label" parent="BuildingPanel/ShapeCounts/Square"]
-layout_mode = 2
-text = "Squares:"
-label_settings = ExtResource("3_wl3ot")
-
-[node name="Count" type="Label" parent="BuildingPanel/ShapeCounts/Square"]
-layout_mode = 2
-text = "0/0"
-label_settings = ExtResource("3_wl3ot")
-
-[node name="Instructions" type="Label" parent="BuildingPanel"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -53.0
-offset_top = 67.8898
-offset_right = 108.0
-offset_bottom = 87.8898
-grow_horizontal = 2
-grow_vertical = 2
-text = " [1]                         [2]                        [3]"
-label_settings = ExtResource("3_wl3ot")
-
-[node name="Instructions2" type="Label" parent="BuildingPanel"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -53.0
-offset_top = 55.9675
-offset_right = 108.0
-offset_bottom = 75.9675
+offset_top = 48.0194
+offset_right = 81.0
+offset_bottom = 68.0194
 grow_horizontal = 2
 grow_vertical = 2
 text = "PRESS KEYS TO PLACE..."
@@ -237,7 +234,7 @@ text = "GRAPPLING HOOK"
 label_settings = SubResource("LabelSettings_wl3ot")
 
 [node name="CIR" type="Area2D" parent="BuildingPanel"]
-position = Vector2(283, 174.851)
+position = Vector2(258, 173.857)
 scale = Vector2(0.072, 0.072)
 collision_mask = 3
 
@@ -249,7 +246,7 @@ width = 30.0
 default_color = Color(1, 0, 0, 1)
 
 [node name="TR" type="Area2D" parent="BuildingPanel"]
-position = Vector2(234, 171.87)
+position = Vector2(205, 169.883)
 scale = Vector2(0.0171652, 0.0171652)
 
 [node name="TRI" type="Line2D" parent="BuildingPanel/TR"]
@@ -262,7 +259,7 @@ default_color = Color(1, 0, 0, 1)
 joint_mode = 1
 
 [node name="SQU" type="Area2D" parent="BuildingPanel"]
-position = Vector2(164, 176.838)
+position = Vector2(139, 175.844)
 scale = Vector2(0.0171652, 0.0171652)
 collision_mask = 3
 
@@ -326,8 +323,9 @@ polygon = PackedVector2Array(-100, 2, -86, 50, -50, 85, 0, 99, 50, 84, 86, 51, 1
 
 [node name="item_blueprint_grapplinghook" type="Area2D" parent="." groups=["blueprint_item"]]
 visible = false
-position = Vector2(-124, -153.996)
-scale = Vector2(0.815, 0.815)
+position = Vector2(72, -3.97409)
+rotation = 3.23603
+scale = Vector2(0.451887, 0.451887)
 
 [node name="blueprint_triangle3" type="Area2D" parent="item_blueprint_grapplinghook"]
 position = Vector2(103, 94.3757)
