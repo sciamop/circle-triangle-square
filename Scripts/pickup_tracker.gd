@@ -20,6 +20,7 @@ var currently_activated:String = "triangle"
 signal on_score(circle_score,triangle_score,square_score)
 
 func _ready() -> void:
+	print("Pickup tracker ready")
 	# Add shape groups to icons
 	circle_icon.add_to_group("shape_circle")
 	triangle_icon.add_to_group("shape_triangle")
@@ -92,7 +93,6 @@ func no_projectile(shape: String) -> void:
 	print(shape + "_deny")
 	await animation_player.animation_finished
 	animation_player.play("RESET")
-	pass
 	
 
 	

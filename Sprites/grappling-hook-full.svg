@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="uuid-12c6c760-22ad-4587-a39e-d77065fe0bfd" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1687.34 1406.54">
+  <defs>
+    <style>
+      .uuid-f72a21f6-57f7-49af-a0ce-5ed90c7b55ee {
+        fill: none;
+        stroke: #000;
+        stroke-miterlimit: 10;
+        stroke-width: 66px;
+      }
+
+      .uuid-7eb312ae-04a6-4216-b75f-f377c8e9f636 {
+        fill: #d00023;
+      }
+    </style>
+  </defs>
+  <g id="uuid-40c1e53f-d527-41e9-9227-a268d5f4445a" data-name="Layer 1">
+    <polygon class="uuid-7eb312ae-04a6-4216-b75f-f377c8e9f636" points="1565.52 869.19 1687.34 658.19 1443.7 658.19 1565.52 869.19"/>
+    <polygon class="uuid-7eb312ae-04a6-4216-b75f-f377c8e9f636" points="811.08 121.82 1022.08 243.64 1022.08 0 811.08 121.82"/>
+    <rect class="uuid-7eb312ae-04a6-4216-b75f-f377c8e9f636" x="810.3" y="708.93" width="154" height="154" transform="translate(-295.85 857.61) rotate(-45)"/>
+    <rect class="uuid-7eb312ae-04a6-4216-b75f-f377c8e9f636" x="813.44" y="610.28" width="345" height="154" transform="translate(-197.21 898.47) rotate(-45)"/>
+    <rect class="uuid-7eb312ae-04a6-4216-b75f-f377c8e9f636" x="1124.96" y="394.26" width="154" height="154" transform="translate(18.81 987.95) rotate(-45)"/>
+    <circle class="uuid-7eb312ae-04a6-4216-b75f-f377c8e9f636" cx="758.61" cy="914.62" r="84.85"/>
+    <rect class="uuid-7eb312ae-04a6-4216-b75f-f377c8e9f636" x="1064.15" y="41.42" width="363.3" height="154"/>
+    <rect class="uuid-7eb312ae-04a6-4216-b75f-f377c8e9f636" x="1482.05" y="243.65" width="154" height="363.3"/>
+    <rect class="uuid-7eb312ae-04a6-4216-b75f-f377c8e9f636" x="1479.93" y="37.17" width="154" height="154"/>
+    <polygon class="uuid-7eb312ae-04a6-4216-b75f-f377c8e9f636" points="1402.41 268.66 1204.66 267.49 1403.59 466.41 1402.41 268.66"/>
+    <path class="uuid-f72a21f6-57f7-49af-a0ce-5ed90c7b55ee" d="M690.57,991.45c-30,30-55,122-152,78-76.18-34.56-119-187-226-128-186.43,102.8,169.9,344.67,69,415-40.73,28.39-143.98,41.97-361-131"/>
+  </g>
+</svg>

@@ -21,7 +21,7 @@ class_name Blueprint
 #@onready var collision_shape: CollisionShape2D = $CollisionShape2D
 #@onready var sprite: Sprite2D = $Sprite2D
 @onready var building_panel: ColorRect = $BuildingPanel
-@onready var shape_counts: VBoxContainer = $BuildingPanel/ShapeCounts
+@onready var shape_counts: HBoxContainer = $BuildingPanel/ShapeCounts
 
 # State
 var player_in_range: bool = false
@@ -194,7 +194,7 @@ func place_shape(shape_type: String) -> void:
 								# Check if blueprint is complete
 								if is_complete():
 									complete_blueprint()
-						break
+							return
 		
 		# Check if blueprint is complete
 		if is_complete():

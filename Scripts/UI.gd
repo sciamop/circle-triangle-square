@@ -11,26 +11,32 @@ func _ready() -> void:
 		oob_dialogue.hide()
 		slide_dialog(null, designintent_dialogue)
 	else:
-		oob_dialogue.hide()
-		designintent_dialogue.hide()
+		hide_all_oob()
+	
+func hide_all_oob() -> void:
+	var all_oob = get_tree().get_nodes_in_group("OOB")
+	for oob in all_oob:
+		oob.hide()
 
 func slide_dialog( out_dialog: ColorRect, in_dialog: ColorRect) -> void:
-	var tween = create_tween()
+	
 	if (out_dialog):
 
 		var out_dialog_target_position_x:int = out_dialog.global_position.x - 1100
 		out_dialog.show()
-		tween.tween_property(out_dialog, "global_position", Vector2(out_dialog_target_position_x, out_dialog.global_position.y), 0.25)
-		await tween.finished
+		var out_tween = create_tween()
+		out_tween.tween_property(out_dialog, "global_position", Vector2(out_dialog_target_position_x, out_dialog.global_position.y), 0.25)
+		await out_tween.finished
 		out_dialog.hide()
 	
 	if (in_dialog):
-		tween = create_tween()
+		
 		var in_dialog_target_position: Vector2 = in_dialog.global_position
 		in_dialog.global_position.x = in_dialog.global_position.x + 1100
 		in_dialog.show()
-		tween.tween_property(in_dialog, "global_position", in_dialog_target_position, 0.25)
-		await tween.finished
+		var in_tween = create_tween()
+		in_tween.tween_property(in_dialog, "global_position", in_dialog_target_position, 0.25)
+		await in_tween.finished
 		
 	
 

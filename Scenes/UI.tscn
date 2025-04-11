@@ -1,9 +1,12 @@
-[gd_scene load_steps=20 format=3 uid="uid://ch4o0guerbahn"]
+[gd_scene load_steps=23 format=3 uid="uid://ch4o0guerbahn"]
 
 [ext_resource type="Script" uid="uid://dm4ey0iltuo33" path="res://Scripts/UI.gd" id="1_w371h"]
 [ext_resource type="LabelSettings" uid="uid://pjukfu4qrdup" path="res://Resources/blueprint_label_settings.tres" id="2_qwshj"]
+[ext_resource type="VideoStream" path="res://Videos/shapes.ogv" id="3_48q88"]
 [ext_resource type="FontFile" uid="uid://dbb1aunswvl1g" path="res://Fonts/circle-triangle-square-Regular.otf" id="3_dewlx"]
 [ext_resource type="Script" uid="uid://dnyl3fayamem0" path="res://Scripts/pickup_tracker.gd" id="4_hfhsn"]
+[ext_resource type="VideoStream" path="res://Videos/circle.ogv" id="4_xjg7p"]
+[ext_resource type="VideoStream" path="res://Videos/triangle.ogv" id="5_mg6lk"]
 [ext_resource type="Script" uid="uid://bfkruun4ft5qx" path="res://Scenes/life_indicator.gd" id="5_qwshj"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_xjg7p"]
@@ -574,7 +577,8 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="OOB" type="ColorRect" parent="CanvasLayer/Control"]
+[node name="OOB" type="ColorRect" parent="CanvasLayer/Control" groups=["OOB"]]
+visible = false
 layout_mode = 0
 offset_left = 339.0
 offset_top = 81.0
@@ -693,7 +697,8 @@ text = "PRESS ANY KEY TO START"
 horizontal_alignment = 2
 autowrap_mode = 1
 
-[node name="DESIGNINTENT" type="ColorRect" parent="CanvasLayer/Control"]
+[node name="DESIGNINTENT" type="ColorRect" parent="CanvasLayer/Control" groups=["OOB"]]
+visible = false
 layout_mode = 0
 offset_left = 339.0
 offset_top = 81.0
@@ -709,15 +714,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -190.0
+offset_left = -194.811
 offset_top = -48.0
-offset_right = 185.0
+offset_right = 192.189
 offset_bottom = 89.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "The core idea that I want to explore in O /\\ [ ] (“circle triangle square”) is ‘building under pressure’.  The player is tasked with reuniting (capturing?) a cat that is out-of-reach at the beginning of the level. In this geometric world, the player can harvest shapes from enemies that will allow them to do two things: build the environment and build items. These builds will help the player to overcome obstacles (ie a too-high platform or a hitherto undefeatable enemy) to gain access to the cat. What is currently available in the demo is just the core mechanics of building environment and building an item. The next step is to add the “under pressure” (and puzzle solving) bits which will be expressed in the level design. Building, puzzle-solving, pressure, discovery: this comprises the core gameplay loop of O /\\ [ ]"
 label_settings = ExtResource("2_qwshj")
-autowrap_mode = 1
+autowrap_mode = 2
 
 [node name="Instructions2" type="Label" parent="CanvasLayer/Control/DESIGNINTENT"]
 layout_mode = 1
@@ -726,9 +731,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 24.9799
+offset_left = 21.2313
 offset_top = 81.5481
-offset_right = 186.98
+offset_right = 183.231
 offset_bottom = 98.5481
 grow_horizontal = 2
 grow_vertical = 2
@@ -779,12 +784,425 @@ width = 30.0
 default_color = Color(1, 0, 0, 1)
 joint_mode = 1
 
+[node name="TR2" type="Area2D" parent="CanvasLayer/Control/DESIGNINTENT"]
+position = Vector2(395.011, 193.054)
+rotation = 1.56978
+scale = Vector2(0.0135777, 0.0135777)
+
+[node name="TRI" type="Line2D" parent="CanvasLayer/Control/DESIGNINTENT/TR2"]
+position = Vector2(-291.499, 438.582)
+scale = Vector2(4.12913, 4.12913)
+points = PackedVector2Array(1, -82, -83, 59, 88, 59)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+joint_mode = 1
+
 [node name="SQU" type="Area2D" parent="CanvasLayer/Control/DESIGNINTENT"]
 position = Vector2(9.78613, 19.0776)
 scale = Vector2(0.0135777, 0.0135777)
 collision_mask = 3
 
 [node name="SQ" type="Line2D" parent="CanvasLayer/Control/DESIGNINTENT/SQU"]
+position = Vector2(116.513, -57.8791)
+scale = Vector2(3.26719, 3.26719)
+points = PackedVector2Array(-82, -47, -48, -80, 0, -93, 48, -80, 83, -46, 96, 1, 83, 48, 48, 81, 0, 94, -48, 81, -83, 48, -96, 0)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="SHAPES_OOB" type="ColorRect" parent="CanvasLayer/Control"]
+visible = false
+layout_mode = 0
+offset_left = 339.0
+offset_top = 81.0
+offset_right = 737.0
+offset_bottom = 283.0
+scale = Vector2(2.13412, 2.28433)
+color = Color(1, 1, 1, 0.937255)
+
+[node name="Continue_msg" type="Label" parent="CanvasLayer/Control/SHAPES_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 13.734
+offset_top = 81.548
+offset_right = 175.734
+offset_bottom = 98.548
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 8
+text = "PRESS ANY KEY TO LEARN ABOUT CIRCLES"
+horizontal_alignment = 2
+autowrap_mode = 1
+
+[node name="Title" type="Label" parent="CanvasLayer/Control/SHAPES_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -194.0
+offset_top = -81.0
+offset_right = 47.0
+offset_bottom = -36.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "SHAPES"
+label_settings = SubResource("LabelSettings_xjg7p")
+
+[node name="Description" type="Label" parent="CanvasLayer/Control/SHAPES_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -6.0
+offset_top = -37.0
+offset_right = 180.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Attack (CONTROL KEY) and defeat enemies and they will drop shapes. Collect shapes by getting close to them. 
+
+Each shape has a unique ability. Select a shape by pressing the 1, 2 or 3 key."
+label_settings = ExtResource("2_qwshj")
+autowrap_mode = 2
+
+[node name="VideoContainer" type="ColorRect" parent="CanvasLayer/Control/SHAPES_OOB"]
+clip_contents = true
+layout_mode = 0
+offset_left = 9.84012
+offset_top = 59.9738
+offset_right = 861.84
+offset_bottom = 539.974
+scale = Vector2(0.197185, 0.197185)
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="CanvasLayer/Control/SHAPES_OOB/VideoContainer"]
+layout_mode = 2
+offset_left = -97.4298
+offset_right = 1022.57
+offset_bottom = 480.0
+stream = ExtResource("3_48q88")
+autoplay = true
+loop = true
+
+[node name="CIR" type="Area2D" parent="CanvasLayer/Control/SHAPES_OOB"]
+position = Vector2(39.0576, 16.623)
+scale = Vector2(0.0569521, 0.0569521)
+collision_mask = 3
+
+[node name="SQ" type="Line2D" parent="CanvasLayer/Control/SHAPES_OOB/CIR"]
+position = Vector2(111.111, 27.5981)
+points = PackedVector2Array(-83, -80, 77, -80, 76, 66, -83, 66)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="TR" type="Area2D" parent="CanvasLayer/Control/SHAPES_OOB"]
+position = Vector2(30.3135, 15.0696)
+scale = Vector2(0.0135777, 0.0135777)
+
+[node name="TRI" type="Line2D" parent="CanvasLayer/Control/SHAPES_OOB/TR"]
+position = Vector2(-291.288, 231.52)
+scale = Vector2(4.12913, 4.12913)
+points = PackedVector2Array(1, -82, -83, 59, 88, 59)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+joint_mode = 1
+
+[node name="TR2" type="Area2D" parent="CanvasLayer/Control/SHAPES_OOB"]
+position = Vector2(395.011, 193.054)
+rotation = 1.56978
+scale = Vector2(0.0135777, 0.0135777)
+
+[node name="TRI" type="Line2D" parent="CanvasLayer/Control/SHAPES_OOB/TR2"]
+position = Vector2(-291.499, 438.582)
+scale = Vector2(4.12913, 4.12913)
+points = PackedVector2Array(1, -82, -83, 59, 88, 59)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+joint_mode = 1
+
+[node name="SQU" type="Area2D" parent="CanvasLayer/Control/SHAPES_OOB"]
+position = Vector2(9.78613, 19.0776)
+scale = Vector2(0.0135777, 0.0135777)
+collision_mask = 3
+
+[node name="SQ" type="Line2D" parent="CanvasLayer/Control/SHAPES_OOB/SQU"]
+position = Vector2(116.513, -57.8791)
+scale = Vector2(3.26719, 3.26719)
+points = PackedVector2Array(-82, -47, -48, -80, 0, -93, 48, -80, 83, -46, 96, 1, 83, 48, 48, 81, 0, 94, -48, 81, -83, 48, -96, 0)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="CIR_OOB" type="ColorRect" parent="CanvasLayer/Control" groups=["OOB"]]
+visible = false
+layout_mode = 0
+offset_left = 339.0
+offset_top = 81.0
+offset_right = 739.0
+offset_bottom = 283.0
+scale = Vector2(2.13412, 2.28433)
+color = Color(1, 1, 1, 0.937255)
+
+[node name="Continue_msg" type="Label" parent="CanvasLayer/Control/CIR_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.54044
+offset_top = 81.5481
+offset_right = 175.46
+offset_bottom = 98.5481
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 8
+text = "PRESS ANY KEY TO LEARN ABOUT TRIANGLES"
+horizontal_alignment = 2
+autowrap_mode = 1
+
+[node name="TR2" type="Area2D" parent="CanvasLayer/Control/CIR_OOB"]
+position = Vector2(394.542, 193.047)
+rotation = 1.56978
+scale = Vector2(0.0135777, 0.0135777)
+
+[node name="TRI" type="Line2D" parent="CanvasLayer/Control/CIR_OOB/TR2"]
+position = Vector2(-291.499, 438.582)
+scale = Vector2(4.12913, 4.12913)
+points = PackedVector2Array(1, -82, -83, 59, 88, 59)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+joint_mode = 1
+
+[node name="Title" type="Label" parent="CanvasLayer/Control/CIR_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -195.783
+offset_top = -81.0
+offset_right = 45.2172
+offset_bottom = -36.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "CIRCLES"
+label_settings = SubResource("LabelSettings_xjg7p")
+
+[node name="Description" type="Label" parent="CanvasLayer/Control/CIR_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -9.0
+offset_top = -79.558
+offset_right = 190.0
+offset_bottom = 72.442
+grow_horizontal = 2
+grow_vertical = 2
+text = "If you have a circle in your inventory (bottom of screen), you can trigger INSIGHT using the B key.  INSIGHT reveals hidden shapes in the environment. 
+
+IMPORTANT: While the INSIGHT circle is active, SHAPE inventory behaves differently. If there is a matching shape revealed by insight, pressing B key will fill the new shape and make it permanent. The new environment shape can be interacted with! "
+label_settings = ExtResource("2_qwshj")
+autowrap_mode = 2
+
+[node name="VideoContainer" type="ColorRect" parent="CanvasLayer/Control/CIR_OOB"]
+layout_mode = 0
+offset_left = 9.84012
+offset_top = 59.9738
+offset_right = 861.84
+offset_bottom = 539.974
+scale = Vector2(0.197185, 0.197185)
+color = Color(0.964742, 0.964742, 0.964742, 1)
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="CanvasLayer/Control/CIR_OOB/VideoContainer"]
+layout_mode = 2
+offset_right = 852.0
+offset_bottom = 480.0
+stream = ExtResource("4_xjg7p")
+autoplay = true
+loop = true
+
+[node name="CIR" type="Area2D" parent="CanvasLayer/Control/CIR_OOB"]
+position = Vector2(39.0576, 16.623)
+scale = Vector2(0.0569521, 0.0569521)
+collision_mask = 3
+
+[node name="SQ" type="Line2D" parent="CanvasLayer/Control/CIR_OOB/CIR"]
+position = Vector2(111.111, 27.5981)
+points = PackedVector2Array(-83, -80, 77, -80, 76, 66, -83, 66)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="TR" type="Area2D" parent="CanvasLayer/Control/CIR_OOB"]
+position = Vector2(30.3135, 15.0696)
+scale = Vector2(0.0135777, 0.0135777)
+
+[node name="TRI" type="Line2D" parent="CanvasLayer/Control/CIR_OOB/TR"]
+position = Vector2(-291.288, 231.52)
+scale = Vector2(4.12913, 4.12913)
+points = PackedVector2Array(1, -82, -83, 59, 88, 59)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+joint_mode = 1
+
+[node name="SQU" type="Area2D" parent="CanvasLayer/Control/CIR_OOB"]
+position = Vector2(9.78613, 19.0776)
+scale = Vector2(0.0135777, 0.0135777)
+collision_mask = 3
+
+[node name="SQ" type="Line2D" parent="CanvasLayer/Control/CIR_OOB/SQU"]
+position = Vector2(116.513, -57.8791)
+scale = Vector2(3.26719, 3.26719)
+points = PackedVector2Array(-82, -47, -48, -80, 0, -93, 48, -80, 83, -46, 96, 1, 83, 48, 48, 81, 0, 94, -48, 81, -83, 48, -96, 0)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="TRI_OOB" type="ColorRect" parent="CanvasLayer/Control" groups=["OOB"]]
+visible = false
+layout_mode = 0
+offset_left = 338.0
+offset_top = 81.0
+offset_right = 740.0
+offset_bottom = 283.0
+scale = Vector2(2.13412, 2.28433)
+color = Color(1, 1, 1, 0.937255)
+
+[node name="Continue_msg" type="Label" parent="CanvasLayer/Control/TRI_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -9.35193
+offset_top = 82.0
+offset_right = 171.648
+offset_bottom = 99.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 8
+text = "PRESS ANY KEY TO LEARN ABOUT SQUARES"
+horizontal_alignment = 2
+autowrap_mode = 1
+
+[node name="TR2" type="Area2D" parent="CanvasLayer/Control/TRI_OOB"]
+position = Vector2(395.479, 193.047)
+rotation = 1.56978
+scale = Vector2(0.0135777, 0.0135777)
+
+[node name="TRI" type="Line2D" parent="CanvasLayer/Control/TRI_OOB/TR2"]
+position = Vector2(-291.499, 438.582)
+scale = Vector2(4.12913, 4.12913)
+points = PackedVector2Array(1, -82, -83, 59, 88, 59)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+joint_mode = 1
+
+[node name="Title" type="Label" parent="CanvasLayer/Control/TRI_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -197.251
+offset_top = -81.3006
+offset_right = 43.7486
+offset_bottom = -36.3006
+grow_horizontal = 2
+grow_vertical = 2
+text = "TRIANGLES"
+label_settings = SubResource("LabelSettings_xjg7p")
+
+[node name="Description" type="Label" parent="CanvasLayer/Control/TRI_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = -40.0
+offset_right = 188.0
+offset_bottom = 47.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "If you have a triangle  in your inventory (bottom of screen), you can use it as a projectile to attack enemies. 
+
+Press 2 key to select triangle then press the B key to fire it in the direction that you last moved. "
+label_settings = ExtResource("2_qwshj")
+autowrap_mode = 2
+
+[node name="VideoContainer" type="ColorRect" parent="CanvasLayer/Control/TRI_OOB"]
+layout_mode = 0
+offset_left = 10.3087
+offset_top = 59.9738
+offset_right = 862.309
+offset_bottom = 539.974
+scale = Vector2(0.197185, 0.197185)
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="CanvasLayer/Control/TRI_OOB/VideoContainer"]
+layout_mode = 2
+offset_right = 852.0
+offset_bottom = 480.0
+stream = ExtResource("5_mg6lk")
+autoplay = true
+loop = true
+
+[node name="CIR" type="Area2D" parent="CanvasLayer/Control/TRI_OOB"]
+position = Vector2(39.0576, 16.623)
+scale = Vector2(0.0569521, 0.0569521)
+collision_mask = 3
+
+[node name="SQ" type="Line2D" parent="CanvasLayer/Control/TRI_OOB/CIR"]
+position = Vector2(111.111, 27.5981)
+points = PackedVector2Array(-83, -80, 77, -80, 76, 66, -83, 66)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="TR" type="Area2D" parent="CanvasLayer/Control/TRI_OOB"]
+position = Vector2(30.3135, 15.0696)
+scale = Vector2(0.0135777, 0.0135777)
+
+[node name="TRI" type="Line2D" parent="CanvasLayer/Control/TRI_OOB/TR"]
+position = Vector2(-291.288, 231.52)
+scale = Vector2(4.12913, 4.12913)
+points = PackedVector2Array(1, -82, -83, 59, 88, 59)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+joint_mode = 1
+
+[node name="SQU" type="Area2D" parent="CanvasLayer/Control/TRI_OOB"]
+position = Vector2(9.78613, 19.0776)
+scale = Vector2(0.0135777, 0.0135777)
+collision_mask = 3
+
+[node name="SQ" type="Line2D" parent="CanvasLayer/Control/TRI_OOB/SQU"]
 position = Vector2(116.513, -57.8791)
 scale = Vector2(3.26719, 3.26719)
 points = PackedVector2Array(-82, -47, -48, -80, 0, -93, 48, -80, 83, -46, 96, 1, 83, 48, 48, 81, 0, 94, -48, 81, -83, 48, -96, 0)

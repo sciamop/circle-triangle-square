@@ -102,6 +102,7 @@ var active_projectile_shape: String = "triangle"
 var circle_pieces: int = 10
 var triangle_pieces: int = 10
 var square_pieces: int = 10
+@onready var pickup_tracker: HBoxContainer = $"/root/Game/UI/CanvasLayer/Control/BoxContainer/HBoxContainer"
 
 # Timers for mechanics
 var jump_buffer_timer: float = 0.0
@@ -165,6 +166,22 @@ var insight_circle: Polygon2D = null
 var insight_animation_phase: String = "grow"  # "grow", "hold", "contract"
 var insight_animation_timer: float = 0.0
 var is_insight_active: bool = false  # Track if insight is currently active
+
+# wall paremters
+@export var wall_duration: float = 3.0
+@export var wall_color: Color = Color(0.5, 0.5, 0.5, 0.2)  # Semi-transparent gray
+@export var wall_grow_time: float = 0.125  # Time to grow to full size
+@export var wall_contract_time: float = 0.25  # Time to contract before disappearing
+@export var wall_max_height: float = 220.0  # Maximum radius during growth
+@export var wall_max_width: float = 22.0  # Maximum radius during growth
+
+var wall_timer: float = 0.0
+var wall_area: Area2D = null
+var wall_rect: Polygon2D = null
+var wall_animation_phase: String = "grow"  # "grow", "hold", "contract"
+var wall_animation_timer: float = 0.0
+var is_wall_active: bool = false  # Track if insight is currently active
+
 
 #checkpoint stuff
 @onready var mcguffin: Node2D = $"/root/Game/mcguffin"
@@ -362,6 +379,13 @@ func update_timers(delta: float) -> void:
 		if insight_timer <= 0:
 			end_insight()
 
+	# Update insight timer and animation
+	if wall_timer > 0:
+		wall_timer -= delta
+		update_wall_animation(delta)
+		if wall_timer <= 0:
+			end_insight()
+
 func handle_input() -> void:
 	# Skip input handling if player is disabled
 	if is_disabled:
@@ -388,11 +412,19 @@ func handle_input() -> void:
 	if Input.is_action_just_pressed("slash") and melee_cooldown_timer <= 0:
 		perform_melee_attack()
 	
-	if Input.is_action_just_pressed("attack_ranged") and ranged_cooldown_timer <= 0 and ranged_unlocked and active_projectile_shape != "circle":
+	if Input.is_action_just_pressed("attack_ranged") and ranged_cooldown_timer > 0 and ranged_unlocked:
+		pickup_tracker.no_projectile(active_projectile_shape)
+
+	if Input.is_action_just_pressed("attack_ranged") and ranged_cooldown_timer <= 0 and ranged_unlocked and active_projectile_shape == "triangle":
 		perform_ranged_attack()
 
 	if Input.is_action_just_pressed("attack_ranged") and ranged_cooldown_timer <= 0 and ranged_unlocked and active_projectile_shape == "circle":
 		perform_insight()
+
+	if Input.is_action_just_pressed("attack_ranged") and ranged_cooldown_timer * 5 <= 0 and ranged_unlocked and active_projectile_shape == "square":
+		perform_wall_build()
+		
+
 		
 	if Input.is_action_just_pressed("activate_triangle"):
 		update_activation("triangle")		
@@ -656,106 +688,128 @@ func perform_insight() -> void:
 	attacking = false
 	emit_signal("on_attack", "insight")
 
-func perform_ranged_attack() -> void:
+
+func perform_wall_build() -> void:
 	if not ranged_unlocked or attacking:
 		return
 	# Check ammo before proceeding
 	if not has_ammo():
 		return
+	# Play attack animation
 
-	# Check if player is in a blueprint zone and has a square
-	if active_projectile_shape == "square" and shape_counts["square"] > 0:
-		var blueprint_areas = get_tree().get_nodes_in_group("blueprint_zone")
-		for area in blueprint_areas:
-			print(area.name)
-			if area.overlaps_area(pickup_area):
-				# Start blueprint building instead of firing projectile
-				var blueprint = area.get_parent()
-				if blueprint and blueprint.has_method("start_blueprint_building"):
-					start_blueprint_building(blueprint)
-					return
+
+	if animation_player:
+		animation_player.play("ranged_attack")
 	
-	# Start attack state
+	# Spawn projectile
+	var projectile = projectile_scene.instantiate()
+	projectile.set_meta("shape_type", "square")
+	projectile.find_child("projectile_square").visible = true
+	projectile.set_meta("is_wall_projectile", true)  # Mark this as a wall projectile
+	
+	# Set collision layers and masks
+	projectile.collision_layer = 4  # Projectile layer
+	projectile.collision_mask = 1   # Collide with environment layer
+	
+	# Set up collision for the square shape
+	var square_collision = projectile.find_child("RBCollShape2D")
+	if square_collision:
+		square_collision.disabled = false
+	
+	projectile.global_position = global_position + Vector2(facing_direction * 50, 40)
+	
+	# Initialize velocity with proper direction and speed
+	projectile.velocity = Vector2(facing_direction * ranged_projectile_speed * 0.5, -ranged_projectile_speed * 0.5)  # Upward angle
+	projectile.direction = Vector2(facing_direction, -0.5)  # Slight upward angle
+	
+	get_parent().add_child(projectile)
+
+		# Start attack state
 	attacking = true
 	ranged_cooldown_timer = ranged_cooldown
 	
 	# Emit attack signal
 	emit_signal("on_attack", "ranged")
 	
-	# Play attack sound
+	
+	# Play sound
 	if audio_player and attack_ranged_sound:
 		audio_player.stream = attack_ranged_sound
 		audio_player.play()
 	
-	# Check for insight items in range
-	var found_match = false
-	print("Checking for insight items with shape: ", active_projectile_shape)
+	await animation_player.animation_finished
+	attacking = false
+	emit_signal("on_attack", "wall")
+
+
+func _on_wall_body_entered(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		# Allow player to jump on top of the wall
+		if body.global_position.y < wall_area.global_position.y:
+			body.velocity.y = 0  # Stop player's downward velocity
+	elif body.is_in_group("enemy"):
+		# Stop enemies from passing through
+		if body.has_method("take_damage"):
+			body.take_damage(1)  # Optional: damage enemies that hit the wall
+		# Push enemy away from wall
+		var push_direction = sign(body.global_position.x - wall_area.global_position.x)
+		body.velocity.x = push_direction * 200  # Adjust push force as needed
+
+func _on_wall_area_entered(area: Area2D) -> void:
+	if area.is_in_group("enemy"):
+		# Handle enemy area collision
+		var enemy = area.get_parent()
+		if enemy and enemy.has_method("take_damage"):
+			enemy.take_damage(1)  # Optional: damage enemies that hit the wall
+
+func transform_projectile_to_wall(projectile: Node2D) -> void:
+	# Create wall area
+	wall_area = Area2D.new()
+	wall_area.name = "WallArea"
 	
-	# Only check for insight items if the insight circle is active
-	if is_insight_active:
-		for item in get_tree().get_nodes_in_group("insight_item"):
-			print("Found insight item: ", item.name)
-			# Check both the item and its parent for visibility
-			var parent = item.get_parent()
-			if item.visible or (parent and parent.visible):
-				var item_shape = item.get_meta("shape_type", "")
-				print("Item shape type: ", item_shape)
-				print("Looking for: ", active_projectile_shape)
-				if item_shape == active_projectile_shape and not item.get_meta("is_permanent"):
-					print("Found matching shape!")
-					# Make the item permanent
-					item.set_meta("is_permanent", true)
-					
-					# Get the Line2D and Polygon2D nodes
-					var line_node = item.get_node_or_null("Line2D")
-					var poly_node = item.get_node_or_null("Polygon2D")
-					
-					if line_node:
-						line_node.visible = false
-					if poly_node:
-						poly_node.visible = true
-					
-					# Enable collision on the StaticBody2D
-					set_static_body_collision(item, true)
-					
-					# Ensure both the item and its parent are visible
-					item.visible = true
-					if parent:
-						parent.visible = true
-					
-					# Spawn traveling shape from UI to insight item
-					if traveling_shape_scene:
+	# Set collision layers and masks
+	wall_area.collision_layer = 1  # Environment layer
+	wall_area.collision_mask = 6   # Collide with player (2) and enemies (4)
 	
-						var traveling_shape = traveling_shape_scene.instantiate()
-						get_tree().root.add_child(traveling_shape)
-						
-						# Get the UI position for the current shape
-						var ui_shape = get_tree().get_first_node_in_group("shape_" + active_projectile_shape)
-						if ui_shape:
-							traveling_shape.init(ui_shape.global_position, item.global_position, active_projectile_shape)
-					
-					found_match = true
-					break
-				else:
-					print("Shape mismatch - expected: " + active_projectile_shape + ", got: " + item_shape)
-			else:
-				print("Item and parent not visible")
+	# Create collision shape
+	var collision = CollisionShape2D.new()
+	collision.name = "WallCollisionShape"
+	var rect = RectangleShape2D.new()
 	
-	if found_match:
-		# Reset attack state and emit signal
-		attacking = false
-		emit_signal("on_attack", "ranged")
-	else:
-		# Spawn projectile if no match found
-		var projectile = projectile_scene.instantiate()
-		projectile.set_meta("shape_type", active_projectile_shape)
-		# Spawn in front of the player based on facing direction, with enough distance to avoid collision
-		projectile.global_position = global_position + Vector2(facing_direction * 50, 40)
-		projectile.direction = Vector2(facing_direction, 0)
-		projectile.speed = ranged_projectile_speed
-		get_parent().add_child(projectile)
-		# Reset attack state after projectile is fired
-		attacking = false
+	# Set initial size
+	rect.size = Vector2(wall_max_width * 2, wall_max_height * 2)
+	collision.shape = rect
+	
+	# Create visual rectangle
+	wall_rect = Polygon2D.new()
+	wall_rect.color = wall_color
+	wall_rect.show_behind_parent = true
+	
+	# Initialize with empty polygon
+	wall_rect.polygon = PackedVector2Array()
+	
+	wall_area.add_child(wall_rect)
+	wall_area.add_child(collision)
+	get_parent().add_child(wall_area)
+	
+	# Position the wall at the projectile's position
+	var wall_area_offset = projectile.global_position.y - wall_max_height / 3
+	wall_area.global_position = Vector2(projectile.global_position.x, wall_area_offset)
+	
+	# Start wall effect
+	wall_timer = wall_duration
+	wall_animation_timer = 0.0
+	wall_animation_phase = "grow"
+	wall_area.monitoring = true
+	wall_rect.visible = true
+	is_wall_active = true
+	
+	# Connect signals for collision detection
+	wall_area.body_entered.connect(_on_wall_body_entered)
+	wall_area.area_entered.connect(_on_wall_area_entered)
+	
+	# Remove the projectile
+	projectile.queue_free()
 
 func end_insight() -> void:
 	if insight_area:
@@ -1020,6 +1074,7 @@ func apply_knockback(direction: Vector2) -> void:
 	# Play hurt animation if available
 	if animation_player:
 		animation_player.play("hurt")
+		await animation_player.animation_finished
 
 # Function to heal the player
 func heal(amount: int) -> void:
@@ -1108,6 +1163,49 @@ func print_debug_info() -> void:
 	print("Ranged Cooldown: ", ranged_cooldown_timer)
 	print("Pieces - Circle: ", circle_pieces, " Triangle: ", triangle_pieces, " Square: ", square_pieces)
 
+func update_wall_animation(delta: float) -> void:
+	if not wall_rect or not wall_rect.visible:
+		return
+		
+	wall_animation_timer += delta
+	
+	match wall_animation_phase:
+		"grow":
+			# Rapidly grow to max size
+			var progress = wall_animation_timer / wall_grow_time
+			if progress >= 1.0:
+				progress = 1.0
+				wall_animation_phase = "hold"
+				wall_animation_timer = 0.0
+			
+			var current_height = lerp(0.0, wall_max_height, progress)
+			var current_width = lerp(0.0, wall_max_width, progress)
+			var current_size = Vector2(current_width, current_height)
+			
+			update_rect_size(current_size)
+			
+		"hold":
+			# Hold at full size until near the end
+			if wall_timer <= wall_contract_time:
+				wall_animation_phase = "contract"
+				wall_animation_timer = 0.0
+			
+		"contract":
+			# Contract before disappearing
+			var progress = wall_animation_timer / wall_contract_time
+			if progress >= 1.0:
+				progress = 1.0
+			
+			var current_height = lerp(wall_max_height, 0.0, progress)
+			var current_width = lerp(wall_max_width, 0.0, progress)
+			var current_size = Vector2(current_width, current_height)
+			update_rect_size(current_size)
+			if (current_width <= wall_max_width / 10):
+				wall_animation_phase = "remove"
+		"remove":
+			print("Removing wall")
+			wall_area.queue_free()
+
 func update_insight_animation(delta: float) -> void:
 	if not insight_circle or not insight_circle.visible:
 		return
@@ -1157,6 +1255,28 @@ func update_circle_radius(radius: float) -> void:
 		var collision = insight_area.get_node("insightCollisionShape")
 		if collision and collision.shape is CircleShape2D:
 			collision.shape.radius = radius
+
+
+func update_rect_size(size: Vector2) -> void:
+	if not wall_rect:
+		return
+		
+	# Create a rectangle with the given size
+	var points = [
+		Vector2(-size.x/2, -size.y/2),  # Top-left
+		Vector2(size.x/2, -size.y/2),   # Top-right
+		Vector2(size.x/2, size.y/2),    # Bottom-right
+		Vector2(-size.x/2, size.y/2)    # Bottom-left
+	]
+	
+	wall_rect.polygon = PackedVector2Array(points)
+	
+	# Update collision shape size
+	if wall_area:
+		var collision = wall_area.get_node("WallCollisionShape")
+		if collision and collision.shape is RectangleShape2D:
+			collision.shape.size.x = size.x + 10
+			collision.shape.size.y = size.y + 10
 
 func handle_checkpoint(checkpoint: Node2D) -> void:
 	# Disable player movement and actions

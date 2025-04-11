@@ -27,6 +27,7 @@ Global="*res://Scripts/global.gd"
 
 window/size/viewport_width=1440
 window/size/viewport_height=720
+window/stretch/mode="viewport"
 
 [global_group]
 
@@ -36,6 +37,8 @@ insight_item=""
 player_attack=""
 blueprint_zone=""
 blueprint_item=""
+OOB=""
+enemy=""
 
 [input]
 

@@ -70,4 +70,5 @@ func _process(delta):
 	global_position = current_pos
 	
 	if progress >= 1.0:
+		emit_signal("animation_finished")
 		queue_free() 

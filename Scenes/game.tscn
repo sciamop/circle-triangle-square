@@ -512,7 +512,7 @@ region = Rect2(0, 0, 1260, 400)
 [node name="Game" type="Node2D"]
 script = ExtResource("1_wowpa")
 
-[node name="mid" type="TileMapLayer" parent="."]
+[node name="mid" type="TileMapLayer" parent="." groups=["environment"]]
 z_index = 1
 use_parent_material = true
 position = Vector2(-87, -55)
@@ -541,11 +541,13 @@ navigation_enabled = false
 [node name="Player" parent="." instance=ExtResource("2_a8p0r")]
 position = Vector2(90, -226)
 collision_mask = 7
-ranged_damage = 5
 ranged_unlocked = true
 max_health = 40
 enable_juice = true
 projectile_scene = ExtResource("5_ldgsr")
+wall_color = Color(0.319804, 0.498295, 0.975875, 1)
+wall_max_height = 200.0
+wall_max_width = 33.0
 traveling_shape_scene = ExtResource("7_rfjv2")
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
@@ -570,7 +572,7 @@ wait_time = 0.019
 one_shot = true
 ignore_time_scale = true
 
-[node name="enemy" parent="." instance=ExtResource("3_wrm1d")]
+[node name="enemy" parent="." groups=["enemy"] instance=ExtResource("3_wrm1d")]
 position = Vector2(-260, -82)
 scale = Vector2(0.947398, 0.947398)
 knockback_force = 666.0
@@ -598,11 +600,6 @@ scale = Vector2(0.878668, 0.456082)
 [node name="BlueprintPickup" parent="." instance=ExtResource("15_nb51f")]
 position = Vector2(457, -84)
 blueprint_name = "item_blueprint_grapplinghook"
-required_shapes = {
-"circle": 1,
-"square": 4,
-"triangle": 3
-}
 result_item = "grappling_hook"
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
