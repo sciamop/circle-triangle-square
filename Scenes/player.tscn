@@ -887,6 +887,7 @@ vertex_colors = PackedColorArray(0, 0, 0, 1)
 [node name="HeadPolygon" type="Polygon2D" parent="."]
 show_behind_parent = true
 top_level = true
+z_index = 3
 position = Vector2(0.582203, 36.5352)
 rotation = -1.40764
 scale = Vector2(0.999999, 0.999999)

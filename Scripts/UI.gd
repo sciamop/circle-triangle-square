@@ -8,6 +8,9 @@ extends CanvasLayer
 @onready var cir_oob: ColorRect = $CanvasLayer/Control/CIR_OOB
 @onready var shapes_oob: ColorRect = $CanvasLayer/Control/SHAPES_OOB
 @onready var enemy: Enemy = $"/root/Game/enemy"
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var blueprint_pickup: Blueprint = $"/root/Game/BlueprintPickup"
+@onready var blueprint_item: Area2D = $CanvasLayer/Control/BoxContainer/HBoxContainer/squareVBoxContainer2/squareCenterContainer/item_blueprint_grapplinghook
 
 var key_presses: int = 0
 var dialog_state: String = "none"
@@ -27,9 +30,24 @@ func _ready() -> void:
 		dialog_state = "intent"
 	else:
 		dialog_state = "none"
+
+	var _add_blueprint_item_to_inventory = Callable(self, "add_blueprint_item_to_inventory")
+	blueprint_pickup.connect("blueprint_item_added_to_inventory", _add_blueprint_item_to_inventory)
 	
+	# make sure blueprint item shows
+	if Global.has_blueprint_item:
+		add_blueprint_item_to_inventory("null")
+
+	# figure out what's going on with the dialogues
 	get_state()
-	
+
+func add_blueprint_item_to_inventory(name: String) -> void:
+	print("FIFIFIFIIF")
+	print(blueprint_item.name)
+	# if Global.has_blueprint_item:
+	blueprint_item.show()
+	animation_player.play("add_blueprint_item")
+
 func hide_all_oob() -> void:
 	var all_oob = get_tree().get_nodes_in_group("OOB")
 	for oob in all_oob:

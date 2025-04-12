@@ -565,6 +565,11 @@ position_smoothing_enabled = true
 z_index = 2
 position = Vector2(457, -84)
 blueprint_name = "item_blueprint_grapplinghook"
+required_shapes = {
+"circle": 1,
+"square": 5,
+"triangle": 5
+}
 result_item = "grappling_hook"
 
 [node name="UI" parent="." instance=ExtResource("6_1l0tm")]
