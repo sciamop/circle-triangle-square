@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://bemm6jn2h2it7"]
+[gd_scene load_steps=9 format=3 uid="uid://bemm6jn2h2it7"]
 
 [ext_resource type="Script" uid="uid://dxn5uu2dk2ipx" path="res://Scripts/blueprint_controller.gd" id="1_2k4m3"]
 [ext_resource type="Material" uid="uid://bktyivkiltmw1" path="res://Resources/blueprint_particles.tres" id="2_wlm2b"]
 [ext_resource type="LabelSettings" uid="uid://d270b5vas2gjr" path="res://Resources/blueprint_label_next_settings.tres" id="3_wl3ot"]
+[ext_resource type="FontFile" uid="uid://653p86rf1v0e" path="res://Fonts/Aileron-Heavy.otf" id="4_xisl2"]
 
 [sub_resource type="Animation" id="Animation_xisl2"]
 length = 0.001
@@ -68,7 +69,8 @@ _data = {
 }
 
 [sub_resource type="LabelSettings" id="LabelSettings_wl3ot"]
-font_size = 24
+font = ExtResource("4_xisl2")
+font_size = 72
 font_color = Color(0, 0, 0, 1)
 
 [node name="BlueprintPickup" type="StaticBody2D"]
@@ -124,12 +126,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -72.0
-offset_top = 13.2461
-offset_right = 88.0
-offset_bottom = 133.246
+offset_left = -71.0
+offset_top = 50.9871
+offset_right = 358.0
+offset_bottom = 170.987
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.379853, 0.379853)
 
 [node name="Circle" type="HBoxContainer" parent="BuildingPanel/ShapeCounts"]
 layout_mode = 2
@@ -201,12 +204,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -193.0
-offset_top = -88.0932
-offset_right = 177.0
-offset_bottom = -43.0932
+offset_left = -191.0
+offset_top = -87.0997
+offset_right = 179.0
+offset_bottom = -42.0997
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.375, 0.375)
 text = "BLUEPRINT"
 label_settings = ExtResource("3_wl3ot")
 
@@ -217,14 +221,16 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -194.0
-offset_top = -81.1385
-offset_right = 176.0
-offset_bottom = -36.1385
+offset_left = -194.5
+offset_top = -78.4999
+offset_right = 454.5
+offset_bottom = 8.50005
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.375, 0.375)
 text = "GRAPPLING HOOK"
 label_settings = SubResource("LabelSettings_wl3ot")
+uppercase = true
 
 [node name="CIR" type="Area2D" parent="BuildingPanel"]
 position = Vector2(256, 173.857)

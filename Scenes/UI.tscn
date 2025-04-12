@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://ch4o0guerbahn"]
+[gd_scene load_steps=26 format=3 uid="uid://ch4o0guerbahn"]
 
 [ext_resource type="Script" uid="uid://dm4ey0iltuo33" path="res://Scripts/UI.gd" id="1_w371h"]
 [ext_resource type="LabelSettings" uid="uid://pjukfu4qrdup" path="res://Resources/blueprint_label_settings.tres" id="2_qwshj"]
@@ -10,6 +10,7 @@
 [ext_resource type="VideoStream" uid="uid://v623tjaihuof" path="res://Videos/circle.ogv" id="4_xjg7p"]
 [ext_resource type="VideoStream" uid="uid://6c5q5wn6kuod" path="res://Videos/triangle.ogv" id="5_mg6lk"]
 [ext_resource type="Script" uid="uid://bfkruun4ft5qx" path="res://Scenes/life_indicator.gd" id="5_qwshj"]
+[ext_resource type="VideoStream" path="res://Videos/enemies.ogv" id="8_vqx31"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_xjg7p"]
 font = ExtResource("3_wunin")
@@ -1229,6 +1230,143 @@ scale = Vector2(0.0135777, 0.0135777)
 collision_mask = 3
 
 [node name="SQ" type="Line2D" parent="CanvasLayer/Control/TRI_OOB/SQU"]
+position = Vector2(116.513, -57.8791)
+scale = Vector2(3.26719, 3.26719)
+points = PackedVector2Array(-82, -47, -48, -80, 0, -93, 48, -80, 83, -46, 96, 1, 83, 48, 48, 81, 0, 94, -48, 81, -83, 48, -96, 0)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="ENEMY_OOB" type="ColorRect" parent="CanvasLayer/Control" groups=["OOB"]]
+visible = false
+layout_mode = 0
+offset_left = 338.0
+offset_top = 81.0
+offset_right = 740.0
+offset_bottom = 283.0
+scale = Vector2(2.13412, 2.28433)
+color = Color(1, 1, 1, 0.937255)
+
+[node name="Continue_msg" type="Label" parent="CanvasLayer/Control/ENEMY_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -49.181
+offset_top = 81.1103
+offset_right = 555.819
+offset_bottom = 116.11
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.375, 0.375)
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 8
+text = "PRESS ANY KEY TO EXIT"
+label_settings = ExtResource("4_j04uc")
+horizontal_alignment = 2
+autowrap_mode = 1
+
+[node name="TR2" type="Area2D" parent="CanvasLayer/Control/ENEMY_OOB"]
+position = Vector2(395.479, 193.047)
+rotation = 1.56978
+scale = Vector2(0.0135777, 0.0135777)
+
+[node name="TRI" type="Line2D" parent="CanvasLayer/Control/ENEMY_OOB/TR2"]
+position = Vector2(-291.499, 438.582)
+scale = Vector2(4.12913, 4.12913)
+points = PackedVector2Array(1, -82, -83, 59, 88, 59)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+joint_mode = 1
+
+[node name="Title" type="Label" parent="CanvasLayer/Control/ENEMY_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -193.034
+offset_top = -78.5
+offset_right = 562.966
+offset_bottom = 28.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.333, 0.333)
+text = "ENEMIES / MELEE"
+label_settings = SubResource("LabelSettings_xjg7p")
+
+[node name="Description" type="Label" parent="CanvasLayer/Control/ENEMY_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.6229
+offset_top = -71.0
+offset_right = 623.377
+offset_bottom = 407.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.333, 0.333)
+text = "When faced with a hostile enemy, proceed with caution. You can always use the melee attack ([CTRL] key) to fight back. 
+
+Enemies  aren't all bad though -- they drop shapes that you will need to complete your journey."
+label_settings = ExtResource("2_qwshj")
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="VideoContainer" type="ColorRect" parent="CanvasLayer/Control/ENEMY_OOB"]
+layout_mode = 0
+offset_left = 10.3087
+offset_top = 59.9738
+offset_right = 862.309
+offset_bottom = 539.974
+scale = Vector2(0.197185, 0.197185)
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="CanvasLayer/Control/ENEMY_OOB/VideoContainer"]
+layout_mode = 2
+offset_right = 852.0
+offset_bottom = 480.0
+stream = ExtResource("8_vqx31")
+autoplay = true
+loop = true
+
+[node name="CIR" type="Area2D" parent="CanvasLayer/Control/ENEMY_OOB"]
+position = Vector2(39.0576, 16.623)
+scale = Vector2(0.0569521, 0.0569521)
+collision_mask = 3
+
+[node name="SQ" type="Line2D" parent="CanvasLayer/Control/ENEMY_OOB/CIR"]
+position = Vector2(111.111, 27.5981)
+points = PackedVector2Array(-83, -80, 77, -80, 76, 66, -83, 66)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="TR" type="Area2D" parent="CanvasLayer/Control/ENEMY_OOB"]
+position = Vector2(30.3135, 15.0696)
+scale = Vector2(0.0135777, 0.0135777)
+
+[node name="TRI" type="Line2D" parent="CanvasLayer/Control/ENEMY_OOB/TR"]
+position = Vector2(-291.288, 231.52)
+scale = Vector2(4.12913, 4.12913)
+points = PackedVector2Array(1, -82, -83, 59, 88, 59)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+joint_mode = 1
+
+[node name="SQU" type="Area2D" parent="CanvasLayer/Control/ENEMY_OOB"]
+position = Vector2(9.78613, 19.0776)
+scale = Vector2(0.0135777, 0.0135777)
+collision_mask = 3
+
+[node name="SQ" type="Line2D" parent="CanvasLayer/Control/ENEMY_OOB/SQU"]
 position = Vector2(116.513, -57.8791)
 scale = Vector2(3.26719, 3.26719)
 points = PackedVector2Array(-82, -47, -48, -80, 0, -93, 48, -80, 83, -46, 96, 1, 83, 48, 48, 81, 0, 94, -48, 81, -83, 48, -96, 0)
