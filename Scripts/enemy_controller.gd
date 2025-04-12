@@ -67,6 +67,7 @@ var spawn_point: Node2D = null
 @onready var audio_player: AudioStreamPlayer2D = $AudioPlayer
 @onready var attack_area: Area2D = $AttackArea
 @onready var player: Player = $"../Player"
+@onready var ui: CanvasLayer = $"../UI"
 
 # Resources
 @export var circle_pickup: PackedScene
@@ -91,7 +92,7 @@ var is_aggro: bool = false
 var was_on_floor: bool = false
 var is_hurting: bool = false
 var original_color: Color = Color.BLACK
-
+var is_dialogue_visible: bool = false
 # Signals
 signal enemy_died()
 signal enemy_respawned()
@@ -108,6 +109,8 @@ func _ready() -> void:
 	
 	# Store original color for flash effects
 	original_color = Color.BLACK
+	
+
 	
 	# Initialize timers
 	if attack_timer:
@@ -149,6 +152,12 @@ func _ready() -> void:
 			child.color = Color(1, 0.3, 0.3, 1)
 			var tween = create_tween()
 			tween.tween_property(child, "color", original_color, 0.5)
+
+	var is_dialogue = Callable(self, "set_dialog_invinciblity") 
+	ui.connect("dialog_visible", is_dialogue)
+
+func set_dialog_invinciblity(dialogue_visible:bool) -> void:
+	is_dialogue_visible = dialogue_visible
 
 func _physics_process(delta: float) -> void:
 	# Skip if dead
@@ -638,16 +647,16 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 		take_damage(damage, knockback_dir)
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
-	# Check if hit player
-	var player_dir = player.facing_direction
+	
+	var knockback_dir = (body.global_position - global_position).normalized()
 	if body.is_in_group("player"):
 		print("contact with player")
+		print(is_dialogue_visible)
 		# Deal contact damage to player
-		if body.has_method("take_damage"):
-			var knockback_dir = (body.global_position - global_position).normalized()
+		if body.has_method("take_damage") and !is_dialogue_visible:
 			body.take_damage(contact_damage, knockback_dir)
-	if body.get_meta("shape_type") and body.get_meta("shape_type") == "triangle":
-		var knockback_dir = Vector2(player_dir, -0.5).normalized()
+	
+	if body.has_meta("shape_type") and body.get_meta("shape_type") == "triangle":
 		take_damage(10, knockback_dir)
 
 func _on_attack_timer_timeout() -> void:

@@ -1,22 +1,50 @@
 extends CanvasLayer
 	
-
+@onready var player: Player = $"/root/Game/Player"
 @onready var oob_dialogue = $CanvasLayer/Control/OOB
 @onready var designintent_dialogue: ColorRect = $CanvasLayer/Control/DESIGNINTENT
+@onready var enemy_oob: ColorRect = $CanvasLayer/Control/ENEMY_OOB
+@onready var tri_oob: ColorRect = $CanvasLayer/Control/TRI_OOB
+@onready var cir_oob: ColorRect = $CanvasLayer/Control/CIR_OOB
+@onready var shapes_oob: ColorRect = $CanvasLayer/Control/SHAPES_OOB
+@onready var enemy: Enemy = $"/root/Game/enemy"
+
 var key_presses: int = 0
+var dialog_state: String = "none"
+var any_dialogues_visible: bool = false
+
+signal dialog_visible(visible: bool)
 
 func _ready() -> void:
 	# Only show the dialogue if this is the first start
+	var _show_enemy_onboarding = Callable(self, "show_enemy_onboarding") 
+	player.connect("health_changed", _show_enemy_onboarding)
+	
+	var _show_shapes_onboarding = Callable(self, "show_shapes_onboarding")
+	enemy.connect("on_death", _show_shapes_onboarding)
+	
 	if not Global.has_seen_onboarding:
-		oob_dialogue.hide()
-		slide_dialog(null, designintent_dialogue)
+		dialog_state = "intent"
 	else:
-		hide_all_oob()
+		dialog_state = "none"
+	
+	get_state()
 	
 func hide_all_oob() -> void:
 	var all_oob = get_tree().get_nodes_in_group("OOB")
 	for oob in all_oob:
 		oob.hide()
+
+func show_enemy_onboarding(health: int) -> void:
+	if !Global.has_seen_enemy_onboarding:
+		dialog_state = "enemy"
+		get_state()
+
+func show_shapes_onboarding() -> void:
+	if !Global.has_seen_shapes_onboarding:
+		dialog_state = "shapes"
+		get_state()
+				
 
 func slide_dialog( out_dialog: ColorRect, in_dialog: ColorRect) -> void:
 	
@@ -38,21 +66,67 @@ func slide_dialog( out_dialog: ColorRect, in_dialog: ColorRect) -> void:
 		in_tween.tween_property(in_dialog, "global_position", in_dialog_target_position, 0.25)
 		await in_tween.finished
 		
-	
+
+func get_state() -> void:
+	match dialog_state:
+			"intent":
+				slide_dialog(null, designintent_dialogue)
+				dialog_state = "controls"
+				get_viewport().set_input_as_handled()
+				emit_signal("dialog_visible", true)
+				any_dialogues_visible = true
+			"controls":
+				slide_dialog(designintent_dialogue, oob_dialogue)
+				get_viewport().set_input_as_handled()
+				Global.has_seen_onboarding = true
+				dialog_state = "none"
+				any_dialogues_visible = true
+			"enemy":
+				slide_dialog(null, enemy_oob)
+				get_viewport().set_input_as_handled()
+				emit_signal("dialog_visible", true)
+				Global.has_seen_enemy_onboarding = true
+				dialog_state = "none"
+				any_dialogues_visible = true
+			"shapes":
+				slide_dialog(null, shapes_oob)
+				get_viewport().set_input_as_handled()
+				emit_signal("dialog_visible", true)
+				dialog_state = "circles"
+				any_dialogues_visible = true
+			"circles":
+				slide_dialog(shapes_oob, cir_oob)
+				get_viewport().set_input_as_handled()
+				emit_signal("dialog_visible", true)
+				dialog_state = "triangles"
+				any_dialogues_visible = true
+			"triangles":
+				slide_dialog(cir_oob, tri_oob)
+				get_viewport().set_input_as_handled()
+				emit_signal("dialog_visible", true)
+				Global.has_seen_shapes_onboarding = true
+				dialog_state = "none"
+				any_dialogues_visible = true
+			"squares":
+				pass
+			"none":
+				var visible_oob = get_tree().get_nodes_in_group("OOB")
+				for oob in visible_oob:
+					if oob.visible:
+						slide_dialog(oob, null)
+				emit_signal("dialog_visible", false)
+				any_dialogues_visible = false
 
 func _input(event: InputEvent) -> void:
-	
-	if event is InputEventKey and event.pressed:
-		if (key_presses > 0):
-			slide_dialog(oob_dialogue, null)
-			designintent_dialogue.hide()
-			get_viewport().set_input_as_handled()
-			 #and oob_dialogue.visible
-		if (key_presses == 0):
-			slide_dialog(designintent_dialogue, oob_dialogue)
-			key_presses = 1
-			get_viewport().set_input_as_handled()
-			Global.has_seen_onboarding = true
+	if event is InputEventKey and event.pressed and any_dialogues_visible:
+		get_state()
+
+			
+			
+			
+			
+
+
 			
 			
 			

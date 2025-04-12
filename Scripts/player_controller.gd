@@ -128,6 +128,7 @@ var current_squash_stretch: float = 0.0
 @onready var audio_player: AudioStreamPlayer2D = $AudioPlayer
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 @onready var game_manager: Node2D = $"/root/Game"
+@onready var ui: CanvasLayer = $"../UI"
 
 # Resources
 @export var projectile_scene: PackedScene
@@ -228,6 +229,9 @@ func _ready() -> void:
 	emit_signal("on_pickup", "circle", circle_pieces)
 	emit_signal("on_pickup", "triangle", triangle_pieces)
 	emit_signal("on_pickup", "square", square_pieces)
+
+	var is_dialogue = Callable(self, "set_dialog_invinciblity") 
+	ui.connect("dialog_visible", is_dialogue)
 	
 	# Add player to the player group
 	add_to_group("player")
@@ -277,6 +281,15 @@ func _ready() -> void:
 	for item in get_tree().get_nodes_in_group("insight_item"):
 		item.visible = false
 		set_static_body_collision(item, false)
+
+func set_dialog_invinciblity(is_dialogue_visible:bool) -> void:
+	print("dialogue visible: " + str(is_dialogue_visible))
+	if is_dialogue_visible:
+		is_post_knockback_invincible = true
+	else:
+		# post_knockback_invincibility_timer = 0.75
+		post_knockback_invincibility_timer = 2.0
+	print("is_post_knockback_invincible: " + str(is_post_knockback_invincible))
 
 func _physics_process(delta: float) -> void:
 	# Skip all physics if player is disabled
@@ -1067,7 +1080,8 @@ func take_damage(damage: int, knockback_direction: Vector2 = Vector2.ZERO) -> vo
 func apply_knockback(direction: Vector2) -> void:
 	if is_being_knocked_back or is_post_knockback_invincible:  # Don't apply new knockback during knockback or post-knockback invincibility
 		return
-		
+	
+
 	is_being_knocked_back = true
 	knockback_direction = direction
 	knockback_timer = knockback_duration
