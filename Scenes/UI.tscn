@@ -10,7 +10,7 @@
 [ext_resource type="VideoStream" uid="uid://v623tjaihuof" path="res://Videos/circle.ogv" id="4_xjg7p"]
 [ext_resource type="VideoStream" uid="uid://6c5q5wn6kuod" path="res://Videos/triangle.ogv" id="5_mg6lk"]
 [ext_resource type="Script" uid="uid://bfkruun4ft5qx" path="res://Scenes/life_indicator.gd" id="5_qwshj"]
-[ext_resource type="VideoStream" path="res://Videos/enemies.ogv" id="8_vqx31"]
+[ext_resource type="VideoStream" uid="uid://sm50vjaxanyf" path="res://Videos/enemies.ogv" id="8_vqx31"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_xjg7p"]
 font = ExtResource("3_wunin")

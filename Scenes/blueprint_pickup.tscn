@@ -114,10 +114,13 @@ libraries = {
 autoplay = "idle"
 
 [node name="BuildingPanel" type="ColorRect" parent="."]
-offset_left = -199.0
-offset_top = -157.961
-offset_right = 199.0
-offset_bottom = 44.0389
+clip_contents = true
+offset_left = -392.0
+offset_top = -374.558
+offset_right = 6.0
+offset_bottom = -172.558
+scale = Vector2(2.08067, 2.08067)
+color = Color(1, 1, 1, 0.882353)
 
 [node name="ShapeCounts" type="HBoxContainer" parent="BuildingPanel"]
 layout_mode = 1
@@ -269,6 +272,14 @@ points = PackedVector2Array(-82, -47, -48, -80, 0, -93, 48, -80, 83, -46, 96, 1,
 closed = true
 width = 30.0
 default_color = Color(1, 0, 0, 1)
+
+[node name="GridContainer" type="GridContainer" parent="BuildingPanel"]
+layout_mode = 0
+offset_left = 142.262
+offset_top = 57.3002
+offset_right = 242.262
+offset_bottom = 157.3
+columns = 4
 
 [node name="blueprint_square3" type="Area2D" parent="."]
 visible = false

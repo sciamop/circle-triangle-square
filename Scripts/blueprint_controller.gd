@@ -33,6 +33,8 @@ var placed_shapes: Dictionary = {
 	"square": 0
 }
 var panel_grow_tween: Tween
+var building_panel_size_y: int
+var building_panel_size_x: int
 
 #camera
 var camera_zoom_out_tween: Tween
@@ -49,7 +51,8 @@ func _ready() -> void:
 	
 	# Set visual properties
 	polygon.color = glow_color
-	
+	building_panel_size_y = building_panel.size.y
+	building_panel_size_x = building_panel.size.x
 	# Initialize building panel
 	building_panel.hide()
 	_update_shape_count_labels()
@@ -99,32 +102,27 @@ func start_building() -> void:
 	original_camera_zoom = camera.zoom
 	
 
-	var camera_offset_x:float = building_panel.size.x / 2
-	var camera_offset_y:float = building_panel.size.y / 2
+	var camera_offset_x:float = building_panel_size_x
+	var camera_offset_y:float = building_panel_size_y
 	var camera_target = building_panel.global_position
 	camera_target.x = camera_target.x + camera_offset_x
 	camera_target.y = camera_target.y + camera_offset_y
 
-	# Zoom to mcguffin
+	# Zoom to blueprint
 	tween = create_tween()
 	tween.tween_property(camera, "global_position", camera_target, 0.5)
-	tween.parallel().tween_property(camera, "zoom", Vector2(3.2, 3.2), 0.5)
+	tween.parallel().tween_property(camera, "zoom", Vector2(1.50, 1.50), 0.5)
 
 
 	# Show the panel but keep it at 1px width
 	building_panel.visible = true
 	building_panel.size.x = 1
+	building_panel.size.y = 1
+
+	building_panel.size.x = lerp(1,building_panel_size_x,1.0)
+	building_panel.size.y = lerp(1,building_panel_size_y,1.0)
+
 	# Center the panel
-	building_panel.position.x = -0.5  # Half of 1px width
-	
-	# Create and start the grow animation
-	if panel_grow_tween:
-		panel_grow_tween.kill()
-	panel_grow_tween = create_tween()
-	# Animate both size and position
-	panel_grow_tween.parallel().tween_property(building_panel, "size:x", 400, 0.3).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
-	panel_grow_tween.parallel().tween_property(building_panel, "position:x", -200, 0.3).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
-	
 	is_building = true
 	_update_shape_count_labels()
 	if current_player.has_method("start_blueprint_building"):
