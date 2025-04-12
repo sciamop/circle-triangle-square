@@ -1,0 +1,9 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://d270b5vas2gjr"]
+
+[ext_resource type="FontFile" uid="uid://bhaeglj2is8tb" path="res://Fonts/Aileron-Regular.otf" id="1_r5uyf"]
+
+[resource]
+line_spacing = 9.22
+font = ExtResource("1_r5uyf")
+font_size = 28
+font_color = Color(1, 0, 0, 1)

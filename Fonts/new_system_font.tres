@@ -1,0 +1,4 @@
+[gd_resource type="SystemFont" format=3 uid="uid://ve5gptudgu3h"]
+
+[resource]
+multichannel_signed_distance_field = true
