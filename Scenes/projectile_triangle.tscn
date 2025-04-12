@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://c21tcsscyumfc" path="res://Scripts/projectile.gd" id="1_a8fiy"]
 [ext_resource type="Material" uid="uid://b8o43bl42cg1p" path="res://Resources/projectile_particles.tres" id="2_acy1t"]
 
-[node name="projectile" type="Area2D"]
+[node name="projectile" type="StaticBody2D"]
 collision_mask = 15
 script = ExtResource("1_a8fiy")
 

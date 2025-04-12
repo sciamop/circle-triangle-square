@@ -25,7 +25,7 @@ class_name Enemy
 # Pickup drops
 @export var drops_enabled: bool = true
 @export_group("Pickup Drops")
-@export var circle_drop_chance: float = 0.7
+@export var circle_drop_chance: float = 0.3
 @export var triangle_drop_chance: float = 0.5
 @export var square_drop_chance: float = 0.3
 @export var min_drops: int = 1
@@ -98,6 +98,7 @@ signal enemy_respawned()
 signal on_enemy_died
 signal on_enemy_hit(damage)
 signal on_enemy_attack
+signal on_death()
 
 func _ready() -> void:
 	#death_particles = preload("res://Scenes/death_particles.tscn").instantiate()
@@ -265,6 +266,7 @@ func change_state(new_state: int) -> void:
 		
 		EnemyState.DEAD:
 			# Disable collisions
+			print("Dead state")
 			if hitbox:
 				hitbox.set_deferred("monitoring", false)
 				hitbox.set_deferred("monitorable", false)
@@ -492,6 +494,7 @@ func _apply_hit_flash() -> void:
 		hit_flash_timer.start(hit_flash_duration)
 
 func take_damage(damage: float, knockback_direction: Vector2) -> void:
+	print("take damage")
 	if current_state == EnemyState.DEAD:
 		return
 		
@@ -636,13 +639,16 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 
 func _on_hitbox_body_entered(body: Node2D) -> void:
 	# Check if hit player
-	print(body.name)
+	var player_dir = player.facing_direction
 	if body.is_in_group("player"):
 		print("contact with player")
 		# Deal contact damage to player
 		if body.has_method("take_damage"):
 			var knockback_dir = (body.global_position - global_position).normalized()
 			body.take_damage(contact_damage, knockback_dir)
+	if body.get_meta("shape_type") and body.get_meta("shape_type") == "triangle":
+		var knockback_dir = Vector2(player_dir, -0.5).normalized()
+		take_damage(10, knockback_dir)
 
 func _on_attack_timer_timeout() -> void:
 	attack_ready = true

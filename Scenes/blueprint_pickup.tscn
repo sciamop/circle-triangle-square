@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dxn5uu2dk2ipx" path="res://Scripts/blueprint_controller.gd" id="1_2k4m3"]
 [ext_resource type="Material" uid="uid://bktyivkiltmw1" path="res://Resources/blueprint_particles.tres" id="2_wlm2b"]
-[ext_resource type="LabelSettings" uid="uid://pjukfu4qrdup" path="res://Resources/blueprint_label_settings.tres" id="3_wl3ot"]
+[ext_resource type="LabelSettings" uid="uid://d270b5vas2gjr" path="res://Resources/blueprint_label_next_settings.tres" id="3_wl3ot"]
 
 [sub_resource type="Animation" id="Animation_xisl2"]
 length = 0.001

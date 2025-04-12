@@ -176,7 +176,7 @@ var is_insight_active: bool = false  # Track if insight is currently active
 @export var wall_max_width: float = 22.0  # Maximum radius during growth
 
 var wall_timer: float = 0.0
-var wall_area: Area2D = null
+var wall_area: StaticBody2D = null
 var wall_rect: Polygon2D = null
 var wall_animation_phase: String = "grow"  # "grow", "hold", "contract"
 var wall_animation_timer: float = 0.0
@@ -219,10 +219,15 @@ enum PlayerState {
 var current_state: int = PlayerState.IDLE
 
 func _ready() -> void:
-	
+	# Initialize shape counts
 	shape_counts["square"] = square_pieces
 	shape_counts["triangle"] = triangle_pieces
 	shape_counts["circle"] = circle_pieces
+	
+	# Emit signals for each shape type
+	emit_signal("on_pickup", "circle", circle_pieces)
+	emit_signal("on_pickup", "triangle", triangle_pieces)
+	emit_signal("on_pickup", "square", square_pieces)
 	
 	# Add player to the player group
 	add_to_group("player")
@@ -321,6 +326,8 @@ func _physics_process(delta: float) -> void:
 			# Keep playing hurt animation during post-knockback invincibility
 			if animation_player:
 				animation_player.play("hurt")
+				await animation_player.animation_finished
+				animation_player.play("RESET")
 		else:
 			velocity = knockback_direction * knockback_force
 			move_and_slide()
@@ -610,28 +617,27 @@ func perform_melee_attack() -> void:
 	emit_signal("on_attack", "melee")
 
 func has_ammo() -> bool:
-	#if (circle_pieces == 0 && square_pieces == 0 && triangle_pieces == 0):
-		#return false
-		
 	match active_projectile_shape:
 		"circle":
 			if (circle_pieces == 0):
 				emit_signal("on_empty", active_projectile_shape)
 				return false
 			circle_pieces -= 1
+			shape_counts["circle"] = circle_pieces
 			emit_signal("on_pickup", active_projectile_shape, circle_pieces)
 		"square":
 			if (square_pieces == 0):
-				# print("nope")
 				emit_signal("on_empty", active_projectile_shape)
 				return false
 			square_pieces -= 1
+			shape_counts["square"] = square_pieces
 			emit_signal("on_pickup", active_projectile_shape, square_pieces)
 		"triangle":
 			if (triangle_pieces == 0):
 				emit_signal("on_empty", active_projectile_shape)
 				return false
 			triangle_pieces -= 1
+			shape_counts["triangle"] = triangle_pieces
 			emit_signal("on_pickup", active_projectile_shape, triangle_pieces)
 	
 	return true
@@ -757,14 +763,22 @@ func _on_wall_body_entered(body: Node2D) -> void:
 
 func _on_wall_area_entered(area: Area2D) -> void:
 	if area.is_in_group("enemy"):
+		print("Wall area entered by enemy")
 		# Handle enemy area collision
 		var enemy = area.get_parent()
 		if enemy and enemy.has_method("take_damage"):
 			enemy.take_damage(1)  # Optional: damage enemies that hit the wall
 
 func transform_projectile_to_wall(projectile: Node2D) -> void:
-	# Create wall area
-	wall_area = Area2D.new()
+	# Remove any existing wall before creating a new one
+	if wall_area:
+		wall_area.queue_free()
+		wall_area = null
+		wall_rect = null
+		is_wall_active = false
+	
+	# Create wall body
+	wall_area = StaticBody2D.new()
 	wall_area.name = "WallArea"
 	
 	# Set collision layers and masks
@@ -800,13 +814,8 @@ func transform_projectile_to_wall(projectile: Node2D) -> void:
 	wall_timer = wall_duration
 	wall_animation_timer = 0.0
 	wall_animation_phase = "grow"
-	wall_area.monitoring = true
 	wall_rect.visible = true
 	is_wall_active = true
-	
-	# Connect signals for collision detection
-	wall_area.body_entered.connect(_on_wall_body_entered)
-	wall_area.area_entered.connect(_on_wall_area_entered)
 	
 	# Remove the projectile
 	projectile.queue_free()
@@ -1075,6 +1084,7 @@ func apply_knockback(direction: Vector2) -> void:
 	if animation_player:
 		animation_player.play("hurt")
 		await animation_player.animation_finished
+		animation_player.play("RESET")
 
 # Function to heal the player
 func heal(amount: int) -> void:
@@ -1509,3 +1519,108 @@ func change_state(new_state: PlayerState) -> void:
 		PlayerState.BUILDING:
 			# Initialize building state
 			velocity = Vector2.ZERO
+
+func perform_ranged_attack() -> void:
+	if not ranged_unlocked or attacking:
+		return
+	# Check ammo before proceeding
+	if not has_ammo():
+		return
+
+	# Check if player is in a blueprint zone and has a square
+	var blueprint_areas = get_tree().get_nodes_in_group("blueprint_zone")
+	for area in blueprint_areas:
+		print(area.name)
+		if area.overlaps_area(pickup_area):
+			# Start blueprint building instead of firing projectile
+			var blueprint = area.get_parent()
+			if blueprint and blueprint.has_method("start_blueprint_building"):
+				start_blueprint_building(blueprint)
+				return
+	
+	# Start attack state
+	attacking = true
+	ranged_cooldown_timer = ranged_cooldown
+	
+	# Emit attack signal
+	emit_signal("on_attack", "ranged")
+	
+	# Play attack sound
+	if audio_player and attack_ranged_sound:
+		audio_player.stream = attack_ranged_sound
+		audio_player.play()
+	
+	# Check for insight items in range
+	var found_match = false
+	print("Checking for insight items with shape: ", active_projectile_shape)
+	
+	# Only check for insight items if the insight circle is active
+	if is_insight_active:
+		for item in get_tree().get_nodes_in_group("insight_item"):
+			print("Found insight item: ", item.name)
+			# Check both the item and its parent for visibility
+			var parent = item.get_parent()
+			if item.visible or (parent and parent.visible):
+				var item_shape = item.get_meta("shape_type", "")
+				print("Item shape type: ", item_shape)
+				print("Looking for: ", active_projectile_shape)
+				if item_shape == active_projectile_shape and not item.get_meta("is_permanent"):
+					print("Found matching shape!")
+					# Make the item permanent
+					item.set_meta("is_permanent", true)
+					
+					# Get the Line2D and Polygon2D nodes
+					var line_node = item.get_node_or_null("Line2D")
+					var poly_node = item.get_node_or_null("Polygon2D")
+					
+					if line_node:
+						line_node.visible = false
+					if poly_node:
+						poly_node.visible = true
+					
+					# Enable collision on the StaticBody2D
+					set_static_body_collision(item, true)
+					
+					# Ensure both the item and its parent are visible
+					item.visible = true
+					if parent:
+						parent.visible = true
+					
+					# Spawn traveling shape from UI to insight item
+					if traveling_shape_scene:
+						var traveling_shape = traveling_shape_scene.instantiate()
+						get_tree().root.add_child(traveling_shape)
+						
+						# Get the UI position for the current shape
+						var ui_shape = get_tree().get_first_node_in_group("shape_" + active_projectile_shape)
+						if ui_shape:
+							traveling_shape.init(ui_shape.global_position, item.global_position, active_projectile_shape)
+					
+					found_match = true
+					break
+				else:
+					print("Shape mismatch - expected: " + active_projectile_shape + ", got: " + item_shape)
+			else:
+				print("Item and parent not visible")
+	
+	if found_match:
+		# Reset attack state and emit signal
+		attacking = false
+		emit_signal("on_attack", "ranged")
+	else:
+		# Spawn projectile if no match found
+		var projectile = projectile_scene.instantiate()
+		projectile.set_meta("shape_type", active_projectile_shape)
+		
+		# Make the correct shape visible
+		var shape_node = projectile.find_child("projectile_" + active_projectile_shape)
+		if shape_node:
+			shape_node.visible = true
+		
+		# Spawn in front of the player based on facing direction, with enough distance to avoid collision
+		projectile.global_position = global_position + Vector2(facing_direction * 50, 40)
+		projectile.direction = Vector2(facing_direction, 0)
+		projectile.speed = ranged_projectile_speed
+		get_parent().add_child(projectile)
+		# Reset attack state after projectile is fired
+		attacking = false

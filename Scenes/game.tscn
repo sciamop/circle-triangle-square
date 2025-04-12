@@ -538,6 +538,8 @@ tile_map_data = PackedByteArray("AAD+//7/BAAFAAQAAAD///7/BAAFAAQAAAAAAP7/BAAFAAQ
 tile_set = SubResource("TileSet_0q5gb")
 navigation_enabled = false
 
+[node name="UI" parent="." instance=ExtResource("6_1l0tm")]
+
 [node name="Player" parent="." instance=ExtResource("2_a8p0r")]
 position = Vector2(90, -226)
 collision_mask = 7
@@ -577,8 +579,6 @@ position = Vector2(-260, -82)
 scale = Vector2(0.947398, 0.947398)
 knockback_force = 666.0
 enable_effects = false
-
-[node name="UI" parent="." instance=ExtResource("6_1l0tm")]
 
 [node name="Parallax2D" type="Parallax2D" parent="."]
 scroll_scale = Vector2(1.73, 1.73)

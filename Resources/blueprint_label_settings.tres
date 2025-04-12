@@ -1,8 +1,9 @@
 [gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://pjukfu4qrdup"]
 
-[sub_resource type="SystemFont" id="SystemFont_wlm2b"]
+[ext_resource type="FontFile" uid="uid://bhaeglj2is8tb" path="res://Fonts/Aileron-Regular.otf" id="1_6bsj8"]
 
 [resource]
-font = SubResource("SystemFont_wlm2b")
-font_size = 8
+line_spacing = 12.7
+font = ExtResource("1_6bsj8")
+font_size = 28
 font_color = Color(0, 0, 0, 1)
