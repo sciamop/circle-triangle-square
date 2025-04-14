@@ -17,7 +17,7 @@ position = Vector2(1.91676, -3.36946)
 rotation = -0.046246
 scale = Vector2(0.00776863, 0.161101)
 color = Color(0, 0, 0, 1)
-polygon = PackedVector2Array(-1179.4, 52.6765, 1001.33, 61.4369, -101.033, -30.5611)
+polygon = PackedVector2Array(-1202.32, 55.538, 983.629, 60.4163, -101.033, -30.5611)
 
 [node name="pickupArea2D" type="Area2D" parent="." groups=["pickup_group"]]
 collision_layer = 4

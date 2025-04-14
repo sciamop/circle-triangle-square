@@ -631,8 +631,6 @@ func perform_melee_attack() -> void:
 		# Keep the original position values but flip them based on facing direction
 		var hitbox_collision = melee_hitbox.get_node("ArmHurtBox")
 		hitbox_collision.disabled = false
-		# var base_position = Vector2(40.4641, -27.0979)  # Original position from scene
-		#hitbox_collision.position = base_position * Vector2(facing_direction, 1)
 		
 		# Wait for animation to finish then disable hitbox
 		await animation_player.animation_finished
@@ -646,6 +644,7 @@ func perform_melee_attack() -> void:
 		audio_player.stream = attack_melee_sound
 		audio_player.play()
 	
+	# Always reset attacking state
 	attacking = false
 	emit_signal("on_attack", "melee")
 

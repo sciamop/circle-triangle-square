@@ -29,4 +29,5 @@ func _on_area_entered(area: Area2D) -> void:
 		var enemy = area.get_parent()
 		enemy.apply_central_impulse(Vector2(66,22) * player.direction)
 		game_manager.pause_game()
-		enemy.take_damage(damage)
+		var knockback_dir = Vector2(player.direction, -0.5).normalized()
+		enemy.take_damage(damage, knockback_dir)

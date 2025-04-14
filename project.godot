@@ -42,6 +42,7 @@ OOB=""
 enemy=""
 grappling_hook_point=""
 summit_point=""
+oob_trigger=""
 
 [input]
 

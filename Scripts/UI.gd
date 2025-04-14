@@ -3,11 +3,22 @@ extends CanvasLayer
 @onready var player: Player = $"/root/Game/Player"
 @onready var oob_dialogue = $CanvasLayer/Control/OOB
 @onready var designintent_dialogue: ColorRect = $CanvasLayer/Control/DESIGNINTENT
+
 @onready var enemy_oob: ColorRect = $CanvasLayer/Control/ENEMY_OOB
+@onready var enemy_oob_trigger: Area2D = $"/root/Game/OOB_enemy_trigger"
+
 @onready var tri_oob: ColorRect = $CanvasLayer/Control/TRI_OOB
+@onready var tri_oob_trigger: Area2D = $"/root/Game/OOB_tri_trigger"
+
 @onready var cir_oob: ColorRect = $CanvasLayer/Control/CIR_OOB
+@onready var cir_oob_trigger: Area2D = $"/root/Game/OOB_cir_trigger"
+
 @onready var squ_oob: ColorRect = $CanvasLayer/Control/SQU_OOB
+@onready var squ_oob_trigger: Area2D = $"/root/Game/OOB_squ_trigger"
+
 @onready var shapes_oob: ColorRect = $CanvasLayer/Control/SHAPES_OOB
+
+
 @onready var enemy: Enemy = $"/root/Game/enemy"
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var blueprint_pickup: Blueprint = $"/root/Game/BlueprintPickup"
@@ -20,8 +31,14 @@ signal dialog_visible(visible: bool)
 
 func _ready() -> void:
 	# Only show the dialogue if this is the first start
-	var _show_enemy_onboarding = Callable(self, "show_enemy_onboarding") 
-	player.connect("health_changed", _show_enemy_onboarding)
+	var _show_onboarding = Callable(self, "show_onboarding") 
+
+	
+	enemy_oob_trigger.connect("oob_triggered", _show_onboarding)
+	tri_oob_trigger.connect("oob_triggered", _show_onboarding)
+	squ_oob_trigger.connect("oob_triggered", _show_onboarding)
+	cir_oob_trigger.connect("oob_triggered", _show_onboarding)
+	enemy.connect("on_death", _show_onboarding.bind("shapes"))
 	
 	var _show_shapes_onboarding = Callable(self, "show_shapes_onboarding")
 	enemy.connect("on_death", _show_shapes_onboarding)
@@ -53,36 +70,30 @@ func add_blueprint_item_to_inventory(_name: String) -> void:
 	animation_player.play("add_blueprint_item")
 
 
-func show_enemy_onboarding(health: int) -> void:
+func show_onboarding(oob_to_display: String) -> void:
 	if any_dialogues_visible:
 		return
-	if !Global.has_seen_enemy_onboarding:
-		dialog_state = "enemy"
-		get_state()
 
-func show_shapes_onboarding() -> void:
-	if any_dialogues_visible:
-		return
-	if !Global.has_seen_shapes_onboarding:
-		dialog_state = "shapes"
-		get_state()
-
-func show_circle_triangle_square_onboarding(shape: String) -> void:
-	if any_dialogues_visible:
-		return
-	if shape == "circle":
+	if oob_to_display == "circle":
 		if !Global.has_seen_circles_onboarding:
 			dialog_state = "circles"
 			get_state()
-	elif shape == "triangle":
+	elif oob_to_display == "triangle":
 		if !Global.has_seen_triangles_onboarding:
 			dialog_state = "triangles"
 			get_state()
-	elif shape == "square":
+	elif oob_to_display == "square":
 		if !Global.has_seen_squares_onboarding:
 			dialog_state = "squares"
 			get_state()
-				
+	elif oob_to_display == "enemy":
+		if !Global.has_seen_enemy_onboarding:
+			dialog_state = "enemy"
+			get_state()
+	elif oob_to_display == "shapes":
+		if !Global.has_seen_shapes_onboarding:
+			dialog_state = "shapes"
+			get_state()
 
 func slide_dialog( out_dialog: ColorRect, in_dialog: ColorRect) -> void:
 	
@@ -164,13 +175,8 @@ func _input(event: InputEvent) -> void:
 		get_state()
 
 			
-			
-			
-			
 
-
-			
-			
-			
-	
-	
+func _on_oob_trigger_body_entered(body: Node2D) -> void:
+	if (body.is_in_group("player")):
+		print('poop')
+	pass # Replace with function body.

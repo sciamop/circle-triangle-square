@@ -5,6 +5,7 @@ class_name Enemy
 # Basic parameters
 @export var max_health: int = 20
 @export var move_speed: float = 150.0
+@export var move_speed_modifier: float = 1.0
 @export var gravity: float = 1500.0
 @export var max_fall_speed: float = 800.0
 @export var jump_force: float = 100.0  # Added jump force parameter
@@ -47,7 +48,6 @@ class_name Enemy
 @export_node_path("Node2D") var spawn_point_path  # Optional custom spawn point
 @export var random_spawn_radius: float = 100.0  # Random spawn radius (0 for exact spawn)
 
-var current_health: int = max_health
 var is_alive: bool = true
 var initial_position: Vector2
 var spawn_point: Node2D = null
@@ -87,7 +87,7 @@ enum EnemyState {IDLE, PATROL, CHASE, ATTACK, HURT, DEAD, RESPAWN}
 var current_state: int = EnemyState.IDLE
 
 # State tracking variables
-var health: int = max_health
+var current_health: int = max_health
 var direction: int = 1  # 1 = right, -1 = left
 var patrol_destination: Vector2 = Vector2.ZERO
 var target: Node2D = null
@@ -171,11 +171,11 @@ func set_dialog_invinciblity(dialogue_visible:bool) -> void:
 
 func _physics_process(delta: float) -> void:
 	# Skip if dead or dialogue is visible
-	if is_dialogue_visible:
-		move_speed = 0
+	if is_dialogue_visible or !Global.has_seen_enemy_onboarding:
+		move_speed_modifier = 0
 		return
 	else:
-		move_speed = 200
+		move_speed_modifier = 1.0
 		
 	
 	if current_state == EnemyState.DEAD:
@@ -405,7 +405,7 @@ func _process_patrol_state(delta: float) -> void:
 		return
 	
 	# Move toward patrol destination
-	var target_velocity = direction * move_speed * 0.6
+	var target_velocity = direction * move_speed * move_speed_modifier * 0.6
 	velocity.x = move_toward(velocity.x, target_velocity, patrol_acceleration * delta)
 	
 	# Check if we've reached the destination
@@ -431,7 +431,7 @@ func _process_chase_state(delta: float) -> void:
 		return
 	
 	# Move toward target
-	var target_velocity = direction * move_speed
+	var target_velocity = direction * move_speed  * move_speed_modifier 
 	velocity.x = move_toward(velocity.x, target_velocity, chase_acceleration * delta)
 
 func _process_attack_state(delta: float) -> void:
@@ -548,7 +548,7 @@ func take_damage(damage: float, knockback_direction: Vector2) -> void:
 	if current_state == EnemyState.DEAD:
 		return
 		
-	health -= damage
+	current_health -= damage
 	
 	# Apply knockback
 	if knockback_direction != Vector2.ZERO:
@@ -556,8 +556,8 @@ func take_damage(damage: float, knockback_direction: Vector2) -> void:
 		# Wait for knockback to complete before changing state
 		await get_tree().create_timer(0.5).timeout
 	
-	if health <= 0:
-		health = 0
+	if current_health <= 0:
+		current_health = 0
 		change_state(EnemyState.DEAD)
 		emit_signal("on_death")
 		# Start respawn timer

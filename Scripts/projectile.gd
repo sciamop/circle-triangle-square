@@ -54,7 +54,8 @@ func _on_body_entered(body: Node2D) -> void:
 	elif body.is_in_group("enemy") and self.get_meta("shape_type") == "triangle":
 		# Handle enemy hit
 		print("enemy hit")
-		body.take_damage(10, self.direction)
+		var knockback_dir = (body.global_position - global_position).normalized()
+		body.take_damage(10, knockback_dir)
 		queue_free()
 
 func bounce() -> void:

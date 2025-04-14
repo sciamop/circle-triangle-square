@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://c2a8f1fbc7m4n"]
+
+[ext_resource type="Script" uid="uid://5q5ad10hgm7y" path="res://Scripts/oob_trigger.gd" id="1_wh2ji"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oapm4"]
+size = Vector2(20, 470)
+
+[node name="OOB_trigger" type="Area2D"]
+script = ExtResource("1_wh2ji")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -37)
+shape = SubResource("RectangleShape2D_oapm4")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
