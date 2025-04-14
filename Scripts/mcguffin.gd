@@ -33,15 +33,17 @@ func move_to_door(door: Node2D) -> void:
 		door_anim.play("cat_escape")
 		await door_anim.animation_finished
 		door.hide()
-	
+		door_anim.play("RESET")
 	# Move instantly to checkpoint2
 	var checkpoint2 = get_tree().get_nodes_in_group("checkpoint")[1]
 	if checkpoint2:
 		visible = true
 		global_position = checkpoint2.global_position
-		door.global_position = Vector2(checkpoint2.global_position.x + 100, checkpoint2.global_position.y)
-		# Trigger checkpoint sequence
-		if player and player.has_method("handle_checkpoint"):
-			await player.handle_checkpoint(checkpoint2)
+		door.global_position = Vector2(checkpoint2.global_position.x + 100, checkpoint2.global_position.y - 53)
+	
+		
+		door.show()
+		if player and player.has_method("zoom_on_checkpoint"):
+			await player.zoom_on_checkpoint(checkpoint2)
 		
 	 

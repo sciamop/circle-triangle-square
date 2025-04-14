@@ -1338,6 +1338,31 @@ func update_rect_size(size: Vector2) -> void:
 			collision.shape.size.x = size.x + 10
 			collision.shape.size.y = size.y + 10
 
+func zoom_on_checkpoint(checkpoint:Node2D) -> void:
+			# Store original camera position and zoom
+		var original_camera_pos = camera.global_position
+		var original_camera_zoom = camera.zoom
+		
+		# Zoom to mcguffin
+		var tween = create_tween()
+		tween.tween_property(camera, "global_position", mcguffin.global_position, 0.5)
+		tween.parallel().tween_property(camera, "zoom", Vector2(4.2, 4.2), 0.5)
+		
+		print("Started camera tween")
+		
+		# Wait for zoom
+		await get_tree().create_timer(0.5).timeout
+		
+		# Handle mcguffin meow sequence
+		await mcguffin.play_meow_sequence()
+		
+		# Zoom back out
+		tween = create_tween()
+		tween.tween_property(camera, "global_position", original_camera_pos, 0.5)
+		tween.parallel().tween_property(camera, "zoom", original_camera_zoom, 0.5)
+		# Wait for zoom
+		await get_tree().create_timer(1.25).timeout
+
 func handle_checkpoint(checkpoint: Node2D) -> void:
 	# Disable player movement and actions
 	is_disabled = true

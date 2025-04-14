@@ -614,7 +614,7 @@ position = Vector2(418, -323)
 scale = Vector2(0.878668, 0.456082)
 
 [node name="checkpoint2" parent="." groups=["checkpoint"] instance=ExtResource("5_rku1e")]
-position = Vector2(-384, -654)
+position = Vector2(-384, -647)
 scale = Vector2(0.878668, 0.456082)
 
 [node name="GrapplingHook_Point" parent="." instance=ExtResource("16_nnt18")]
