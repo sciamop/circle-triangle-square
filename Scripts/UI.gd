@@ -15,7 +15,6 @@ extends CanvasLayer
 var key_presses: int = 0
 var dialog_state: String = "none"
 var any_dialogues_visible: bool = false
-
 signal dialog_visible(visible: bool)
 
 func _ready() -> void:
@@ -52,6 +51,9 @@ func add_blueprint_item_to_inventory(name: String) -> void:
 func hide_all_oob() -> void:
 	var all_oob = get_tree().get_nodes_in_group("OOB")
 	for oob in all_oob:
+		var video_stream_player:VideoStreamPlayer = oob.find_child("VideoStreamPlayer")
+		if video_stream_player:
+			video_stream_player.stop()
 		oob.hide()
 
 func show_enemy_onboarding(health: int) -> void:
@@ -87,6 +89,10 @@ func slide_dialog( out_dialog: ColorRect, in_dialog: ColorRect) -> void:
 		in_tween.tween_property(in_dialog, "global_position", in_dialog_target_position, 0.25)
 		await in_tween.finished
 		
+func start_video_player(dialog:ColorRect) -> void:
+	var vs_player:VideoStreamPlayer = dialog.find_child("VideoStreamPlayer")
+	if vs_player:
+		vs_player.play()
 
 func get_state() -> void:
 	match dialog_state:
@@ -110,18 +116,21 @@ func get_state() -> void:
 				Global.has_seen_enemy_onboarding = true
 				dialog_state = "none"
 				any_dialogues_visible = true
+				start_video_player(enemy_oob)
 			"shapes":
 				slide_dialog(null, shapes_oob)
 				get_viewport().set_input_as_handled()
 				emit_signal("dialog_visible", true)
 				dialog_state = "circles"
 				any_dialogues_visible = true
+				start_video_player(shapes_oob)
 			"circles":
 				slide_dialog(shapes_oob, cir_oob)
 				get_viewport().set_input_as_handled()
 				emit_signal("dialog_visible", true)
 				dialog_state = "triangles"
 				any_dialogues_visible = true
+				start_video_player(cir_oob)
 			"triangles":
 				slide_dialog(cir_oob, tri_oob)
 				get_viewport().set_input_as_handled()
@@ -129,6 +138,7 @@ func get_state() -> void:
 				Global.has_seen_shapes_onboarding = true
 				dialog_state = "none"
 				any_dialogues_visible = true
+				start_video_player(tri_oob)
 			"squares":
 				pass
 			"none":

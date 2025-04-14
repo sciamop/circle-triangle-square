@@ -583,7 +583,7 @@ position = Vector2(-25, 0)
 shape = SubResource("WorldBoundaryShape2D_wowpa")
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 0.019
+wait_time = 0.5
 one_shot = true
 ignore_time_scale = true
 

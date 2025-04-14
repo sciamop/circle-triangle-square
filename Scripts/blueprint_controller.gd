@@ -218,10 +218,13 @@ func make_blueprint_item_real() -> void:
 	
 	# now we want to position it where the placeholder was
 	var blueprint_marker: Polygon2D = blueprint_root.get_node("Polygon2D")
+	var blueprint_particles: GPUParticles2D = blueprint_root.get_node("GPUParticles2D")
 	blueprint_item.global_position = blueprint_marker.global_position
+	
 	
 	# hide the marker/placeholder
 	blueprint_marker.hide()
+	blueprint_particles.hide()
 
 	# move it into inventory
 	move_blueprint_item_into_inventory()
@@ -259,11 +262,11 @@ func _update_shape_count_labels() -> void:
 
 func _input(event: InputEvent) -> void:
 	if is_building:
-		if event.is_action_pressed("ui_cancel"):
-			stop_building()
-			if current_player and current_player.has_method("change_state"):
-				current_player.change_state(current_player.PlayerState.IDLE)
-		elif event.is_action_pressed("activate_circle"):
+		# if event.is_action_pressed("ui_cancel"):
+		# 	stop_building()
+		# 	if current_player and current_player.has_method("change_state"):
+		# 		current_player.change_state(current_player.PlayerState.IDLE)
+		if event.is_action_pressed("activate_circle"):
 			place_shape("circle")
 		elif event.is_action_pressed("activate_triangle"):
 			place_shape("triangle")

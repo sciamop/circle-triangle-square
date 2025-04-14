@@ -173,6 +173,9 @@ func _physics_process(delta: float) -> void:
 	if is_dialogue_visible:
 		move_speed = 0
 		return
+	else:
+		move_speed = 200
+		
 	
 	if current_state == EnemyState.DEAD:
 		return
