@@ -2514,6 +2514,7 @@ collision_layer = 2
 collision_mask = 7
 script = ExtResource("1_hghv2")
 max_health = 10
+jump_force = 400.0
 knockback_force = 500.0
 min_drops = 4
 max_drops = 8
@@ -2556,6 +2557,8 @@ collide_with_areas = true
 [node name="WallCheck" type="RayCast2D" parent="."]
 target_position = Vector2(50, 0)
 collide_with_areas = true
+
+[node name="StuckTimer" type="Timer" parent="."]
 
 [node name="AttackTimer" type="Timer" parent="."]
 

@@ -10,7 +10,7 @@
 [ext_resource type="VideoStream" uid="uid://v623tjaihuof" path="res://Videos/circle.ogv" id="4_xjg7p"]
 [ext_resource type="VideoStream" uid="uid://6c5q5wn6kuod" path="res://Videos/triangle.ogv" id="5_mg6lk"]
 [ext_resource type="Script" uid="uid://bfkruun4ft5qx" path="res://Scenes/life_indicator.gd" id="5_qwshj"]
-[ext_resource type="VideoStream" uid="uid://7wy17kju6e1j" path="res://Videos/enemies.ogv" id="8_vqx31"]
+[ext_resource type="VideoStream" uid="uid://8vavewke27dp" path="res://Videos/enemies.ogv" id="8_vqx31"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_xjg7p"]
 font = ExtResource("3_wunin")
@@ -303,6 +303,47 @@ tracks/21/keys = {
 "values": [Vector2(0.175, 0.175)]
 }
 
+[sub_resource type="Animation" id="Animation_n04ve"]
+resource_name = "add_blueprint_item"
+length = 0.625
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/squareVBoxContainer2/squareCenterContainer/item_blueprint_grapplinghook:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.375, 0.5, 0.625),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(51, 58), Vector2(59, 89), Vector2(51, 58), Vector2(59, 89), Vector2(61, 92)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/squareVBoxContainer2/squareCenterContainer/item_blueprint_grapplinghook:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.375, 0.5, 0.625),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [-3.04716, -3.04716, -3.04716, -3.04716, -3.04716]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/squareVBoxContainer2/squareCenterContainer/item_blueprint_grapplinghook:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.375, 0.5, 0.625),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.06, 0.06), Vector2(0.175, 0.175), Vector2(0.06, 0.06), Vector2(0.175, 0.175), Vector2(0.19, 0.19)]
+}
+
 [sub_resource type="Animation" id="Animation_j04uc"]
 resource_name = "circle_deny"
 length = 0.5
@@ -592,47 +633,6 @@ tracks/0/keys = {
 "values": [Vector2(0.0154851, 0.292801), Vector2(0.02, 0.391), Vector2(0.0154851, 0.292801)]
 }
 
-[sub_resource type="Animation" id="Animation_n04ve"]
-resource_name = "add_blueprint_item"
-length = 0.625
-step = 0.125
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/squareVBoxContainer2/squareCenterContainer/item_blueprint_grapplinghook:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25, 0.375, 0.5, 0.625),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(51, 58), Vector2(59, 89), Vector2(51, 58), Vector2(59, 89), Vector2(61, 92)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/squareVBoxContainer2/squareCenterContainer/item_blueprint_grapplinghook:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.25, 0.375, 0.5, 0.625),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 0,
-"values": [-3.04716, -3.04716, -3.04716, -3.04716, -3.04716]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/squareVBoxContainer2/squareCenterContainer/item_blueprint_grapplinghook:scale")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.25, 0.375, 0.5, 0.625),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(0.06, 0.06), Vector2(0.175, 0.175), Vector2(0.06, 0.06), Vector2(0.175, 0.175), Vector2(0.19, 0.19)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_48q88"]
 _data = {
 &"RESET": SubResource("Animation_qwshj"),
@@ -770,16 +770,16 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 49.8145
-offset_top = 78.9215
-offset_right = 423.815
-offset_bottom = 118.921
+offset_left = 44.0
+offset_top = 79.0
+offset_right = 433.0
+offset_bottom = 119.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.375, 0.375)
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_font_sizes/font_size = 8
-text = "PRESS ANY KEY TO START"
+text = "PRESS [ENTER] KEY TO START"
 label_settings = ExtResource("4_j04uc")
 horizontal_alignment = 2
 autowrap_mode = 1
@@ -819,16 +819,16 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 22.637
-offset_top = 80.2348
-offset_right = 437.637
-offset_bottom = 116.235
+offset_left = -4.0
+offset_top = 80.0
+offset_right = 482.0
+offset_bottom = 116.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.375, 0.375)
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_font_sizes/font_size = 8
-text = "PRESS ANY KEY FOR CONTROLS"
+text = "PRESS [ENTER] KEY FOR CONTROLS"
 label_settings = ExtResource("4_j04uc")
 horizontal_alignment = 2
 autowrap_mode = 1
@@ -928,7 +928,7 @@ grow_vertical = 2
 scale = Vector2(0.375, 0.375)
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_font_sizes/font_size = 8
-text = "PRESS ANY KEY TO LEARN ABOUT CIRCLES"
+text = "PRESS [ENTER] KEY TO LEARN ABOUT CIRCLES"
 label_settings = ExtResource("4_j04uc")
 horizontal_alignment = 2
 autowrap_mode = 1
@@ -985,6 +985,7 @@ offset_left = -97.4298
 offset_right = 1022.57
 offset_bottom = 480.0
 stream = ExtResource("3_48q88")
+volume_db = -80.0
 autoplay = true
 loop = true
 
@@ -1066,7 +1067,7 @@ grow_vertical = 2
 scale = Vector2(0.375, 0.375)
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_font_sizes/font_size = 8
-text = "PRESS ANY KEY TO LEARN ABOUT TRIANGLES"
+text = "PRESS [ENTER] KEY TO LEARN ABOUT TRIANGLES"
 label_settings = ExtResource("4_j04uc")
 horizontal_alignment = 2
 autowrap_mode = 1
@@ -1137,6 +1138,7 @@ layout_mode = 2
 offset_right = 852.0
 offset_bottom = 480.0
 stream = ExtResource("4_xjg7p")
+volume_db = -80.0
 autoplay = true
 loop = true
 
@@ -1195,16 +1197,16 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -49.181
-offset_top = 81.1103
-offset_right = 555.819
-offset_bottom = 116.11
+offset_left = -60.0
+offset_top = 81.0
+offset_right = 575.0
+offset_bottom = 116.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.375, 0.375)
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_font_sizes/font_size = 8
-text = "PRESS ANY KEY TO LEARN ABOUT SQUARES"
+text = "PRESS [ENTER] KEY TO LEARN ABOUT SQUARES"
 label_settings = ExtResource("4_j04uc")
 horizontal_alignment = 2
 autowrap_mode = 1
@@ -1274,6 +1276,7 @@ layout_mode = 2
 offset_right = 852.0
 offset_bottom = 480.0
 stream = ExtResource("5_mg6lk")
+volume_db = -80.0
 autoplay = true
 loop = true
 
@@ -1341,7 +1344,7 @@ grow_vertical = 2
 scale = Vector2(0.375, 0.375)
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_font_sizes/font_size = 8
-text = "PRESS ANY KEY TO EXIT"
+text = "PRESS [ENTER] KEY TO EXIT"
 label_settings = ExtResource("4_j04uc")
 horizontal_alignment = 2
 autowrap_mode = 1
@@ -1411,6 +1414,7 @@ layout_mode = 2
 offset_right = 852.0
 offset_bottom = 480.0
 stream = ExtResource("8_vqx31")
+volume_db = -80.0
 autoplay = true
 loop = true
 

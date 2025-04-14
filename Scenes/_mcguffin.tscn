@@ -804,9 +804,9 @@ vertex_colors = PackedColorArray(0, 0, 0, 1)
 
 [node name="tail" type="Polygon2D" parent="torsoGroup"]
 z_index = 1
-position = Vector2(38.9405, -57.4777)
+position = Vector2(38.9404, -57.4777)
 rotation = 0.456806
-scale = Vector2(0.999817, 0.999817)
+scale = Vector2(0.999813, 0.999813)
 color = Color(0, 0, 0, 1)
 offset = Vector2(-30.499, 22.4457)
 texture_scale = Vector2(61.65, 61.65)
@@ -820,9 +820,9 @@ scale = Vector2(0.999906, 0.999906)
 
 [node name="rearLegL" type="Polygon2D" parent="torsoGroup/rearLegs"]
 z_index = 1
-position = Vector2(6.92444, 13.0741)
-rotation = -2.27254
-scale = Vector2(0.99981, 0.99981)
+position = Vector2(5.37552, 16.5795)
+rotation = -1.89294
+scale = Vector2(0.999809, 0.999809)
 color = Color(0, 0, 0, 1)
 offset = Vector2(-1.235, 4.365)
 texture_scale = Vector2(61.65, 61.65)
@@ -831,8 +831,8 @@ vertex_colors = PackedColorArray(0, 0, 0, 1)
 
 [node name="rearLegR" type="Polygon2D" parent="torsoGroup/rearLegs"]
 z_index = 1
-position = Vector2(3.74383, 11.0848)
-rotation = -2.09306
+position = Vector2(2.38719, 9.45926)
+rotation = -1.89605
 scale = Vector2(0.999822, 0.999822)
 color = Color(0, 0, 0, 1)
 offset = Vector2(-1.235, 4.365)
@@ -847,9 +847,9 @@ scale = Vector2(0.999921, 0.999921)
 
 [node name="frontLegL" type="Polygon2D" parent="torsoGroup/frontLegs"]
 z_index = 1
-position = Vector2(3.11313, 17.9697)
-rotation = 0.592997
-scale = Vector2(0.999814, 0.999814)
+position = Vector2(3.70131, 15.216)
+rotation = 0.14871
+scale = Vector2(0.999809, 0.999809)
 color = Color(0, 0, 0, 1)
 offset = Vector2(-1.235, 4.365)
 texture_scale = Vector2(61.65, 61.65)
@@ -858,8 +858,8 @@ vertex_colors = PackedColorArray(0, 0, 0, 1)
 
 [node name="frontLegR" type="Polygon2D" parent="torsoGroup/frontLegs"]
 z_index = 1
-position = Vector2(2.75602, 2.86211)
-rotation = -1.605
+position = Vector2(-0.23296, 3.12235)
+rotation = -1.60502
 scale = Vector2(0.999804, 0.999804)
 color = Color(0, 0, 0, 1)
 offset = Vector2(-1.235, 4.365)
@@ -871,7 +871,7 @@ vertex_colors = PackedColorArray(0, 0, 0, 1)
 position = Vector2(-8.25648, -51.79)
 rotation = -3.11682
 scale = Vector2(1.20394, -1.20095)
-skew = -0.000162601
+skew = -0.000167489
 
 [node name="whisker02R" type="Polygon2D" parent="headGroup"]
 z_index = 1

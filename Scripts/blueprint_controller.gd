@@ -24,7 +24,7 @@ class_name Blueprint
 @onready var building_panel: ColorRect = $BuildingPanel
 @onready var shape_counts: HBoxContainer = $BuildingPanel/ShapeCounts
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
-
+@onready var player: CharacterBody2D = $"/root/Game/Player"
 # State
 var player_in_range: bool = false
 var current_player: Node = null
@@ -49,6 +49,7 @@ var camera
 var blueprint_complete: bool = false
 
 signal blueprint_item_added_to_inventory(blueprint_item_name)
+signal shape_spent_on_blueprint(shape_type)
 
 func _ready() -> void:
 	# Set up interaction area
@@ -134,11 +135,13 @@ func stop_building() -> void:
 	panel_grow_tween.tween_callback(hide_building_panel)
 
 	is_building = false
-	placed_shapes = {
-		"circle": 0,
-		"triangle": 0,
-		"square": 0
-	}
+	# placed_shapes = {
+	# 	"circle": 0,
+	# 	"triangle": 0,
+	# 	"square": 0
+	# }
+
+
 	_update_shape_count_labels()
 
 func place_shape(shape_type: String) -> void:
@@ -146,6 +149,8 @@ func place_shape(shape_type: String) -> void:
 		placed_shapes[shape_type] += 1
 		print(placed_shapes)
 		_update_shape_count_labels()
+		emit_signal("shape_spent_on_blueprint",shape_type)
+		# player.
 		# Find all shapes of this type in the blueprint item
 		blueprint_item = building_panel.get_node_or_null("item_blueprint_grapplinghook")
 		

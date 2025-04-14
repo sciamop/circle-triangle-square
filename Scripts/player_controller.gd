@@ -129,6 +129,7 @@ var current_squash_stretch: float = 0.0
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 @onready var game_manager: Node2D = $"/root/Game"
 @onready var ui: CanvasLayer = $"../UI"
+@onready var blueprint_controller: Blueprint = $"/root/Game/BlueprintPickup"
 
 # Resources
 @export var projectile_scene: PackedScene
@@ -188,12 +189,6 @@ var is_wall_active: bool = false  # Track if insight is currently active
 @onready var mcguffin: Node2D = $"/root/Game/mcguffin"
 @onready var door: Node2D = $"/root/Game/mid/Door"
 
-# Add this new helper function
-func set_static_body_collision(item: Node2D, enabled: bool) -> void:
-	var static_body = item.find_child("StaticBody2D")
-	if static_body and static_body is StaticBody2D:
-		static_body.collision_layer = 1 if enabled else 0
-		static_body.collision_mask = 1 if enabled else 0
 
 @export var traveling_shape_scene: PackedScene
 
@@ -233,6 +228,10 @@ func _ready() -> void:
 	var is_dialogue = Callable(self, "set_dialog_invinciblity") 
 	ui.connect("dialog_visible", is_dialogue)
 	
+	var _decrement_shape_count = Callable(self, "decrement_shape_count") 
+	blueprint_controller.connect("shape_spent_on_blueprint", _decrement_shape_count)
+
+
 	# Add player to the player group
 	add_to_group("player")
 	
@@ -281,6 +280,13 @@ func _ready() -> void:
 	for item in get_tree().get_nodes_in_group("insight_item"):
 		item.visible = false
 		set_static_body_collision(item, false)
+
+# Add this new helper function
+func set_static_body_collision(item: Node2D, enabled: bool) -> void:
+	var static_body = item.find_child("StaticBody2D")
+	if static_body and static_body is StaticBody2D:
+		static_body.collision_layer = 1 if enabled else 0
+		static_body.collision_mask = 1 if enabled else 0
 
 func set_dialog_invinciblity(is_dialogue_visible:bool) -> void:
 	print("dialogue visible: " + str(is_dialogue_visible))
@@ -1370,6 +1376,12 @@ func start_blueprint_building(blueprint: Blueprint) -> void:
 	# Enter building state
 	change_state(PlayerState.BUILDING)
 	
+func decrement_shape_count(shape_type: String):
+	# Spend the shape
+	shape_counts[shape_type] -= 1
+	
+	emit_signal("on_pickup", shape_type, shape_counts[shape_type])
+	emit_signal("shape_count_changed", shape_type, shape_counts[shape_type])
 
 func place_shape_on_blueprint(shape_type: String) -> void:
 	if not is_building or current_blueprint == null:

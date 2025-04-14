@@ -37,12 +37,13 @@ func _ready() -> void:
 	# make sure blueprint item shows
 	if Global.has_blueprint_item:
 		add_blueprint_item_to_inventory("null")
-
+		
+	emit_signal("dialog_visible", true)
 	# figure out what's going on with the dialogues
 	get_state()
 
 func add_blueprint_item_to_inventory(name: String) -> void:
-	print("FIFIFIFIIF")
+
 	print(blueprint_item.name)
 	# if Global.has_blueprint_item:
 	blueprint_item.show()
@@ -54,6 +55,8 @@ func hide_all_oob() -> void:
 		oob.hide()
 
 func show_enemy_onboarding(health: int) -> void:
+	if any_dialogues_visible:
+		return
 	if !Global.has_seen_enemy_onboarding:
 		dialog_state = "enemy"
 		get_state()
@@ -88,6 +91,7 @@ func slide_dialog( out_dialog: ColorRect, in_dialog: ColorRect) -> void:
 func get_state() -> void:
 	match dialog_state:
 			"intent":
+				print("intent")
 				slide_dialog(null, designintent_dialogue)
 				dialog_state = "controls"
 				get_viewport().set_input_as_handled()
@@ -136,7 +140,7 @@ func get_state() -> void:
 				any_dialogues_visible = false
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventKey and event.pressed and any_dialogues_visible:
+	if event.is_action_pressed("ui_accept") and any_dialogues_visible:
 		get_state()
 
 			

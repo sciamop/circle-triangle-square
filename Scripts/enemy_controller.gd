@@ -7,6 +7,7 @@ class_name Enemy
 @export var move_speed: float = 150.0
 @export var gravity: float = 1500.0
 @export var max_fall_speed: float = 800.0
+@export var jump_force: float = 100.0  # Added jump force parameter
 
 # AI parameters
 @export var detection_radius: float = 300.0
@@ -34,7 +35,7 @@ class_name Enemy
 # Juice parameters
 @export_group("Visual Effects")
 @export var enable_effects: bool = true
-@export var hit_flash_duration: float = 0.1
+@export var hit_flash_duration: float = 0.5
 @export var death_particles_count: int = 20
 @export var squash_on_land: float = 0.2
 @export var jump_stretch: float = 0.3
@@ -50,6 +51,7 @@ var current_health: int = max_health
 var is_alive: bool = true
 var initial_position: Vector2
 var spawn_point: Node2D = null
+var current_position_x: float = 0.0
 @onready var respawn_timer: Timer = $RespawnTimer
 
 # References to nodes
@@ -64,6 +66,8 @@ var spawn_point: Node2D = null
 @onready var patrol_timer: Timer = $PatrolTimer
 @onready var aggro_timer: Timer = $AggroTimer
 @onready var hit_flash_timer: Timer = $HitFlashTimer
+@onready var stuck_timer: Timer = $StuckTimer
+@onready var stuck_timer_duration: float = 2.0
 @onready var audio_player: AudioStreamPlayer2D = $AudioPlayer
 @onready var attack_area: Area2D = $AttackArea
 @onready var player: Player = $"../Player"
@@ -110,7 +114,8 @@ func _ready() -> void:
 	# Store original color for flash effects
 	original_color = Color.BLACK
 	
-
+	var is_dialogue = Callable(self, "set_dialog_invinciblity") 
+	ui.connect("dialog_visible", is_dialogue)
 	
 	# Initialize timers
 	if attack_timer:
@@ -124,6 +129,10 @@ func _ready() -> void:
 	
 	if hit_flash_timer:
 		hit_flash_timer.timeout.connect(_on_hit_flash_timer_timeout)
+
+	if stuck_timer:
+		print("Stuck timer connected")
+		stuck_timer.timeout.connect(_on_stuck_timer_timeout)
 	
 	# Setup collision
 	if hurtbox:
@@ -153,14 +162,18 @@ func _ready() -> void:
 			var tween = create_tween()
 			tween.tween_property(child, "color", original_color, 0.5)
 
-	var is_dialogue = Callable(self, "set_dialog_invinciblity") 
-	ui.connect("dialog_visible", is_dialogue)
+
 
 func set_dialog_invinciblity(dialogue_visible:bool) -> void:
+
 	is_dialogue_visible = dialogue_visible
 
 func _physics_process(delta: float) -> void:
-	# Skip if dead
+	# Skip if dead or dialogue is visible
+	if is_dialogue_visible:
+		move_speed = 0
+		return
+	
 	if current_state == EnemyState.DEAD:
 		return
 	
@@ -197,7 +210,9 @@ func _physics_process(delta: float) -> void:
 	
 	# Handle wall detection
 	_check_walls()
-	
+
+	_check_if_stuck()
+
 	# Look for player if not already chasing
 	if current_state != EnemyState.CHASE and current_state != EnemyState.ATTACK and current_state != EnemyState.HURT:
 		_check_for_player()
@@ -435,29 +450,51 @@ func _process_hurt_state(delta: float) -> void:
 	# Knockback is applied when damage is taken
 	velocity.x = move_toward(velocity.x, 0, 500 * delta)
 
+
 func _check_ledges() -> void:
 	if not ledge_check:
 		return
-	
+
 	if not ledge_check.is_colliding() and is_on_floor():
-		# About to walk off ledge, turn around
-		direction *= -1
-		_update_raycasts()
+		# About to walk off ledge, try to jump
+		velocity.y = -jump_force
+		# Wait a bit before turning around
+		await get_tree().create_timer(0.5).timeout
 		
-		if current_state == EnemyState.PATROL:
-			_choose_patrol_destination()
+		if not ledge_check.is_colliding():
+			# Still no ground ahead, turn around
+			direction *= -1
+			_update_raycasts()
+			
+			if current_state == EnemyState.PATROL:
+				_choose_patrol_destination()
+
+
+func _check_if_stuck() -> void:
+	
+	current_position_x = global_position.x
+	if stuck_timer && stuck_timer.is_stopped() && current_state != EnemyState.IDLE:
+
+		stuck_timer.start(stuck_timer_duration)
 
 func _check_walls() -> void:
 	if not wall_check:
 		return
 	
 	if wall_check.is_colliding():
-		# Hit a wall, turn around
-		direction *= -1
-		_update_raycasts()
 		
-		if current_state == EnemyState.PATROL:
-			_choose_patrol_destination()
+		# Hit a wall, try to jump over it
+		if is_on_floor():
+			velocity.y = -jump_force
+		else:
+			# If in air, turn around
+			direction *= -1
+			_update_raycasts()
+			
+			if current_state == EnemyState.PATROL:
+				_choose_patrol_destination()
+
+
 
 func _update_raycasts() -> void:
 	# Update raycast directions based on movement direction
@@ -687,3 +724,8 @@ func respawn() -> void:
 func _on_respawn_timer_timeout() -> void:
 	print("now is the time to respawn")
 	respawn()
+
+func _on_stuck_timer_timeout() -> void:
+	if (global_position.x == current_position_x):
+		velocity.y = -jump_force
+	stuck_timer.stop()

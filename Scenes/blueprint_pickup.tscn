@@ -57,6 +57,35 @@ tracks/3/keys = {
 "values": [Color(1, 0, 0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_8vl0k"]
+resource_name = "blueprint_complete"
+length = 1.25
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BuildingPanel/complete_message:label_settings:font_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1, 1.125, 1.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 0, 0, 1), Color(1, 0, 0, 0), Color(1, 0, 0, 1), Color(1, 0, 0, 0), Color(1, 0, 0, 1), Color(1, 0, 0, 0), Color(1, 0, 0, 1), Color(1, 0, 0, 1), Color(1, 0, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BuildingPanel/grid:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.5, 0.875),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_wl3ot"]
 resource_name = "idle"
 length = 4.0
@@ -85,35 +114,6 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(-6, 5.96114), Vector2(-6, 17.8834), Vector2(-8, 2.98057), Vector2(7, 1.98705), Vector2(2, 15.8964)]
-}
-
-[sub_resource type="Animation" id="Animation_8vl0k"]
-resource_name = "blueprint_complete"
-length = 1.25
-step = 0.125
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("BuildingPanel/complete_message:label_settings:font_color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1, 1.125, 1.25),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Color(1, 0, 0, 1), Color(1, 0, 0, 0), Color(1, 0, 0, 1), Color(1, 0, 0, 0), Color(1, 0, 0, 1), Color(1, 0, 0, 0), Color(1, 0, 0, 1), Color(1, 0, 0, 1), Color(1, 0, 0, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("BuildingPanel/grid:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0.5, 0.875),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1og5n"]
@@ -365,7 +365,6 @@ position = Vector2(34.6043, -7.64001)
 
 [node name="cellA" type="Line2D" parent="BuildingPanel/grid/row1"]
 position = Vector2(142.262, 99.7978)
-scale = Vector2(1, 1)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
@@ -373,7 +372,6 @@ default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellB" type="Line2D" parent="BuildingPanel/grid/row1"]
 position = Vector2(157.641, 99.7978)
-scale = Vector2(1, 1)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
@@ -381,7 +379,6 @@ default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellC" type="Line2D" parent="BuildingPanel/grid/row1"]
 position = Vector2(173.021, 99.7978)
-scale = Vector2(1, 1)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
@@ -389,7 +386,6 @@ default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellD" type="Line2D" parent="BuildingPanel/grid/row1"]
 position = Vector2(188.401, 99.7978)
-scale = Vector2(1, 1)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
@@ -397,7 +393,6 @@ default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellE" type="Line2D" parent="BuildingPanel/grid/row1"]
 position = Vector2(203.781, 99.7978)
-scale = Vector2(1, 1)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
@@ -408,7 +403,6 @@ position = Vector2(0, 15.28)
 
 [node name="cellA" type="Line2D" parent="BuildingPanel/grid/row2"]
 position = Vector2(142.262, 99.7978)
-scale = Vector2(1, 1)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
@@ -416,7 +410,6 @@ default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellB" type="Line2D" parent="BuildingPanel/grid/row2"]
 position = Vector2(157.641, 99.7978)
-scale = Vector2(1, 1)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
@@ -424,7 +417,6 @@ default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellC" type="Line2D" parent="BuildingPanel/grid/row2"]
 position = Vector2(173.021, 99.7978)
-scale = Vector2(1, 1)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
@@ -432,7 +424,6 @@ default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellD" type="Line2D" parent="BuildingPanel/grid/row2"]
 position = Vector2(188.401, 99.7978)
-scale = Vector2(1, 1)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
@@ -440,7 +431,6 @@ default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellE" type="Line2D" parent="BuildingPanel/grid/row2"]
 position = Vector2(203.781, 99.7978)
-scale = Vector2(1, 1)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
@@ -451,7 +441,6 @@ position = Vector2(0, 30.5601)
 
 [node name="cellA" type="Line2D" parent="BuildingPanel/grid/row3"]
 position = Vector2(142.262, 99.7978)
-scale = Vector2(1, 1)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
@@ -459,7 +448,6 @@ default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellB" type="Line2D" parent="BuildingPanel/grid/row3"]
 position = Vector2(157.641, 99.7978)
-scale = Vector2(1, 1)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
@@ -467,7 +455,6 @@ default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellC" type="Line2D" parent="BuildingPanel/grid/row3"]
 position = Vector2(173.021, 99.7978)
-scale = Vector2(1, 1)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
@@ -475,7 +462,6 @@ default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellD" type="Line2D" parent="BuildingPanel/grid/row3"]
 position = Vector2(188.401, 99.7978)
-scale = Vector2(1, 1)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
@@ -483,7 +469,6 @@ default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellE" type="Line2D" parent="BuildingPanel/grid/row3"]
 position = Vector2(203.781, 99.7978)
-scale = Vector2(1, 1)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
@@ -494,7 +479,6 @@ position = Vector2(0, 45.8401)
 
 [node name="cellA" type="Line2D" parent="BuildingPanel/grid/row4"]
 position = Vector2(142.262, 99.7978)
-scale = Vector2(1, 1)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
@@ -502,7 +486,6 @@ default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellB" type="Line2D" parent="BuildingPanel/grid/row4"]
 position = Vector2(157.641, 99.7978)
-scale = Vector2(1, 1)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
@@ -510,7 +493,6 @@ default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellC" type="Line2D" parent="BuildingPanel/grid/row4"]
 position = Vector2(173.021, 99.7978)
-scale = Vector2(1, 1)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
@@ -518,7 +500,6 @@ default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellD" type="Line2D" parent="BuildingPanel/grid/row4"]
 position = Vector2(188.401, 99.7978)
-scale = Vector2(1, 1)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
@@ -526,7 +507,6 @@ default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellE" type="Line2D" parent="BuildingPanel/grid/row4"]
 position = Vector2(203.781, 99.7978)
-scale = Vector2(1, 1)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
@@ -537,7 +517,6 @@ position = Vector2(0, 61.1202)
 
 [node name="cellA" type="Line2D" parent="BuildingPanel/grid/row5"]
 position = Vector2(142.262, 99.7978)
-scale = Vector2(1, 1)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
@@ -545,7 +524,6 @@ default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellB" type="Line2D" parent="BuildingPanel/grid/row5"]
 position = Vector2(157.641, 99.7978)
-scale = Vector2(1, 1)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
@@ -553,7 +531,6 @@ default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellC" type="Line2D" parent="BuildingPanel/grid/row5"]
 position = Vector2(173.021, 99.7978)
-scale = Vector2(1, 1)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
@@ -561,7 +538,6 @@ default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellD" type="Line2D" parent="BuildingPanel/grid/row5"]
 position = Vector2(188.401, 99.7978)
-scale = Vector2(1, 1)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
@@ -569,7 +545,6 @@ default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellE" type="Line2D" parent="BuildingPanel/grid/row5"]
 position = Vector2(203.781, 99.7978)
-scale = Vector2(1, 1)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
@@ -578,7 +553,6 @@ default_color = Color(0.607843, 0.607843, 0.607843, 1)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BuildingPanel/grid"]
 visible = false
 position = Vector2(157.641, 115.078)
-scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_xisl2")
 
 [node name="blueprint_canonicals" type="Area2D" parent="BuildingPanel"]
