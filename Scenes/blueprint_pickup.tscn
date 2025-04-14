@@ -852,3 +852,5 @@ default_color = Color(1, 0, 0, 1)
 visible = false
 color = Color(0.760784, 0, 0, 1)
 polygon = PackedVector2Array(-16, 16, 16, 16, 16, -16, -16, -16)
+
+[node name="ShapeCooldownTimer" type="Timer" parent="."]

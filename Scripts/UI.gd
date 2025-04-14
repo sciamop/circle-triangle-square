@@ -148,6 +148,10 @@ func get_state() -> void:
 				any_dialogues_visible = false
 
 func show_dialogue(dialog: ColorRect) -> void:
+	# Don't show dialogue if player is building
+	if player.current_state == player.PlayerState.BUILDING:
+		return
+		
 	slide_dialog(null, dialog)
 	get_viewport().set_input_as_handled()
 	emit_signal("dialog_visible", true)

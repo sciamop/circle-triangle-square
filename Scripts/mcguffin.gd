@@ -2,6 +2,7 @@ extends Node2D
 
 @onready var label: Label = $Label
 @onready var audio_player: AudioStreamPlayer2D = $AudioStreamPlayer2D
+@onready var player: Node2D = $"/root/Game/Player"
 
 func play_meow_sequence() -> void:
 	# Show the label
@@ -21,7 +22,26 @@ func play_meow_sequence() -> void:
 		label.visible = false
 
 func move_to_door(door: Node2D) -> void:
+	# Tween to door's x position
 	var tween = create_tween()
-	tween.tween_property(self, "global_position", Vector2(door.global_position.x,global_position.y), 0.5)
+	tween.tween_property(self, "global_position", Vector2(door.global_position.x, global_position.y), 0.5)
 	await tween.finished
-	visible = false 
+	visible = false
+	# Play door's cat_escape animation
+	var door_anim = door.get_node("AnimationPlayer")
+	if door_anim:
+		door_anim.play("cat_escape")
+		await door_anim.animation_finished
+		door.hide()
+	
+	# Move instantly to checkpoint2
+	var checkpoint2 = get_tree().get_nodes_in_group("checkpoint")[1]
+	if checkpoint2:
+		visible = true
+		global_position = checkpoint2.global_position
+		door.global_position = Vector2(checkpoint2.global_position.x + 100, checkpoint2.global_position.y)
+		# Trigger checkpoint sequence
+		if player and player.has_method("handle_checkpoint"):
+			await player.handle_checkpoint(checkpoint2)
+		
+	 

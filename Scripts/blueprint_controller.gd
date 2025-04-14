@@ -25,6 +25,7 @@ class_name Blueprint
 @onready var shape_counts: VBoxContainer = $BuildingPanel/ShapeCounts
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var player: CharacterBody2D = $"/root/Game/Player"
+@onready var shape_cooldown_timer: Timer = $ShapeCooldownTimer
 # State
 var player_in_range: bool = false
 var current_player: Node = null
@@ -39,6 +40,7 @@ var building_panel_size_y: int
 var building_panel_size_x: int
 var building_panel_pos: Vector2
 var blueprint_item:Area2D
+var can_place_shape: bool = true
 
 #camera
 var camera_zoom_out_tween: Tween
@@ -55,6 +57,10 @@ func _ready() -> void:
 	# Set up interaction area
 	interaction_area.area_entered.connect(_on_interaction_area_entered)
 	interaction_area.area_exited.connect(_on_interaction_area_exited)
+	
+	# Set up cooldown timer
+	shape_cooldown_timer.wait_time = 0.5
+	shape_cooldown_timer.one_shot = true
 	
 	# Set visual properties
 	polygon.color = glow_color
@@ -262,13 +268,18 @@ func _update_shape_count_labels() -> void:
 
 func _input(event: InputEvent) -> void:
 	if is_building:
-		# if event.is_action_pressed("ui_cancel"):
-		# 	stop_building()
-		# 	if current_player and current_player.has_method("change_state"):
-		# 		current_player.change_state(current_player.PlayerState.IDLE)
+		if not shape_cooldown_timer.is_stopped():
+			return
+			
 		if event.is_action_pressed("activate_circle"):
-			place_shape("circle")
+			if placed_shapes["circle"] < required_shapes["circle"]:
+				place_shape("circle")
+				shape_cooldown_timer.start()
 		elif event.is_action_pressed("activate_triangle"):
-			place_shape("triangle")
+			if placed_shapes["triangle"] < required_shapes["triangle"]:
+				place_shape("triangle")
+				shape_cooldown_timer.start()
 		elif event.is_action_pressed("activate_square"):
-			place_shape("square") 
+			if placed_shapes["square"] < required_shapes["square"]:
+				place_shape("square")
+				shape_cooldown_timer.start() 

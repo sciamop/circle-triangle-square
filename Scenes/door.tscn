@@ -1,11 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://6lvklwfapt1y"]
+[gd_scene load_steps=18 format=3 uid="uid://6lvklwfapt1y"]
 
 [ext_resource type="Texture2D" uid="uid://ctn80d6ky0qlf" path="res://Resources/door-shine.tres" id="1_w6aom"]
-[ext_resource type="Texture2D" uid="uid://bbbjj3vno5khc" path="res://Sprites/1x16_tiles.png" id="2_p0e35"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fahql"]
-atlas = ExtResource("2_p0e35")
-region = Rect2(0, 0, 512, 512)
+[ext_resource type="Texture2D" uid="uid://dgutddtln08m6" path="res://Sprites/nebula_sprite_sheet-v4.png" id="2_p0e35"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v6xrn"]
 size = Vector2(52, 154)
@@ -41,122 +37,152 @@ turbulence_noise_strength = 1.84
 turbulence_noise_scale = 7.608
 turbulence_noise_speed = Vector3(22.17, 0, 0)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_fahql"]
+atlas = ExtResource("2_p0e35")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ab4ky"]
+atlas = ExtResource("2_p0e35")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a43ba"]
+atlas = ExtResource("2_p0e35")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_burcv"]
+atlas = ExtResource("2_p0e35")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kj2pw"]
+atlas = ExtResource("2_p0e35")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8c32u"]
+atlas = ExtResource("2_p0e35")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ovubi"]
+atlas = ExtResource("2_p0e35")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ihyep"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fahql")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ab4ky")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a43ba")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_burcv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kj2pw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8c32u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ovubi")
+}],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}]
+
+[sub_resource type="Animation" id="Animation_p0e35"]
+resource_name = "cat_escape"
+length = 0.375
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Area2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Area2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Area2D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.375),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.582971, 0.582971), Vector2(0.1, 0.1)]
+}
+
+[sub_resource type="Animation" id="Animation_fahql"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Area2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Area2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Area2D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ab4ky"]
+_data = {
+&"RESET": SubResource("Animation_fahql"),
+&"cat_escape": SubResource("Animation_p0e35")
+}
+
 [node name="Door" type="Node2D"]
 
 [node name="Area2D" type="Area2D" parent="."]
-
-[node name="trianglePolygon2" type="Polygon2D" parent="Area2D"]
-z_index = 1
-position = Vector2(2, -45)
-rotation = -1.5708
-scale = Vector2(0.844, 1)
-color = Color(0, 0, 0, 1)
-offset = Vector2(-2.57, 2.54)
-texture_scale = Vector2(61.65, 61.65)
-polygon = PackedVector2Array(-0.984501, 24.46, 65.3662, 3.46, -0.984501, -17.54)
-vertex_colors = PackedColorArray(0, 0, 0, 1)
-
-[node name="squarePolygon" type="Polygon2D" parent="Area2D"]
-position = Vector2(-13, -42.32)
-scale = Vector2(0.844, 2.4464)
-color = Color(0, 0, 0, 1)
-polygon = PackedVector2Array(-8.58307e-06, 0.130812, 49.763, 0.130812, 49.763, 50, -8.58307e-06, 50)
-
-[node name="Sprite2D" type="Sprite2D" parent="Area2D"]
-position = Vector2(0, 72)
-texture = SubResource("AtlasTexture_fahql")
-region_enabled = true
-region_rect = Rect2(88, 112, 16, 16)
-
-[node name="Sprite2D2" type="Sprite2D" parent="Area2D"]
-position = Vector2(16, 72)
-texture = SubResource("AtlasTexture_fahql")
-region_enabled = true
-region_rect = Rect2(88, 112, 16, 16)
-
-[node name="Sprite2D3" type="Sprite2D" parent="Area2D"]
-position = Vector2(0, 56)
-texture = SubResource("AtlasTexture_fahql")
-region_enabled = true
-region_rect = Rect2(88, 112, 16, 16)
-
-[node name="Sprite2D4" type="Sprite2D" parent="Area2D"]
-position = Vector2(16, 56)
-texture = SubResource("AtlasTexture_fahql")
-region_enabled = true
-region_rect = Rect2(88, 112, 16, 16)
-
-[node name="Sprite2D5" type="Sprite2D" parent="Area2D"]
-position = Vector2(0, 40)
-texture = SubResource("AtlasTexture_fahql")
-region_enabled = true
-region_rect = Rect2(88, 112, 16, 16)
-
-[node name="Sprite2D6" type="Sprite2D" parent="Area2D"]
-position = Vector2(16, 40)
-texture = SubResource("AtlasTexture_fahql")
-region_enabled = true
-region_rect = Rect2(88, 112, 16, 16)
-
-[node name="Sprite2D7" type="Sprite2D" parent="Area2D"]
-position = Vector2(0, 24)
-texture = SubResource("AtlasTexture_fahql")
-region_enabled = true
-region_rect = Rect2(88, 112, 16, 16)
-
-[node name="Sprite2D8" type="Sprite2D" parent="Area2D"]
-position = Vector2(16, 24)
-texture = SubResource("AtlasTexture_fahql")
-region_enabled = true
-region_rect = Rect2(88, 112, 16, 16)
-
-[node name="Sprite2D9" type="Sprite2D" parent="Area2D"]
-position = Vector2(0, 8)
-texture = SubResource("AtlasTexture_fahql")
-region_enabled = true
-region_rect = Rect2(88, 112, 16, 16)
-
-[node name="Sprite2D10" type="Sprite2D" parent="Area2D"]
-position = Vector2(16, 8)
-texture = SubResource("AtlasTexture_fahql")
-region_enabled = true
-region_rect = Rect2(88, 112, 16, 16)
-
-[node name="Sprite2D11" type="Sprite2D" parent="Area2D"]
-position = Vector2(0, -8)
-texture = SubResource("AtlasTexture_fahql")
-region_enabled = true
-region_rect = Rect2(88, 112, 16, 16)
-
-[node name="Sprite2D12" type="Sprite2D" parent="Area2D"]
-position = Vector2(16, -8)
-texture = SubResource("AtlasTexture_fahql")
-region_enabled = true
-region_rect = Rect2(88, 112, 16, 16)
-
-[node name="Sprite2D13" type="Sprite2D" parent="Area2D"]
-position = Vector2(0, -24)
-texture = SubResource("AtlasTexture_fahql")
-region_enabled = true
-region_rect = Rect2(88, 112, 16, 16)
-
-[node name="Sprite2D14" type="Sprite2D" parent="Area2D"]
-position = Vector2(16, -24)
-texture = SubResource("AtlasTexture_fahql")
-region_enabled = true
-region_rect = Rect2(88, 112, 16, 16)
-
-[node name="Sprite2D15" type="Sprite2D" parent="Area2D"]
-position = Vector2(0, -40)
-texture = SubResource("AtlasTexture_fahql")
-region_enabled = true
-region_rect = Rect2(88, 112, 16, 16)
-
-[node name="Sprite2D16" type="Sprite2D" parent="Area2D"]
-position = Vector2(16, -40)
-texture = SubResource("AtlasTexture_fahql")
-region_enabled = true
-region_rect = Rect2(88, 112, 16, 16)
 
 [node name="squarePolygon2" type="Polygon2D" parent="Area2D"]
 position = Vector2(-160, 14)
@@ -164,7 +190,7 @@ scale = Vector2(3.798, 2.4464)
 color = Color(0, 0, 0, 1)
 offset = Vector2(8.58307e-06, -23.0216)
 texture = ExtResource("1_w6aom")
-polygon = PackedVector2Array(-3.15957, -51.7822, 44.4971, -22.3512, 49.763, 0.130812, 49.763, 50, -2.89628, 85.9712)
+polygon = PackedVector2Array(-3.15957, -51.7822, 54.7657, 4.21846, 50.5529, 27.1092, 35.8083, 36.9196, -16.851, 76.1609)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 visible = false
@@ -181,3 +207,13 @@ fixed_fps = 24
 collision_base_size = 16.55
 visibility_rect = Rect2(-100, -100, 200, 184.485)
 process_material = SubResource("ParticleProcessMaterial_w6aom")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Area2D"]
+sprite_frames = SubResource("SpriteFrames_ihyep")
+autoplay = "default"
+frame_progress = 0.651255
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_ab4ky")
+}
