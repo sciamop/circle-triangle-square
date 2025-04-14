@@ -107,7 +107,8 @@ signal on_death()
 
 func _ready() -> void:
 	#death_particles = preload("res://Scenes/death_particles.tscn").instantiate()
-	
+	if !Global.has_seen_onboarding:
+		is_dialogue_visible = true
 	# Initialize health
 	current_health = max_health
 	

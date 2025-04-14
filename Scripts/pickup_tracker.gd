@@ -7,6 +7,7 @@ extends HBoxContainer
 @onready var triangle_icon: Polygon2D = $triangleVBoxContainer/CenterContainer/triangleIcon
 @onready var square_icon: Polygon2D = $squareVBoxContainer/squareCenterContainer/squareIcon
 @onready var animation_player: AnimationPlayer = $"../../../../AnimationPlayer"
+@onready var blueprint_item: Area2D = $blueprintVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook
 
 var square_score:int = 0
 var triangle_score:int = 0
@@ -58,11 +59,19 @@ func checkStatus() -> void:
 		circle_icon.color = disabled_color
 	else:
 		circle_icon.color = enabled_color
-		
-	var activated_icon:Polygon2D = find_child(currently_activated + "Icon")
-	activated_icon.color = active_color
+
+	set_blueprint_item_status(enabled_color)
 	
+	if currently_activated == "blueprint":
+		set_blueprint_item_status(active_color)
+	else:
+		var activated_icon:Polygon2D = find_child(currently_activated + "Icon")
+		activated_icon.color = active_color
 	
+func set_blueprint_item_status(color:Color):
+	var blueprint_item_polygon2ds = blueprint_item.get_children()
+	for polygon2d:Polygon2D in blueprint_item_polygon2ds:
+		polygon2d.color = color
 
 func updateScore(pickup_type:String, pieces:int):
 

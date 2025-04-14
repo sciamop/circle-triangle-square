@@ -22,7 +22,7 @@ class_name Blueprint
 #@onready var collision_shape: CollisionShape2D = $CollisionShape2D
 #@onready var sprite: Sprite2D = $Sprite2D
 @onready var building_panel: ColorRect = $BuildingPanel
-@onready var shape_counts: HBoxContainer = $BuildingPanel/ShapeCounts
+@onready var shape_counts: VBoxContainer = $BuildingPanel/ShapeCounts
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var player: CharacterBody2D = $"/root/Game/Player"
 # State

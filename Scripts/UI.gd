@@ -10,7 +10,7 @@ extends CanvasLayer
 @onready var enemy: Enemy = $"/root/Game/enemy"
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var blueprint_pickup: Blueprint = $"/root/Game/BlueprintPickup"
-@onready var blueprint_item: Area2D = $CanvasLayer/Control/BoxContainer/HBoxContainer/squareVBoxContainer2/squareCenterContainer/item_blueprint_grapplinghook
+@onready var blueprint_item: Area2D = $CanvasLayer/Control/BoxContainer/HBoxContainer/blueprintVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook
 
 var key_presses: int = 0
 var dialog_state: String = "none"
@@ -41,9 +41,8 @@ func _ready() -> void:
 	# figure out what's going on with the dialogues
 	get_state()
 
-func add_blueprint_item_to_inventory(name: String) -> void:
+func add_blueprint_item_to_inventory(_name: String) -> void:
 
-	print(blueprint_item.name)
 	# if Global.has_blueprint_item:
 	blueprint_item.show()
 	animation_player.play("add_blueprint_item")

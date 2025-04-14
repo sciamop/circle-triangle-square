@@ -461,6 +461,9 @@ func handle_input() -> void:
 	if Input.is_action_just_pressed("activate_square"):
 		update_activation("square")
 
+	if Input.is_action_just_pressed("activate_blueprint_item") and Global.has_blueprint_item:
+		update_activation("blueprint")
+
 func apply_gravity(delta: float) -> void:
 	if is_wall_sliding:
 		# Apply reduced gravity when wall sliding

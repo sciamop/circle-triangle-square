@@ -1,9 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://bemm6jn2h2it7"]
+[gd_scene load_steps=14 format=3 uid="uid://bemm6jn2h2it7"]
 
 [ext_resource type="Script" uid="uid://dxn5uu2dk2ipx" path="res://Scripts/blueprint_controller.gd" id="1_2k4m3"]
 [ext_resource type="Material" uid="uid://bktyivkiltmw1" path="res://Resources/blueprint_particles.tres" id="2_wlm2b"]
 [ext_resource type="LabelSettings" uid="uid://d270b5vas2gjr" path="res://Resources/blueprint_label_next_settings.tres" id="3_wl3ot"]
 [ext_resource type="FontFile" uid="uid://bhaeglj2is8tb" path="res://Fonts/Aileron-Regular.otf" id="4_1og5n"]
+[ext_resource type="LabelSettings" uid="uid://pjukfu4qrdup" path="res://Resources/blueprint_label_settings.tres" id="4_8vl0k"]
 [ext_resource type="FontFile" uid="uid://653p86rf1v0e" path="res://Fonts/Aileron-Heavy.otf" id="4_xisl2"]
 
 [sub_resource type="Animation" id="Animation_xisl2"]
@@ -137,6 +138,7 @@ font_color = Color(0, 0, 0, 1)
 size = Vector2(61.5186, 61.1201)
 
 [node name="BlueprintPickup" type="StaticBody2D"]
+position = Vector2(0, 1)
 scale = Vector2(1, 1.00652)
 collision_layer = 2
 collision_mask = 0
@@ -185,21 +187,21 @@ offset_bottom = -187.461
 scale = Vector2(2.08067, 2.08067)
 color = Color(1, 1, 1, 0.882353)
 
-[node name="ShapeCounts" type="HBoxContainer" parent="BuildingPanel"]
-visible = false
+[node name="ShapeCounts" type="VBoxContainer" parent="BuildingPanel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -71.0
-offset_top = 50.9871
-offset_right = 358.0
-offset_bottom = 170.987
+offset_left = -185.543
+offset_top = -21.0395
+offset_right = -93.5429
+offset_bottom = 223.961
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.379853, 0.379853)
+theme_override_constants/separation = 70
 
 [node name="Circle" type="HBoxContainer" parent="BuildingPanel/ShapeCounts"]
 layout_mode = 2
@@ -247,22 +249,24 @@ text = " [1]                         [2]                        [3]"
 label_settings = ExtResource("3_wl3ot")
 
 [node name="Instructions2" type="Label" parent="BuildingPanel"]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -80.0
-offset_top = 48.0194
-offset_right = 81.0
-offset_bottom = 68.0194
+offset_left = -37.033
+offset_top = -8.84229
+offset_right = 719.967
+offset_bottom = 241.158
 grow_horizontal = 2
 grow_vertical = 2
-text = "PRESS KEYS TO PLACE..."
-label_settings = ExtResource("3_wl3ot")
-horizontal_alignment = 1
+scale = Vector2(0.295252, 0.295252)
+text = "Select your inventory shapes (using 1,2,3) to fill in the blueprint's corresponding shapes. 
+Once you've filled in all the shapes, you'll receive the item! 
+Be careful, enemies can still attack while you are building."
+label_settings = ExtResource("4_8vl0k")
+autowrap_mode = 2
 
 [node name="blueprint" type="Label" parent="BuildingPanel"]
 layout_mode = 1
@@ -288,10 +292,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -60.5831
-offset_top = 54.6654
-offset_right = 273.417
-offset_bottom = 99.6654
+offset_left = -152.861
+offset_top = 55.1429
+offset_right = 181.139
+offset_bottom = 100.143
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.375, 0.375)
@@ -359,40 +363,40 @@ width = 30.0
 default_color = Color(1, 0, 0, 1)
 
 [node name="grid" type="Area2D" parent="BuildingPanel"]
-position = Vector2(34.6043, -7.64001)
+position = Vector2(-61.5186, -7.64001)
 
 [node name="row1" type="Area2D" parent="BuildingPanel/grid"]
 
 [node name="cellA" type="Line2D" parent="BuildingPanel/grid/row1"]
-position = Vector2(142.262, 99.7978)
+position = Vector2(142.262, 100.275)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
 default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellB" type="Line2D" parent="BuildingPanel/grid/row1"]
-position = Vector2(157.641, 99.7978)
+position = Vector2(157.641, 100.275)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
 default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellC" type="Line2D" parent="BuildingPanel/grid/row1"]
-position = Vector2(173.021, 99.7978)
+position = Vector2(173.021, 100.275)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
 default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellD" type="Line2D" parent="BuildingPanel/grid/row1"]
-position = Vector2(188.401, 99.7978)
+position = Vector2(188.401, 100.275)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
 default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellE" type="Line2D" parent="BuildingPanel/grid/row1"]
-position = Vector2(203.781, 99.7978)
+position = Vector2(203.781, 100.275)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
@@ -402,35 +406,35 @@ default_color = Color(0.607843, 0.607843, 0.607843, 1)
 position = Vector2(0, 15.28)
 
 [node name="cellA" type="Line2D" parent="BuildingPanel/grid/row2"]
-position = Vector2(142.262, 99.7978)
+position = Vector2(142.262, 100.275)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
 default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellB" type="Line2D" parent="BuildingPanel/grid/row2"]
-position = Vector2(157.641, 99.7978)
+position = Vector2(157.641, 100.275)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
 default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellC" type="Line2D" parent="BuildingPanel/grid/row2"]
-position = Vector2(173.021, 99.7978)
+position = Vector2(173.021, 100.275)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
 default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellD" type="Line2D" parent="BuildingPanel/grid/row2"]
-position = Vector2(188.401, 99.7978)
+position = Vector2(188.401, 100.275)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
 default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellE" type="Line2D" parent="BuildingPanel/grid/row2"]
-position = Vector2(203.781, 99.7978)
+position = Vector2(203.781, 100.275)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
@@ -440,35 +444,35 @@ default_color = Color(0.607843, 0.607843, 0.607843, 1)
 position = Vector2(0, 30.5601)
 
 [node name="cellA" type="Line2D" parent="BuildingPanel/grid/row3"]
-position = Vector2(142.262, 99.7978)
+position = Vector2(142.262, 100.275)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
 default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellB" type="Line2D" parent="BuildingPanel/grid/row3"]
-position = Vector2(157.641, 99.7978)
+position = Vector2(157.641, 100.275)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
 default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellC" type="Line2D" parent="BuildingPanel/grid/row3"]
-position = Vector2(173.021, 99.7978)
+position = Vector2(173.021, 100.275)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
 default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellD" type="Line2D" parent="BuildingPanel/grid/row3"]
-position = Vector2(188.401, 99.7978)
+position = Vector2(188.401, 100.275)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
 default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellE" type="Line2D" parent="BuildingPanel/grid/row3"]
-position = Vector2(203.781, 99.7978)
+position = Vector2(203.781, 100.275)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
@@ -478,35 +482,35 @@ default_color = Color(0.607843, 0.607843, 0.607843, 1)
 position = Vector2(0, 45.8401)
 
 [node name="cellA" type="Line2D" parent="BuildingPanel/grid/row4"]
-position = Vector2(142.262, 99.7978)
+position = Vector2(142.262, 100.275)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
 default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellB" type="Line2D" parent="BuildingPanel/grid/row4"]
-position = Vector2(157.641, 99.7978)
+position = Vector2(157.641, 100.275)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
 default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellC" type="Line2D" parent="BuildingPanel/grid/row4"]
-position = Vector2(173.021, 99.7978)
+position = Vector2(173.021, 100.275)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
 default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellD" type="Line2D" parent="BuildingPanel/grid/row4"]
-position = Vector2(188.401, 99.7978)
+position = Vector2(188.401, 100.275)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
 default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellE" type="Line2D" parent="BuildingPanel/grid/row4"]
-position = Vector2(203.781, 99.7978)
+position = Vector2(203.781, 100.275)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
@@ -516,35 +520,35 @@ default_color = Color(0.607843, 0.607843, 0.607843, 1)
 position = Vector2(0, 61.1202)
 
 [node name="cellA" type="Line2D" parent="BuildingPanel/grid/row5"]
-position = Vector2(142.262, 99.7978)
+position = Vector2(142.262, 100.275)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
 default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellB" type="Line2D" parent="BuildingPanel/grid/row5"]
-position = Vector2(157.641, 99.7978)
+position = Vector2(157.641, 100.275)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
 default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellC" type="Line2D" parent="BuildingPanel/grid/row5"]
-position = Vector2(173.021, 99.7978)
+position = Vector2(173.021, 100.275)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
 default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellD" type="Line2D" parent="BuildingPanel/grid/row5"]
-position = Vector2(188.401, 99.7978)
+position = Vector2(188.401, 100.275)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
 default_color = Color(0.607843, 0.607843, 0.607843, 1)
 
 [node name="cellE" type="Line2D" parent="BuildingPanel/grid/row5"]
-position = Vector2(203.781, 99.7978)
+position = Vector2(203.781, 100.275)
 points = PackedVector2Array(0, -15.28, 0, 0, 0, 0, -15.3797, 0, -15.3797, -15.28)
 closed = true
 width = 1.0
@@ -556,12 +560,11 @@ position = Vector2(157.641, 115.078)
 shape = SubResource("RectangleShape2D_xisl2")
 
 [node name="blueprint_canonicals" type="Area2D" parent="BuildingPanel"]
-visible = false
-position = Vector2(188.401, 180.018)
+position = Vector2(92.2781, 173.333)
 scale = Vector2(0.480614, 0.480614)
 
 [node name="blueprint_square_canonical4" type="Area2D" parent="BuildingPanel/blueprint_canonicals"]
-position = Vector2(-128, -71.9146)
+position = Vector2(-128, -43.1025)
 scale = Vector2(0.875, 0.875)
 collision_mask = 3
 metadata/shape_type = "square"
@@ -580,7 +583,7 @@ color = Color(0.760784, 0, 0, 1)
 polygon = PackedVector2Array(-16, 16, 16, 16, 16, -16, -16, -16)
 
 [node name="blueprint_triangle_canonical" type="Area2D" parent="BuildingPanel/blueprint_canonicals"]
-position = Vector2(-128, -129.158)
+position = Vector2(-128, -121.21)
 metadata/shape_type = "triangle"
 metadata/is_permanent = false
 
@@ -598,7 +601,7 @@ color = Color(0.760784, 0, 0, 1)
 polygon = PackedVector2Array(8, -13.9093, 24, 15.8964, -8, 15.8964)
 
 [node name="blueprint_circle_canonical" type="Area2D" parent="BuildingPanel/blueprint_canonicals"]
-position = Vector2(-128, -206.653)
+position = Vector2(-128, -214.601)
 collision_mask = 3
 metadata/shape_type = "circle"
 metadata/is_permanent = false
@@ -618,7 +621,7 @@ color = Color(0.760784, 0, 0, 1)
 polygon = PackedVector2Array(-100, 2, -86, 50, -50, 85, 0, 99, 50, 84, 86, 51, 100, 1, 88, -48, 51, -83, -1, -97, -50, -83, -86, -48)
 
 [node name="item_blueprint_grapplinghook" type="Area2D" parent="BuildingPanel" groups=["blueprint_item"]]
-position = Vector2(223.005, 178.108)
+position = Vector2(126.887, 178.644)
 rotation = -3.04716
 scale = Vector2(0.217183, 0.217183)
 
