@@ -6,6 +6,7 @@ extends CanvasLayer
 @onready var enemy_oob: ColorRect = $CanvasLayer/Control/ENEMY_OOB
 @onready var tri_oob: ColorRect = $CanvasLayer/Control/TRI_OOB
 @onready var cir_oob: ColorRect = $CanvasLayer/Control/CIR_OOB
+@onready var squ_oob: ColorRect = $CanvasLayer/Control/SQU_OOB
 @onready var shapes_oob: ColorRect = $CanvasLayer/Control/SHAPES_OOB
 @onready var enemy: Enemy = $"/root/Game/enemy"
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -24,6 +25,10 @@ func _ready() -> void:
 	
 	var _show_shapes_onboarding = Callable(self, "show_shapes_onboarding")
 	enemy.connect("on_death", _show_shapes_onboarding)
+	
+	var _show_circle_triangle_square_onboarding = Callable(self, "show_circle_triangle_square_onboarding") 
+	player.connect("on_activate", _show_circle_triangle_square_onboarding)
+	
 	
 	if not Global.has_seen_onboarding:
 		dialog_state = "intent"
@@ -47,13 +52,6 @@ func add_blueprint_item_to_inventory(_name: String) -> void:
 	blueprint_item.show()
 	animation_player.play("add_blueprint_item")
 
-func hide_all_oob() -> void:
-	var all_oob = get_tree().get_nodes_in_group("OOB")
-	for oob in all_oob:
-		var video_stream_player:VideoStreamPlayer = oob.find_child("VideoStreamPlayer")
-		if video_stream_player:
-			video_stream_player.stop()
-		oob.hide()
 
 func show_enemy_onboarding(health: int) -> void:
 	if any_dialogues_visible:
@@ -63,9 +61,27 @@ func show_enemy_onboarding(health: int) -> void:
 		get_state()
 
 func show_shapes_onboarding() -> void:
+	if any_dialogues_visible:
+		return
 	if !Global.has_seen_shapes_onboarding:
 		dialog_state = "shapes"
 		get_state()
+
+func show_circle_triangle_square_onboarding(shape: String) -> void:
+	if any_dialogues_visible:
+		return
+	if shape == "circle":
+		if !Global.has_seen_circles_onboarding:
+			dialog_state = "circles"
+			get_state()
+	elif shape == "triangle":
+		if !Global.has_seen_triangles_onboarding:
+			dialog_state = "triangles"
+			get_state()
+	elif shape == "square":
+		if !Global.has_seen_squares_onboarding:
+			dialog_state = "squares"
+			get_state()
 				
 
 func slide_dialog( out_dialog: ColorRect, in_dialog: ColorRect) -> void:
@@ -109,37 +125,20 @@ func get_state() -> void:
 				dialog_state = "none"
 				any_dialogues_visible = true
 			"enemy":
-				slide_dialog(null, enemy_oob)
-				get_viewport().set_input_as_handled()
-				emit_signal("dialog_visible", true)
+				show_dialogue(enemy_oob)
 				Global.has_seen_enemy_onboarding = true
-				dialog_state = "none"
-				any_dialogues_visible = true
-				start_video_player(enemy_oob)
 			"shapes":
-				slide_dialog(null, shapes_oob)
-				get_viewport().set_input_as_handled()
-				emit_signal("dialog_visible", true)
-				dialog_state = "circles"
-				any_dialogues_visible = true
-				start_video_player(shapes_oob)
-			"circles":
-				slide_dialog(shapes_oob, cir_oob)
-				get_viewport().set_input_as_handled()
-				emit_signal("dialog_visible", true)
-				dialog_state = "triangles"
-				any_dialogues_visible = true
-				start_video_player(cir_oob)
-			"triangles":
-				slide_dialog(cir_oob, tri_oob)
-				get_viewport().set_input_as_handled()
-				emit_signal("dialog_visible", true)
+				show_dialogue(shapes_oob)
 				Global.has_seen_shapes_onboarding = true
-				dialog_state = "none"
-				any_dialogues_visible = true
-				start_video_player(tri_oob)
+			"circles":
+				show_dialogue(cir_oob)
+				Global.has_seen_circles_onboarding = true
+			"triangles":
+				show_dialogue(tri_oob)
+				Global.has_seen_triangles_onboarding = true
 			"squares":
-				pass
+				show_dialogue(squ_oob)
+				Global.has_seen_squares_onboarding = true
 			"none":
 				var visible_oob = get_tree().get_nodes_in_group("OOB")
 				for oob in visible_oob:
@@ -147,6 +146,14 @@ func get_state() -> void:
 						slide_dialog(oob, null)
 				emit_signal("dialog_visible", false)
 				any_dialogues_visible = false
+
+func show_dialogue(dialog: ColorRect) -> void:
+	slide_dialog(null, dialog)
+	get_viewport().set_input_as_handled()
+	emit_signal("dialog_visible", true)
+	any_dialogues_visible = true
+	start_video_player(dialog)
+	dialog_state = "none"
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept") and any_dialogues_visible:

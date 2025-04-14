@@ -214,6 +214,12 @@ enum PlayerState {
 
 var current_state: int = PlayerState.IDLE
 
+# Add these variables near the top with other state variables
+var is_grappling: bool = false
+var grappling_point: Vector2 = Vector2.ZERO
+var grappling_speed: float = 800.0
+var grappling_line: Line2D = null
+
 func _ready() -> void:
 	# Initialize shape counts
 	shape_counts["square"] = square_pieces
@@ -281,32 +287,30 @@ func _ready() -> void:
 		item.visible = false
 		set_static_body_collision(item, false)
 
-# Add this new helper function
-func set_static_body_collision(item: Node2D, enabled: bool) -> void:
-	var static_body = item.find_child("StaticBody2D")
-	if static_body and static_body is StaticBody2D:
-		static_body.collision_layer = 1 if enabled else 0
-		static_body.collision_mask = 1 if enabled else 0
-
-func set_dialog_invinciblity(is_dialogue_visible:bool) -> void:
-	print("dialogue visible: " + str(is_dialogue_visible))
-	if is_dialogue_visible:
-		is_post_knockback_invincible = true
-	else:
-		# post_knockback_invincibility_timer = 0.75
-		post_knockback_invincibility_timer = 2.0
-	print("is_post_knockback_invincible: " + str(is_post_knockback_invincible))
+	# Initialize grappling line
+	grappling_line = Line2D.new()
+	grappling_line.width = 2.0
+	grappling_line.default_color = Color(1, 1, 1, 0.8)
+	add_child(grappling_line)
+	grappling_line.visible = false
 
 func _physics_process(delta: float) -> void:
 	# Skip all physics if player is disabled
-	if is_disabled:
+	if is_disabled and not is_grappling:
 		return
+	
+	# Process input first
+	handle_input()
+	
 	
 	# Update timers
 	update_timers(delta)
 	
-	# Process input
-	handle_input()
+	# Handle grappling if active
+	if is_grappling:
+		_process_grappling(delta)
+		move_and_slide()
+		return
 	
 	# Apply movement logic based on state
 	if is_dashing:
@@ -413,10 +417,18 @@ func update_timers(delta: float) -> void:
 			end_insight()
 
 func handle_input() -> void:
-	# Skip input handling if player is disabled
+	# Skip input handling if player is disabled and not grappling
+	if Input.is_action_just_pressed("attack_ranged") and ranged_cooldown_timer <= 0 and ranged_unlocked and active_projectile_shape == "blueprint":
+		print("is_grappling: " + str(is_grappling))
+		if is_grappling:
+			print("Detaching from grappling hook")
+			end_grappling()
+		else:
+			perform_ranged_attack()
+	
 	if is_disabled:
 		return
-		
+	
 	# Get horizontal input
 	direction = Input.get_axis("move_left", "move_right")
 	
@@ -449,7 +461,6 @@ func handle_input() -> void:
 
 	if Input.is_action_just_pressed("attack_ranged") and ranged_cooldown_timer * 5 <= 0 and ranged_unlocked and active_projectile_shape == "square":
 		perform_wall_build()
-		
 
 		
 	if Input.is_action_just_pressed("activate_triangle"):
@@ -884,7 +895,23 @@ func _on_insight_area_exited(area: Area2D) -> void:
 func update_activation(shape: String) -> void:
 	emit_signal("on_activate", shape)
 	switch_projectile(shape)
-	pass
+	
+	# Handle grappling hook point visibility
+	if shape == "blueprint" and Global.has_blueprint_item:
+		# Find the grappling hook point in the scene
+		var grappling_hook_point = get_tree().get_first_node_in_group("grappling_hook_point")
+		print("grappling hook point: ", grappling_hook_point.name)
+		if grappling_hook_point:
+			grappling_hook_point.visible = true
+			# Play the attach point visible animation
+			var animation_player = grappling_hook_point.get_node("AnimationPlayer")
+			if animation_player and animation_player.has_animation("attach_point_visible"):
+				animation_player.play("attach_point_visible")
+	else:
+		# Hide the grappling hook point when switching to other shapes
+		var grappling_hook_point = get_tree().get_first_node_in_group("grappling_hook_point")
+		if grappling_hook_point:
+			grappling_hook_point.visible = false
 
 func switch_projectile(shape: String) -> void:
 	active_projectile_shape = shape
@@ -1550,23 +1577,46 @@ func change_state(new_state: PlayerState) -> void:
 			velocity = Vector2.ZERO
 
 func perform_ranged_attack() -> void:
-	if not ranged_unlocked or attacking:
+	print("perform_ranged_attack called")
+	if not ranged_unlocked:
+		print("Ranged attack not unlocked")
+		return
+	if attacking:
+		print("Already attacking")
 		return
 	# Check ammo before proceeding
 	if not has_ammo():
+		print("No ammo available")
 		return
 
-	# Check if player is in a blueprint zone and has a square
-	var blueprint_areas = get_tree().get_nodes_in_group("blueprint_zone")
-	for area in blueprint_areas:
-		print(area.name)
-		if area.overlaps_area(pickup_area):
-			# Start blueprint building instead of firing projectile
-			var blueprint = area.get_parent()
-			if blueprint and blueprint.has_method("start_blueprint_building"):
-				start_blueprint_building(blueprint)
-				return
-	
+	# Handle blueprint grappling hook
+	print("Checking blueprint conditions - active shape: ", active_projectile_shape, " has blueprint: ", Global.has_blueprint_item)
+	if active_projectile_shape == "blueprint" and Global.has_blueprint_item:
+		print("Blueprint shape active and has blueprint item")
+		var grappling_hook_point = get_tree().get_first_node_in_group("grappling_hook_point")
+		print("Found grappling hook point: ", grappling_hook_point)
+		if grappling_hook_point and grappling_hook_point.visible:
+			print("Starting grappling sequence")
+			# Start grappling
+			is_grappling = true
+			grappling_point = grappling_hook_point.global_position
+			grappling_line.visible = true
+			
+			# Disable gravity and normal movement while grappling
+			velocity = Vector2.ZERO
+			is_disabled = true
+			
+			# Play grappling sound if available
+			if audio_player and attack_ranged_sound:
+				audio_player.stream = attack_ranged_sound
+				audio_player.play()
+			
+			return
+		else:
+			print("Grappling hook point not found or not visible")
+	else:
+		print("Blueprint conditions not met - active shape: ", active_projectile_shape, " has blueprint: ", Global.has_blueprint_item)
+
 	# Start attack state
 	attacking = true
 	ranged_cooldown_timer = ranged_cooldown
@@ -1653,3 +1703,65 @@ func perform_ranged_attack() -> void:
 		get_parent().add_child(projectile)
 		# Reset attack state after projectile is fired
 		attacking = false
+
+# Add this new function to handle grappling physics
+func _process_grappling(delta: float) -> void:
+	if not is_grappling:
+		return
+		
+		
+	# Calculate direction to grappling point
+	var direction = (grappling_point - global_position).normalized()
+	
+	# Move player towards grappling point
+	velocity = direction * grappling_speed
+	
+	# Update line position
+	grappling_line.clear_points()
+	grappling_line.add_point(Vector2.ZERO)
+	grappling_line.add_point(to_local(grappling_point))
+	
+	# Check if we've reached the point
+	var distance = global_position.distance_to(grappling_point)
+	if distance < 10.0:
+		print("Reached grappling point, ending grapple")
+		end_grappling()
+
+# Add this function to end grappling
+func end_grappling() -> void:
+	print("end_grappling called")
+	is_grappling = false
+	grappling_line.visible = false
+	
+	# Find the summit point
+	var summit_point = get_tree().get_first_node_in_group("summit_point")
+	if summit_point:
+		print("Found summit point, transporting player")
+		# Teleport player to summit point
+		global_position = summit_point.global_position
+		# Reset velocity and enable movement
+		velocity = Vector2.ZERO
+		is_disabled = false
+	else:
+		print("No summit point found")
+		# Just reset state if no summit point
+		velocity = Vector2.ZERO
+		is_disabled = false
+	
+	print("Grapple state reset")
+
+# Add this new helper function
+func set_static_body_collision(item: Node2D, enabled: bool) -> void:
+	var static_body = item.find_child("StaticBody2D")
+	if static_body and static_body is StaticBody2D:
+		static_body.collision_layer = 1 if enabled else 0
+		static_body.collision_mask = 1 if enabled else 0
+
+func set_dialog_invinciblity(is_dialogue_visible:bool) -> void:
+	print("dialogue visible: " + str(is_dialogue_visible))
+	if is_dialogue_visible:
+		is_post_knockback_invincible = true
+	else:
+		# post_knockback_invincibility_timer = 0.75
+		post_knockback_invincibility_timer = 2.0
+	print("is_post_knockback_invincible: " + str(is_post_knockback_invincible))

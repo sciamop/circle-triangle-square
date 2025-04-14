@@ -1,0 +1,123 @@
+[gd_scene load_steps=6 format=3 uid="uid://c6tc30u6hj6da"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vi5v2"]
+size = Vector2(44, 28)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_inevp"]
+size = Vector2(49, 80)
+
+[sub_resource type="Animation" id="Animation_vi5v2"]
+resource_name = "attach_point_visible"
+length = 0.5
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("attach_point/Polygon2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("attach_point/Polygon2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-1.5708]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("attach_point/Polygon2D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1.51108, 1.53029), Vector2(4.3085, 4.36328), Vector2(1.24913, 1.26501), Vector2(2.45448, 2.48569), Vector2(1.51108, 1.53029)]
+}
+
+[sub_resource type="Animation" id="Animation_inevp"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("attach_point/Polygon2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("attach_point/Polygon2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-1.5708]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("attach_point/Polygon2D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1.51108, 1.53029)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_t3eir"]
+_data = {
+&"RESET": SubResource("Animation_inevp"),
+&"attach_point_visible": SubResource("Animation_vi5v2")
+}
+
+[node name="GrapplingHook_Point" type="Area2D" groups=["grappling_hook_point"]]
+
+[node name="attach_point" type="Area2D" parent="."]
+
+[node name="Polygon2D" type="Polygon2D" parent="attach_point"]
+rotation = -1.5708
+scale = Vector2(1.51108, 1.53029)
+color = Color(0, 0.584314, 0, 0.768627)
+polygon = PackedVector2Array(6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="attach_point"]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_vi5v2")
+
+[node name="summit_point" type="Area2D" parent="." groups=["summit_point"]]
+position = Vector2(-1, -168)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="summit_point"]
+position = Vector2(1.5, -1)
+shape = SubResource("RectangleShape2D_inevp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_vi5v2")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_t3eir")
+}

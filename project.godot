@@ -40,6 +40,8 @@ blueprint_zone=""
 blueprint_item=""
 OOB=""
 enemy=""
+grappling_hook_point=""
+summit_point=""
 
 [input]
 
