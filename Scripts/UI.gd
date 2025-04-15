@@ -16,6 +16,12 @@ extends CanvasLayer
 @onready var squ_oob: ColorRect = $CanvasLayer/Control/SQU_OOB
 @onready var squ_oob_trigger: Area2D = $"/root/Game/OOB_squ_trigger"
 
+@onready var cat_oob: ColorRect = $CanvasLayer/Control/CAT_OOB
+@onready var cat_oob_trigger: Area2D = $"/root/Game/OOB_cat_trigger"
+
+@onready var blueprint_oob: ColorRect = $CanvasLayer/Control/BLUEPRINT_OOB
+@onready var blueprint_oob_trigger: Area2D = $"/root/Game/OOB_blueprint_trigger"
+
 @onready var shapes_oob: ColorRect = $CanvasLayer/Control/SHAPES_OOB
 
 
@@ -38,6 +44,8 @@ func _ready() -> void:
 	tri_oob_trigger.connect("oob_triggered", _show_onboarding)
 	squ_oob_trigger.connect("oob_triggered", _show_onboarding)
 	cir_oob_trigger.connect("oob_triggered", _show_onboarding)
+	cat_oob_trigger.connect("oob_triggered", _show_onboarding)
+	blueprint_oob_trigger.connect("oob_triggered", _show_onboarding)
 	enemy.connect("on_death", _show_onboarding.bind("shapes"))
 	
 	var _show_shapes_onboarding = Callable(self, "show_shapes_onboarding")
