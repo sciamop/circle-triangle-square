@@ -171,7 +171,8 @@ func set_dialog_invinciblity(dialogue_visible:bool) -> void:
 
 func _physics_process(delta: float) -> void:
 	# Skip if dead or dialogue is visible
-	if is_dialogue_visible or !Global.has_seen_enemy_onboarding:
+	if is_dialogue_visible:
+
 		move_speed_modifier = 0
 		return
 	else:

@@ -7,7 +7,8 @@ extends HBoxContainer
 @onready var triangle_icon: Polygon2D = $triangleVBoxContainer/CenterContainer/triangleIcon
 @onready var square_icon: Polygon2D = $squareVBoxContainer/squareCenterContainer/squareIcon
 @onready var animation_player: AnimationPlayer = $"../../../../AnimationPlayer"
-@onready var blueprint_item: Area2D = $blueprintVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook
+@onready var blueprint_item: Area2D = $grapplingHookVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook
+@onready var pickaxe_item: Area2D = $pickaxeVBoxContainer/squareCenterContainer/item_blueprint_pickaxe
 
 var square_score:int = 0
 var triangle_score:int = 0
@@ -60,18 +61,30 @@ func checkStatus() -> void:
 	else:
 		circle_icon.color = enabled_color
 
-	set_blueprint_item_status(enabled_color)
+	set_blueprint_item_status()
 	
-	if currently_activated == "blueprint":
-		set_blueprint_item_status(active_color)
-	else:
-		var activated_icon:Polygon2D = find_child(currently_activated + "Icon")
+	var activated_icon:Polygon2D = find_child(currently_activated + "Icon")
+	if activated_icon:
 		activated_icon.color = active_color
 	
-func set_blueprint_item_status(color:Color):
-	var blueprint_item_polygon2ds = blueprint_item.get_children()
-	for polygon2d:Polygon2D in blueprint_item_polygon2ds:
-		polygon2d.color = color
+func set_blueprint_item_status():
+		var blueprint_color:Color = enabled_color
+		
+		if (currently_activated == "blueprint"):
+			blueprint_color = active_color
+			
+		var blueprint_item_polygon2ds = blueprint_item.get_children()
+		for polygon2d:Polygon2D in blueprint_item_polygon2ds:
+			polygon2d.color = blueprint_color
+
+		if (currently_activated == "pickaxe"):
+			blueprint_color = active_color
+		else:
+			blueprint_color = enabled_color
+
+		var pickaxe_item_polygon2ds = pickaxe_item.get_children()
+		for polygon2d:Polygon2D in pickaxe_item_polygon2ds:
+			polygon2d.color = blueprint_color
 
 func updateScore(pickup_type:String, pieces:int):
 

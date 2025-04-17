@@ -304,7 +304,7 @@ text = "BLUEPRINT COMPLETE"
 label_settings = SubResource("LabelSettings_o7hk0")
 horizontal_alignment = 1
 
-[node name="grappling hook" type="Label" parent="BuildingPanel"]
+[node name="title" type="Label" parent="BuildingPanel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -622,6 +622,7 @@ color = Color(0.760784, 0, 0, 1)
 polygon = PackedVector2Array(-100, 2, -86, 50, -50, 85, 0, 99, 50, 84, 86, 51, 100, 1, 88, -48, 51, -83, -1, -97, -50, -83, -86, -48)
 
 [node name="item_blueprint_grapplinghook" type="Area2D" parent="BuildingPanel" groups=["blueprint_item"]]
+visible = false
 position = Vector2(126.887, 178.644)
 rotation = -3.04716
 scale = Vector2(0.217183, 0.217183)
@@ -849,6 +850,196 @@ width = 1.0
 default_color = Color(1, 0, 0, 1)
 
 [node name="blueprint_square_filled" type="Polygon2D" parent="BuildingPanel/item_blueprint_grapplinghook/blueprint_square_01"]
+visible = false
+color = Color(0.760784, 0, 0, 1)
+polygon = PackedVector2Array(-16, 16, 16, 16, 16, -16, -16, -16)
+
+[node name="item_blueprint_pickaxe" type="Area2D" parent="BuildingPanel" groups=["blueprint_item"]]
+visible = false
+position = Vector2(126.887, 178.644)
+rotation = -3.04716
+scale = Vector2(0.217183, 0.217183)
+
+[node name="blueprint_triangle_04" type="Area2D" parent="BuildingPanel/item_blueprint_pickaxe"]
+position = Vector2(287.613, 408.093)
+rotation = 1.46065
+scale = Vector2(1.99165, 1.99165)
+metadata/shape_type = "triangle"
+metadata/is_permanent = false
+
+[node name="blueprint_triangle_empty" type="Line2D" parent="BuildingPanel/item_blueprint_pickaxe/blueprint_triangle_04"]
+position = Vector2(1.90735e-06, 4.96761)
+points = PackedVector2Array(-15.643, -21.2153, -16.1456, 10.7807, 15.6431, 11.2801)
+closed = true
+width = 1.0
+default_color = Color(1, 0, 0, 1)
+joint_mode = 1
+
+[node name="blueprint_triangle_filled" type="Polygon2D" parent="BuildingPanel/item_blueprint_pickaxe/blueprint_triangle_04"]
+visible = false
+position = Vector2(-8, -1.98706)
+color = Color(0.760784, 0, 0, 1)
+polygon = PackedVector2Array(-7.64301, -14.2607, 23.6431, 18.2348, -8.14565, 17.7354)
+
+[node name="blueprint_triangle_05" type="Area2D" parent="BuildingPanel/item_blueprint_pickaxe"]
+position = Vector2(5.25861, 434.867)
+rotation = 3.04716
+scale = Vector2(1.99165, 1.99165)
+metadata/shape_type = "triangle"
+metadata/is_permanent = false
+
+[node name="blueprint_triangle_empty" type="Line2D" parent="BuildingPanel/item_blueprint_pickaxe/blueprint_triangle_05"]
+position = Vector2(1.90735e-06, 4.96761)
+points = PackedVector2Array(-15.643, -21.2153, -16.1456, 10.7807, 15.6431, 11.2801)
+closed = true
+width = 1.0
+default_color = Color(1, 0, 0, 1)
+joint_mode = 1
+
+[node name="blueprint_triangle_filled" type="Polygon2D" parent="BuildingPanel/item_blueprint_pickaxe/blueprint_triangle_05"]
+visible = false
+position = Vector2(-8, -1.98706)
+color = Color(0.760784, 0, 0, 1)
+polygon = PackedVector2Array(-7.64301, -14.2607, 23.6431, 18.2348, -8.14565, 17.7354)
+
+[node name="blueprint_circle_01" type="Area2D" parent="BuildingPanel/item_blueprint_pickaxe"]
+position = Vector2(148.067, 436.77)
+rotation = 3.04716
+scale = Vector2(2.21294, 2.21294)
+collision_mask = 3
+metadata/shape_type = "circle"
+metadata/is_permanent = false
+
+[node name="blueprint_circle_empty" type="Line2D" parent="BuildingPanel/item_blueprint_pickaxe/blueprint_circle_01"]
+position = Vector2(6.10352e-05, 6.95471)
+scale = Vector2(0.15, 0.15)
+points = PackedVector2Array(-82, -47, -48, -80, 0, -93, 48, -80, 83, -46, 96, 1, 83, 48, 48, 81, 0, 94, -48, 81, -83, 48, -96, 0)
+closed = true
+default_color = Color(1, 0, 0, 1)
+
+[node name="blueprint_circle_filled" type="Polygon2D" parent="BuildingPanel/item_blueprint_pickaxe/blueprint_circle_01"]
+visible = false
+position = Vector2(0, 7.94824)
+scale = Vector2(0.15, 0.15)
+color = Color(0.760784, 0, 0, 1)
+polygon = PackedVector2Array(-100, 2, -86, 50, -50, 85, 0, 99, 50, 84, 86, 51, 100, 1, 88, -48, 51, -83, -1, -97, -50, -83, -86, -48)
+
+[node name="blueprint_square_03" type="Area2D" parent="BuildingPanel/item_blueprint_pickaxe"]
+position = Vector2(139.774, 349.219)
+rotation = 3.04716
+scale = Vector2(1.93632, 1.93632)
+collision_mask = 3
+metadata/shape_type = "square"
+metadata/is_permanent = false
+
+[node name="blueprint_square_empty" type="Line2D" parent="BuildingPanel/item_blueprint_pickaxe/blueprint_square_03"]
+position = Vector2(9.53674e-07, -7.57997e-06)
+points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+closed = true
+width = 1.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="blueprint_square_filled" type="Polygon2D" parent="BuildingPanel/item_blueprint_pickaxe/blueprint_square_03"]
+visible = false
+color = Color(0.760784, 0, 0, 1)
+polygon = PackedVector2Array(-16, 16, 16, 16, 16, -16, -16, -16)
+
+[node name="blueprint_square_04" type="Area2D" parent="BuildingPanel/item_blueprint_pickaxe"]
+position = Vector2(216.907, 412.583)
+rotation = 3.04716
+scale = Vector2(1.93632, 1.93632)
+collision_mask = 3
+metadata/shape_type = "square"
+metadata/is_permanent = false
+
+[node name="blueprint_square_empty" type="Line2D" parent="BuildingPanel/item_blueprint_pickaxe/blueprint_square_04"]
+position = Vector2(9.53674e-07, -7.57997e-06)
+points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+closed = true
+width = 1.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="blueprint_square_filled" type="Polygon2D" parent="BuildingPanel/item_blueprint_pickaxe/blueprint_square_04"]
+visible = false
+color = Color(0.760784, 0, 0, 1)
+polygon = PackedVector2Array(-16, 16, 16, 16, 16, -16, -16, -16)
+
+[node name="blueprint_square_05" type="Area2D" parent="BuildingPanel/item_blueprint_pickaxe"]
+position = Vector2(75.9096, 425.937)
+rotation = 3.04716
+scale = Vector2(1.93632, 1.93632)
+collision_mask = 3
+metadata/shape_type = "square"
+metadata/is_permanent = false
+
+[node name="blueprint_square_empty" type="Line2D" parent="BuildingPanel/item_blueprint_pickaxe/blueprint_square_05"]
+position = Vector2(9.53674e-07, -7.57997e-06)
+points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+closed = true
+width = 1.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="blueprint_square_filled" type="Polygon2D" parent="BuildingPanel/item_blueprint_pickaxe/blueprint_square_05"]
+visible = false
+color = Color(0.760784, 0, 0, 1)
+polygon = PackedVector2Array(-16, 16, 16, 16, 16, -16, -16, -16)
+
+[node name="blueprint_square_02" type="Area2D" parent="BuildingPanel/item_blueprint_pickaxe"]
+position = Vector2(126.56, 209.704)
+rotation = 3.04716
+scale = Vector2(1.93632, 1.93632)
+collision_mask = 3
+metadata/shape_type = "square"
+metadata/is_permanent = false
+
+[node name="blueprint_square_empty" type="Line2D" parent="BuildingPanel/item_blueprint_pickaxe/blueprint_square_02"]
+position = Vector2(9.53674e-07, -7.57997e-06)
+points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+closed = true
+width = 1.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="blueprint_square_filled" type="Polygon2D" parent="BuildingPanel/item_blueprint_pickaxe/blueprint_square_02"]
+visible = false
+color = Color(0.760784, 0, 0, 1)
+polygon = PackedVector2Array(-16, 16, 16, 16, 16, -16, -16, -16)
+
+[node name="blueprint_square_06" type="Area2D" parent="BuildingPanel/item_blueprint_pickaxe"]
+position = Vector2(133.14, 279.176)
+rotation = 3.04716
+scale = Vector2(1.93632, 1.93632)
+collision_mask = 3
+metadata/shape_type = "square"
+metadata/is_permanent = false
+
+[node name="blueprint_square_empty" type="Line2D" parent="BuildingPanel/item_blueprint_pickaxe/blueprint_square_06"]
+position = Vector2(9.53674e-07, -7.57997e-06)
+points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+closed = true
+width = 1.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="blueprint_square_filled" type="Polygon2D" parent="BuildingPanel/item_blueprint_pickaxe/blueprint_square_06"]
+visible = false
+color = Color(0.760784, 0, 0, 1)
+polygon = PackedVector2Array(-16, 16, 16, 16, 16, -16, -16, -16)
+
+[node name="blueprint_square_01" type="Area2D" parent="BuildingPanel/item_blueprint_pickaxe"]
+position = Vector2(119.925, 139.662)
+rotation = 3.04716
+scale = Vector2(1.93632, 1.93632)
+collision_mask = 3
+metadata/shape_type = "square"
+metadata/is_permanent = false
+
+[node name="blueprint_square_empty" type="Line2D" parent="BuildingPanel/item_blueprint_pickaxe/blueprint_square_01"]
+position = Vector2(9.53674e-07, -7.57997e-06)
+points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+closed = true
+width = 1.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="blueprint_square_filled" type="Polygon2D" parent="BuildingPanel/item_blueprint_pickaxe/blueprint_square_01"]
 visible = false
 color = Color(0.760784, 0, 0, 1)
 polygon = PackedVector2Array(-16, 16, 16, 16, 16, -16, -16, -16)

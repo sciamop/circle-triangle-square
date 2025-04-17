@@ -4,6 +4,7 @@ extends Node2D
 @onready var audio_player: AudioStreamPlayer2D = $AudioStreamPlayer2D
 @onready var player: Node2D = $"/root/Game/Player"
 
+
 func play_meow_sequence() -> void:
 	# Show the label
 	if label:
@@ -35,15 +36,29 @@ func move_to_door(door: Node2D) -> void:
 		door.hide()
 		door_anim.play("RESET")
 	# Move instantly to checkpoint2
+	var checkpoint1 = get_tree().get_nodes_in_group("checkpoint")[0]
+	checkpoint1.queue_free()
+	
 	var checkpoint2 = get_tree().get_nodes_in_group("checkpoint")[1]
 	if checkpoint2:
 		visible = true
 		global_position = checkpoint2.global_position
-		door.global_position = Vector2(checkpoint2.global_position.x + 100, checkpoint2.global_position.y - 53)
-	
-		
+		door.global_position = Vector2(checkpoint2.global_position.x - 100, checkpoint2.global_position.y - 53)
 		door.show()
+		door_anim.play("portal_open")
+		await door_anim.animation_finished
+		door_anim.play("RESET")
+
 		if player and player.has_method("zoom_on_checkpoint"):
 			await player.zoom_on_checkpoint(checkpoint2)
+			
+			door_anim.play("cat_escape")
+			await door_anim.animation_finished
+			door.hide()
+			door.global_position = Vector2(player.global_position.x - 100, player.global_position.y - 53)
+			door.show()
+			door_anim.play("portal_open")
+			await door_anim.animation_finished
+			door_anim.play("RESET")
 		
 	 

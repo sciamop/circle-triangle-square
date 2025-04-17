@@ -220,6 +220,16 @@ var grappling_point: Vector2 = Vector2.ZERO
 var grappling_speed: float = 800.0
 var grappling_line: Line2D = null
 
+# Add these variables for activation states
+var can_activate_triangle: bool = false
+var can_activate_square: bool = false
+var can_activate_circle: bool = false
+
+# Add these variables near the top with other state variables
+var wall_build_cooldown: float = 1.0
+var wall_build_cooldown_timer: float = 0.0
+@export var wall_scene: PackedScene
+
 func _ready() -> void:
 	# Initialize shape counts
 	shape_counts["square"] = square_pieces
@@ -426,6 +436,9 @@ func handle_input() -> void:
 		else:
 			perform_ranged_attack()
 	
+	if Input.is_action_just_pressed("attack_ranged") and ranged_cooldown_timer <= 0 and ranged_unlocked and active_projectile_shape == "pickaxe":
+		perform_ranged_attack()
+
 	if is_disabled:
 		return
 	
@@ -472,8 +485,11 @@ func handle_input() -> void:
 	if Input.is_action_just_pressed("activate_square"):
 		update_activation("square")
 
-	if Input.is_action_just_pressed("activate_blueprint_item") and Global.has_blueprint_item:
+	if Input.is_action_just_pressed("activate_blueprint_item") and Global.has_grappling_hook:
 		update_activation("blueprint")
+
+	if Input.is_action_just_pressed("activate_pickaxe") and Global.has_pick_axe:
+		update_activation("pickaxe")
 
 func apply_gravity(delta: float) -> void:
 	if is_wall_sliding:
@@ -528,7 +544,7 @@ func handle_jumping() -> void:
 				particles_land.restart()
 			
 			# Squash effect
-			apply_squash()
+			apply_squash(squash_factor)
 			
 			# Play sound
 			if audio_player and land_sound:
@@ -557,7 +573,7 @@ func handle_jumping() -> void:
 				particles_jump.restart()
 			
 			# Stretch effect
-			apply_stretch()
+			apply_stretch(stretch_factor)
 			
 			# Play sound
 			if audio_player and jump_sound:
@@ -577,7 +593,7 @@ func handle_jumping() -> void:
 		if enable_juice:
 			if particles_jump:
 				particles_jump.restart()
-			apply_stretch()
+			apply_stretch(stretch_factor)
 			if audio_player and jump_sound:
 				audio_player.stream = jump_sound
 				audio_player.play()
@@ -647,6 +663,8 @@ func perform_melee_attack() -> void:
 	# Always reset attacking state
 	attacking = false
 	emit_signal("on_attack", "melee")
+	if (active_projectile_shape == "pickaxe"):
+		pickaxe_wall()
 
 func has_ammo() -> bool:
 	match active_projectile_shape:
@@ -734,8 +752,6 @@ func perform_wall_build() -> void:
 	if not has_ammo():
 		return
 	# Play attack animation
-
-
 	if animation_player:
 		animation_player.play("ranged_attack")
 	
@@ -762,13 +778,12 @@ func perform_wall_build() -> void:
 	
 	get_parent().add_child(projectile)
 
-		# Start attack state
+	# Start attack state
 	attacking = true
 	ranged_cooldown_timer = ranged_cooldown
 	
 	# Emit attack signal
 	emit_signal("on_attack", "ranged")
-	
 	
 	# Play sound
 	if audio_player and attack_ranged_sound:
@@ -778,7 +793,6 @@ func perform_wall_build() -> void:
 	await animation_player.animation_finished
 	attacking = false
 	emit_signal("on_attack", "wall")
-
 
 func _on_wall_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
@@ -896,7 +910,7 @@ func update_activation(shape: String) -> void:
 	switch_projectile(shape)
 	
 	# Handle grappling hook point visibility
-	if shape == "blueprint" and Global.has_blueprint_item:
+	if shape == "blueprint" and Global.has_grappling_hook:
 		# Find the grappling hook point in the scene
 		var grappling_hook_point = get_tree().get_first_node_in_group("grappling_hook_point")
 		print("grappling hook point: ", grappling_hook_point.name)
@@ -911,6 +925,13 @@ func update_activation(shape: String) -> void:
 		var grappling_hook_point = get_tree().get_first_node_in_group("grappling_hook_point")
 		if grappling_hook_point:
 			grappling_hook_point.visible = false
+
+		# Handle grappling hook point visibility
+	if shape == "pickaxe" and Global.has_pick_axe:
+		# do something with pickaxe
+		print("YOU ARE DOING SOMETHING WITH PICKAXE")
+		pass
+		
 
 func switch_projectile(shape: String) -> void:
 	active_projectile_shape = shape
@@ -953,46 +974,26 @@ func handle_pickups(delta: float) -> void:
 			pickup_parent.get_node("RBCollShape2D").set_deferred("disabled",false)
 		
 
-func collect_pickup(pickup) -> void:
-	# Identify pickup type
-	var pickup_parent: RigidBody2D = pickup.get_parent()
-	
-	var pickup_type = pickup_parent.get_child(0).name.replace("Shape","")
-	
-	# Add to player inventory
-	match pickup_type:
-		"circle":
-			circle_pieces += 1
-			emit_signal("on_pickup", pickup_type, circle_pieces)
-		"triangle":
-			triangle_pieces += 1
-			emit_signal("on_pickup", pickup_type, triangle_pieces)
-		"square":
-			square_pieces += 1
-			emit_signal("on_pickup", pickup_type, square_pieces)
-		"blueprint":
-			var blueprint_name = pickup_parent.get_meta("blueprint_name", "unknown")
-			if not collected_blueprints.has(blueprint_name):
-				collected_blueprints.append(blueprint_name)
-				emit_signal("blueprint_collected", blueprint_name)
-	
-	# Play collection effect
-	if pickup_particles_scene:
-		var particles = pickup_particles_scene.instantiate()
-		pickup_parent.add_child(particles)
-		particles.global_position = pickup.global_position
-		particles.emitting = true
-	
-	# Play sound
-	if audio_player and pickup_sound:
-		audio_player.stream = pickup_sound
-		audio_player.play()
-	
-	# Remove pickup
-	pickup_parent.queue_free()
-	
-	# Check if ranged attack should be unlocked
-	check_ranged_unlock()
+func collect_pickup(pickup: Node2D) -> void:
+	if pickup.is_in_group("pickup_group"):
+		var pickup_parent = pickup.get_parent()
+		if pickup_parent:
+			# Add to appropriate shape count
+			if pickup_parent.is_in_group("triangle_pickup"):
+				triangle_pieces += 1
+				Global.emit_signal("shape_collected", "triangle", triangle_pieces)
+			elif pickup_parent.is_in_group("square_pickup"):
+				square_pieces += 1
+				Global.emit_signal("shape_collected", "square", square_pieces)
+			elif pickup_parent.is_in_group("circle_pickup"):
+				circle_pieces += 1
+				Global.emit_signal("shape_collected", "circle", circle_pieces)
+			
+			# Update activation states
+			update_activation("all")
+			
+			# Remove pickup
+			pickup_parent.queue_free()
 
 func check_ranged_unlock() -> void:
 	# Example condition: unlock ranged attack when player has at least 5 of each piece
@@ -1048,12 +1049,12 @@ func apply_juice(delta: float) -> void:
 			#trail.set_point_color(i, color)
 			trail.default_color = color
 
-func apply_squash() -> void:
-	current_squash_stretch = squash_factor
+func apply_squash(factor: float) -> void:
+	current_squash_stretch = factor
 	squash_stretch_timer = 0.3
 
-func apply_stretch() -> void:
-	current_squash_stretch = -stretch_factor
+func apply_stretch(factor: float) -> void:
+	current_squash_stretch = -factor
 	squash_stretch_timer = 0.3
 
 func update_animation() -> void:
@@ -1372,6 +1373,7 @@ func handle_checkpoint(checkpoint: Node2D) -> void:
 		end_insight()
 
 	if mcguffin and door and mcguffin.visible:
+		Global.has_completed_checkpoint = true
 		# Store original camera position and zoom
 		var original_camera_pos = camera.global_position
 		var original_camera_zoom = camera.zoom
@@ -1403,6 +1405,7 @@ func handle_checkpoint(checkpoint: Node2D) -> void:
 	
 	# Re-enable player movement and actions
 	is_disabled = false
+	attacking = false
 
 func collect_blueprint(blueprint: Blueprint) -> void:
 	if not collected_blueprints.has(blueprint):
@@ -1413,15 +1416,6 @@ func start_blueprint_building(blueprint: Blueprint) -> void:
 	if is_building or current_blueprint != null:
 		return
 		
-	# Check if player has a square to spend
-	if shape_counts["square"] <= 0:
-		emit_signal("blueprint_building_failed", blueprint)
-		return
-		
-	# Spend a square
-	shape_counts["square"] -= 1
-	emit_signal("shape_count_changed", "square", shape_counts["square"])
-	
 	# Start building
 	current_blueprint = blueprint
 	is_building = true
@@ -1600,6 +1594,11 @@ func change_state(new_state: PlayerState) -> void:
 			# Initialize building state
 			velocity = Vector2.ZERO
 
+func pickaxe_wall() -> void:
+	var pickaxeables = get_tree().get_nodes_in_group("pickaxe_target")
+	for pickaxeable in pickaxeables: 
+		pickaxeable.queue_free()
+
 func perform_ranged_attack() -> void:
 	print("perform_ranged_attack called")
 	if not ranged_unlocked:
@@ -1607,15 +1606,22 @@ func perform_ranged_attack() -> void:
 		return
 	if attacking:
 		print("Already attacking")
+		attacking = false
 		return
 	# Check ammo before proceeding
 	if not has_ammo():
 		print("No ammo available")
 		return
 
+	if active_projectile_shape == "pickaxe" and Global.has_pick_axe:
+		#do something with pickaxe
+		print("!!!!YOU ARE DOING SOMETHING WITH PICKAXE!!!!!!")
+		pickaxe_wall()
+		
+
 	# Handle blueprint grappling hook
-	print("Checking blueprint conditions - active shape: ", active_projectile_shape, " has blueprint: ", Global.has_blueprint_item)
-	if active_projectile_shape == "blueprint" and Global.has_blueprint_item:
+	print("Checking blueprint conditions - active shape: ", active_projectile_shape, " has blueprint: ", Global.has_grappling_hook)
+	if active_projectile_shape == "blueprint" and Global.has_grappling_hook:
 		print("Blueprint shape active and has blueprint item")
 		var grappling_hook_point = get_tree().get_first_node_in_group("grappling_hook_point")
 		print("Found grappling hook point: ", grappling_hook_point)
@@ -1639,7 +1645,9 @@ func perform_ranged_attack() -> void:
 		else:
 			print("Grappling hook point not found or not visible")
 	else:
-		print("Blueprint conditions not met - active shape: ", active_projectile_shape, " has blueprint: ", Global.has_blueprint_item)
+		print("Blueprint conditions not met - active shape: ", active_projectile_shape, " has blueprint: ", Global.has_grappling_hook)
+
+
 
 	# Start attack state
 	attacking = true
@@ -1663,7 +1671,7 @@ func perform_ranged_attack() -> void:
 			print("Found insight item: ", item.name)
 			# Check both the item and its parent for visibility
 			var parent = item.get_parent()
-			if item.visible or (parent and parent.visible):
+			if item.visible:
 				var item_shape = item.get_meta("shape_type", "")
 				print("Item shape type: ", item_shape)
 				print("Looking for: ", active_projectile_shape)
@@ -1766,12 +1774,13 @@ func end_grappling() -> void:
 		# Reset velocity and enable movement
 		velocity = Vector2.ZERO
 		is_disabled = false
+		attacking = false
 	else:
 		print("No summit point found")
 		# Just reset state if no summit point
 		velocity = Vector2.ZERO
 		is_disabled = false
-	
+		attacking = false
 	print("Grapple state reset")
 
 # Add this new helper function

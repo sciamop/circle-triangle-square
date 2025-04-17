@@ -22,6 +22,7 @@ class_name Blueprint
 #@onready var collision_shape: CollisionShape2D = $CollisionShape2D
 #@onready var sprite: Sprite2D = $Sprite2D
 @onready var building_panel: ColorRect = $BuildingPanel
+@onready var building_panel_title: Label = $BuildingPanel/title
 @onready var shape_counts: VBoxContainer = $BuildingPanel/ShapeCounts
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var player: CharacterBody2D = $"/root/Game/Player"
@@ -115,7 +116,12 @@ func start_building() -> void:
 	building_panel.global_position.x = building_panel.global_position.x + 1000
 	panel_grow_tween = create_tween()
 	panel_grow_tween.tween_property(building_panel,"global_position",building_panel_pos ,0.5)
-
+	building_panel_title.text = blueprint_name.replace("item_blueprint_","")
+	
+	blueprint_item = building_panel.get_node_or_null(blueprint_name)
+	if (blueprint_item):
+		blueprint_item.show()
+		
 	is_building = true
 	_update_shape_count_labels()
 	if current_player.has_method("start_blueprint_building"):
@@ -158,7 +164,7 @@ func place_shape(shape_type: String) -> void:
 		emit_signal("shape_spent_on_blueprint",shape_type)
 		# player.
 		# Find all shapes of this type in the blueprint item
-		blueprint_item = building_panel.get_node_or_null("item_blueprint_grapplinghook")
+		
 		
 		if blueprint_item:
 			# Find the next unfilled shape of this type
@@ -246,8 +252,14 @@ func move_blueprint_item_into_inventory() -> void:
 	blueprint_item_inventory_tween.tween_callback(blueprint_move_complete)
 	
 func blueprint_move_complete() -> void:
-	emit_signal("blueprint_item_added_to_inventory","grappling hook")
-	Global.has_blueprint_item = true
+	
+	if (blueprint_name == "item_blueprint_grapplinghook"):
+		emit_signal("blueprint_item_added_to_inventory","grappling hook")
+		Global.has_grappling_hook = true
+	elif (blueprint_name == "item_blueprint_pickaxe"):
+	
+		emit_signal("blueprint_item_added_to_inventory","pickaxe")
+		Global.has_pick_axe = true
 
 func get_required_shapes() -> Dictionary:
 	return required_shapes.duplicate()
@@ -283,3 +295,32 @@ func _input(event: InputEvent) -> void:
 			if placed_shapes["square"] < required_shapes["square"]:
 				place_shape("square")
 				shape_cooldown_timer.start() 
+
+func _on_blueprint_activated(blueprint: Node2D) -> void:
+	if not blueprint.is_in_group("blueprint"):
+		return
+		
+	# Check if we have enough shapes
+	var required_shapes = blueprint.get_meta("required_shapes", {})
+	var has_enough_shapes = true
+	
+	for shape_type in required_shapes:
+		if Global.shapes[shape_type] < required_shapes[shape_type]:
+			has_enough_shapes = false
+			break
+	
+	if not has_enough_shapes:
+		# Not enough shapes, show error message
+		Global.emit_signal("shape_spend_failed", "Not enough shapes to activate blueprint")
+		return
+	
+	# Spend the shapes
+	for shape_type in required_shapes:
+		Global.shapes[shape_type] -= required_shapes[shape_type]
+	
+	# Activate the blueprint
+	blueprint.set_meta("is_activated", true)
+	blueprint.emit_signal("blueprint_activated")
+	
+	# Update UI
+	Global.emit_signal("shapes_changed", Global.shapes) 

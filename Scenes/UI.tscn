@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://ch4o0guerbahn"]
+[gd_scene load_steps=31 format=3 uid="uid://ch4o0guerbahn"]
 
 [ext_resource type="Script" uid="uid://dm4ey0iltuo33" path="res://Scripts/UI.gd" id="1_w371h"]
 [ext_resource type="LabelSettings" uid="uid://pjukfu4qrdup" path="res://Resources/blueprint_label_settings.tres" id="2_qwshj"]
@@ -11,7 +11,10 @@
 [ext_resource type="VideoStream" uid="uid://6c5q5wn6kuod" path="res://Videos/triangle.ogv" id="5_mg6lk"]
 [ext_resource type="Script" uid="uid://bfkruun4ft5qx" path="res://Scenes/life_indicator.gd" id="5_qwshj"]
 [ext_resource type="VideoStream" uid="uid://dn2ela5p5nfaw" path="res://Videos/square.ogv" id="8_b1goy"]
-[ext_resource type="VideoStream" uid="uid://sm50vjaxanyf" path="res://Videos/enemies.ogv" id="8_vqx31"]
+[ext_resource type="VideoStream" uid="uid://8vavewke27dp" path="res://Videos/enemies.ogv" id="8_vqx31"]
+[ext_resource type="VideoStream" path="res://Videos/blueprint.ogv" id="10_wi7yl"]
+[ext_resource type="Texture2D" uid="uid://1sd8xxnplkq0" path="res://Sprites/cat.png" id="11_5q4fb"]
+[ext_resource type="PackedScene" uid="uid://cj8cr7gmqb0di" path="res://Scenes/shape_inventory.tscn" id="13_n04ve"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_xjg7p"]
 font = ExtResource("3_wunin")
@@ -270,7 +273,7 @@ tracks/18/keys = {
 tracks/19/type = "value"
 tracks/19/imported = false
 tracks/19/enabled = true
-tracks/19/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/blueprintVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook:position")
+tracks/19/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook:position")
 tracks/19/interp = 1
 tracks/19/loop_wrap = true
 tracks/19/keys = {
@@ -282,7 +285,7 @@ tracks/19/keys = {
 tracks/20/type = "value"
 tracks/20/imported = false
 tracks/20/enabled = true
-tracks/20/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/blueprintVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook:rotation")
+tracks/20/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook:rotation")
 tracks/20/interp = 1
 tracks/20/loop_wrap = true
 tracks/20/keys = {
@@ -294,7 +297,7 @@ tracks/20/keys = {
 tracks/21/type = "value"
 tracks/21/imported = false
 tracks/21/enabled = true
-tracks/21/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/blueprintVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook:scale")
+tracks/21/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook:scale")
 tracks/21/interp = 1
 tracks/21/loop_wrap = true
 tracks/21/keys = {
@@ -311,7 +314,7 @@ step = 0.125
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/blueprintVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook:position")
+tracks/0/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -323,7 +326,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/blueprintVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook:rotation")
+tracks/1/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -335,7 +338,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/blueprintVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook:scale")
+tracks/2/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook:scale")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -1601,7 +1604,7 @@ scale = Vector2(0.197185, 0.197185)
 layout_mode = 2
 offset_right = 852.0
 offset_bottom = 480.0
-stream = ExtResource("8_vqx31")
+stream = ExtResource("10_wi7yl")
 volume_db = -80.0
 loop = true
 
@@ -1712,7 +1715,17 @@ label_settings = ExtResource("2_qwshj")
 vertical_alignment = 1
 autowrap_mode = 2
 
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/CAT_OOB"]
+layout_mode = 0
+offset_left = 15.463
+offset_top = 62.6004
+offset_right = 662.463
+offset_bottom = 550.6
+scale = Vector2(0.221948, 0.221948)
+texture = ExtResource("11_5q4fb")
+
 [node name="VideoContainer" type="ColorRect" parent="CanvasLayer/Control/CAT_OOB"]
+visible = false
 layout_mode = 0
 offset_left = 10.3087
 offset_top = 59.9738
@@ -1855,91 +1868,168 @@ text = "0"
 label_settings = SubResource("LabelSettings_48q88")
 horizontal_alignment = 1
 
-[node name="blueprintVBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/BoxContainer/HBoxContainer"]
+[node name="grapplingHookVBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/BoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 
-[node name="squareCenterContainer" type="CenterContainer" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/blueprintVBoxContainer"]
+[node name="squareCenterContainer" type="CenterContainer" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 
-[node name="item_blueprint_grapplinghook" type="Area2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/blueprintVBoxContainer/squareCenterContainer"]
+[node name="item_blueprint_grapplinghook" type="Area2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer/squareCenterContainer"]
 visible = false
 position = Vector2(59, 89)
 rotation = -3.04716
 scale = Vector2(0.175, 0.175)
 
-[node name="blueprint_triangle_filled" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/blueprintVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook"]
+[node name="blueprint_triangle_filled" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook"]
 position = Vector2(256.487, 267.221)
 rotation = -0.0944374
 scale = Vector2(2.21294, 2.21294)
 color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(8, -13.9093, 24, 15.8964, -8, 15.8964)
 
-[node name="blueprint_triangle_filled2" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/blueprintVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook"]
+[node name="blueprint_triangle_filled2" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook"]
 position = Vector2(-25.5073, 293.931)
 rotation = -0.0944374
 scale = Vector2(2.21294, 2.21294)
 color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(8, -13.9093, 24, 15.8964, -8, 15.8964)
 
-[node name="blueprint_triangle_filled3" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/blueprintVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook"]
+[node name="blueprint_triangle_filled3" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook"]
 position = Vector2(164.216, 419.511)
 rotation = 3.04716
 scale = Vector2(2.21294, 2.21294)
 color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(8, -13.9093, 24, 15.8964, -8, 15.8964)
 
-[node name="blueprint_triangle_filled4" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/blueprintVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook"]
+[node name="blueprint_triangle_filled4" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook"]
 position = Vector2(282.929, 319.321)
 rotation = 1.46065
 scale = Vector2(1.99165, 1.99165)
 color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(-7.64301, -14.2607, 23.6431, 18.2348, -8.14565, 17.7354)
 
-[node name="blueprint_triangle_filled5" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/blueprintVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook"]
+[node name="blueprint_triangle_filled5" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook"]
 position = Vector2(14.6274, 364.805)
 rotation = 3.04716
 scale = Vector2(1.99165, 1.99165)
 color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(-7.64301, -14.2607, 23.6431, 18.2348, -8.14565, 17.7354)
 
-[node name="blueprint_circle_filled" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/blueprintVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook"]
+[node name="blueprint_circle_filled" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook"]
 position = Vector2(139.542, 346.76)
 rotation = 3.04716
 scale = Vector2(0.331941, 0.331941)
 color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(-100, 2, -86, 50, -50, 85, 0, 99, 50, 84, 86, 51, 100, 1, 88, -48, 51, -83, -1, -97, -50, -83, -86, -48)
 
-[node name="blueprint_square_filled" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/blueprintVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook"]
+[node name="blueprint_square_filled" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook"]
 position = Vector2(133.194, 279.746)
 rotation = 3.04716
 scale = Vector2(1.93632, 1.93632)
 color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(-16, 16, 16, 16, 16, -16, -16, -16)
 
-[node name="blueprint_square_filled2" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/blueprintVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook"]
+[node name="blueprint_square_filled2" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook"]
 position = Vector2(210.327, 343.11)
 rotation = 3.04716
 scale = Vector2(1.93632, 1.93632)
 color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(-16, 16, 16, 16, 16, -16, -16, -16)
 
-[node name="blueprint_square_filled4" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/blueprintVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook"]
+[node name="blueprint_square_filled4" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook"]
 position = Vector2(126.561, 209.704)
 rotation = 3.04716
 scale = Vector2(1.93632, 1.93632)
 color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(-16, 16, 16, 16, 16, -16, -16, -16)
 
-[node name="blueprint_square_filled3" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/blueprintVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook"]
+[node name="blueprint_square_filled3" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook"]
 position = Vector2(69.3296, 356.466)
 rotation = 3.04716
 scale = Vector2(1.93632, 1.93632)
 color = Color(0, 0, 0, 1)
 polygon = PackedVector2Array(-16, 16, 16, 16, 16, -16, -16, -16)
 
-[node name="blueprint_square_filled5" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/blueprintVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook"]
+[node name="blueprint_square_filled5" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook"]
+position = Vector2(119.925, 139.662)
+rotation = 3.04716
+scale = Vector2(1.93632, 1.93632)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-16, 16, 16, 16, 16, -16, -16, -16)
+
+[node name="pickaxeVBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/BoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+
+[node name="squareCenterContainer" type="CenterContainer" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/pickaxeVBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="item_blueprint_pickaxe" type="Area2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/pickaxeVBoxContainer/squareCenterContainer"]
+visible = false
+position = Vector2(83, 93)
+rotation = -3.04716
+scale = Vector2(0.175, 0.175)
+
+[node name="blueprint_triangle_filled" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/pickaxeVBoxContainer/squareCenterContainer/item_blueprint_pickaxe"]
+position = Vector2(289.795, 391.822)
+rotation = 1.46065
+scale = Vector2(1.99165, 1.99165)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-7.64301, -14.2607, 23.6431, 18.2348, -8.14565, 17.7354)
+
+[node name="blueprint_triangle_filled2" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/pickaxeVBoxContainer/squareCenterContainer/item_blueprint_pickaxe"]
+position = Vector2(21.4946, 437.304)
+rotation = 3.04716
+scale = Vector2(1.99165, 1.99165)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-7.64301, -14.2607, 23.6431, 18.2348, -8.14565, 17.7354)
+
+[node name="blueprint_circle_filled" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/pickaxeVBoxContainer/squareCenterContainer/item_blueprint_pickaxe"]
+position = Vector2(146.409, 419.259)
+rotation = 3.04716
+scale = Vector2(0.331941, 0.331941)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-100, 2, -86, 50, -50, 85, 0, 99, 50, 84, 86, 51, 100, 1, 88, -48, 51, -83, -1, -97, -50, -83, -86, -48)
+
+[node name="blueprint_square_filled" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/pickaxeVBoxContainer/squareCenterContainer/item_blueprint_pickaxe"]
+position = Vector2(216.907, 412.583)
+rotation = 3.04716
+scale = Vector2(1.93632, 1.93632)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-16, 16, 16, 16, 16, -16, -16, -16)
+
+[node name="blueprint_square_filled2" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/pickaxeVBoxContainer/squareCenterContainer/item_blueprint_pickaxe"]
+position = Vector2(139.774, 349.219)
+rotation = 3.04716
+scale = Vector2(1.93632, 1.93632)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-16, 16, 16, 16, 16, -16, -16, -16)
+
+[node name="blueprint_square_filled3" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/pickaxeVBoxContainer/squareCenterContainer/item_blueprint_pickaxe"]
+position = Vector2(75.9097, 425.937)
+rotation = 3.04716
+scale = Vector2(1.93632, 1.93632)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-16, 16, 16, 16, 16, -16, -16, -16)
+
+[node name="blueprint_square_filled4" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/pickaxeVBoxContainer/squareCenterContainer/item_blueprint_pickaxe"]
+position = Vector2(126.56, 209.704)
+rotation = 3.04716
+scale = Vector2(1.93632, 1.93632)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-16, 16, 16, 16, 16, -16, -16, -16)
+
+[node name="blueprint_square_filled5" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/pickaxeVBoxContainer/squareCenterContainer/item_blueprint_pickaxe"]
+position = Vector2(133.14, 279.176)
+rotation = 3.04716
+scale = Vector2(1.93632, 1.93632)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-16, 16, 16, 16, 16, -16, -16, -16)
+
+[node name="blueprint_square_filled6" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/pickaxeVBoxContainer/squareCenterContainer/item_blueprint_pickaxe"]
 position = Vector2(119.925, 139.662)
 rotation = 3.04716
 scale = Vector2(1.93632, 1.93632)
@@ -2041,3 +2131,9 @@ polygon = PackedVector2Array(-913.234, 82.3134, 730.588, 82.3134, -91.3232, -121
 libraries = {
 &"": SubResource("AnimationLibrary_48q88")
 }
+
+[node name="ShapeInventory" parent="." instance=ExtResource("13_n04ve")]
+offset_left = -800.0
+offset_top = 635.0
+offset_right = -766.48
+offset_bottom = 635.0
