@@ -1,0 +1,94 @@
+[gd_scene load_steps=4 format=3 uid="uid://82akd5rtce"]
+
+[ext_resource type="Script" uid="uid://bobj3nwhi3ksv" path="res://Scripts/special_shape.gd" id="1_v8du1"]
+[ext_resource type="Material" uid="uid://bktyivkiltmw1" path="res://Resources/blueprint_particles.tres" id="2_gkrxf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v8du1"]
+
+[node name="special_shape" type="Area2D"]
+collision_mask = 3
+script = ExtResource("1_v8du1")
+is_keyhole = null
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+process_material = ExtResource("2_gkrxf")
+
+[node name="diamond" type="Area2D" parent="."]
+visible = false
+position = Vector2(0, -15)
+scale = Vector2(1.04856, 1.04856)
+metadata/special_shape_type = "diamond"
+
+[node name="Line2D" type="Line2D" parent="diamond"]
+points = PackedVector2Array(-30.5181, 0, -0.95369, -14.3053, 29.5644, 0, 0, 40.055)
+closed = true
+width = 3.0
+default_color = Color(1, 0.192157, 1, 1)
+
+[node name="Polygon2D" type="Polygon2D" parent="diamond"]
+color = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(0, -14, 30, 0, 0, 40, -30, 0)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="diamond"]
+polygon = PackedVector2Array(-1, -14, 30, 0, 0, 40, -30, 0)
+
+[node name="rhombus" type="Area2D" parent="."]
+visible = false
+position = Vector2(11, 19)
+scale = Vector2(0.865166, 0.858678)
+skew = -0.471239
+metadata/special_shape_type = "rhombus"
+
+[node name="Line2D" type="Line2D" parent="rhombus"]
+points = PackedVector2Array(-36.5688, -49.6675, -37.5761, 1.30704, 45.645, 1.30704, 45.4965, -49.6675)
+closed = true
+width = 3.0
+default_color = Color(1, 0.282353, 1, 1)
+
+[node name="Polygon2D" type="Polygon2D" parent="rhombus"]
+color = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(46, -50, 46, -3.8147e-06, -37, 0, -37, -50)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="rhombus"]
+position = Vector2(14, 0)
+polygon = PackedVector2Array(46, -50, 46, -3.8147e-06, -37, -3.8147e-06, -37, -50)
+
+[node name="pentagon" type="Area2D" parent="."]
+visible = false
+scale = Vector2(0.699039, 0.699039)
+metadata/special_shape_type = "pentagon"
+
+[node name="Polygon2D" type="Polygon2D" parent="pentagon"]
+color = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(0, -50, 47.5, -15.5, 29.4, 40.5, -29.4, 40.5, -47.5, -15.5)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="pentagon"]
+polygon = PackedVector2Array(0, -50, 47.5, -15.5, 29.4, 40.5, -29.4, 40.5, -47.5, -15.5)
+
+[node name="Line2D" type="Line2D" parent="pentagon"]
+points = PackedVector2Array(0, -48.6382, -47.2076, -14.3053, -28.6107, 41.4855, 28.6107, 41.4855, 47.2076, -15.7359)
+width = 3.0
+default_color = Color(1, 0.184314, 1, 1)
+
+[node name="octagon" type="Area2D" parent="."]
+visible = false
+scale = Vector2(0.699039, 0.699039)
+metadata/special_shape_type = "octagon"
+
+[node name="Polygon2D" type="Polygon2D" parent="octagon"]
+color = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(35.4, -35.4, 50, 0, 35.4, 35.4, 0, 50, -35.4, 35.4, -50, 0, -35.4, -35.4, 0, -50)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="octagon"]
+polygon = PackedVector2Array(35.4, -35.4, 50, 0, 35.4, 35.4, 0, 50, -35.4, 35.4, -50, 0, -35.4, -35.4, 0, -50)
+
+[node name="Line2D" type="Line2D" parent="octagon"]
+visible = false
+points = PackedVector2Array(0, -50.0687, -35.7634, -34.3328, -50.0687, 0, -35.7634, 37.1939, 0, 51.4992, 34.3328, 35.7634, 48.6382, 0, 34.3328, -34.3328)
+closed = true
+default_color = Color(1, 0.180392, 1, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+scale = Vector2(3.96941, 3.96941)
+shape = SubResource("RectangleShape2D_v8du1")

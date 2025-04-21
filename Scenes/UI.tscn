@@ -12,7 +12,7 @@
 [ext_resource type="Script" uid="uid://bfkruun4ft5qx" path="res://Scenes/life_indicator.gd" id="5_qwshj"]
 [ext_resource type="VideoStream" uid="uid://dn2ela5p5nfaw" path="res://Videos/square.ogv" id="8_b1goy"]
 [ext_resource type="VideoStream" uid="uid://8vavewke27dp" path="res://Videos/enemies.ogv" id="8_vqx31"]
-[ext_resource type="VideoStream" path="res://Videos/blueprint.ogv" id="10_wi7yl"]
+[ext_resource type="VideoStream" uid="uid://cv5exka1gdb3d" path="res://Videos/blueprint.ogv" id="10_wi7yl"]
 [ext_resource type="Texture2D" uid="uid://1sd8xxnplkq0" path="res://Sprites/cat.png" id="11_5q4fb"]
 [ext_resource type="PackedScene" uid="uid://cj8cr7gmqb0di" path="res://Scenes/shape_inventory.tscn" id="13_n04ve"]
 

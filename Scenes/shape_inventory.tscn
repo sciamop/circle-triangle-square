@@ -1,0 +1,79 @@
+[gd_scene load_steps=5 format=3 uid="uid://cj8cr7gmqb0di"]
+
+[ext_resource type="Script" uid="uid://dy074xi6dqx7p" path="res://Scripts/shape_inventory.gd" id="1_8v0po"]
+
+[sub_resource type="Animation" id="Animation_2y5si"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HBoxContainer:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_t7h7y"]
+resource_name = "all_shapes_collected"
+length = 0.75
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HBoxContainer:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.75),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.125, 1.125)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2y5si"]
+_data = {
+&"RESET": SubResource("Animation_2y5si"),
+&"all_shapes_collected": SubResource("Animation_t7h7y")
+}
+
+[node name="ShapeInventory" type="Control"]
+custom_minimum_size = Vector2(33.52, 0)
+layout_mode = 3
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1440.0
+offset_right = -1406.48
+offset_bottom = -688.0
+grow_horizontal = 0
+grow_vertical = 2
+script = ExtResource("1_8v0po")
+
+[node name="Line2D" type="Line2D" parent="."]
+visible = false
+position = Vector2(-24, -24)
+points = PackedVector2Array(3, 0, 3, 72)
+width = 2.0
+default_color = Color(0, 0, 0, 1)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(32, 32)
+layout_direction = 3
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -32.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_2y5si")
+}

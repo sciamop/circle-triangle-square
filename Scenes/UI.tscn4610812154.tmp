@@ -1,0 +1,2125 @@
+[gd_scene load_steps=29 format=3 uid="uid://ch4o0guerbahn"]
+
+[ext_resource type="Script" uid="uid://dm4ey0iltuo33" path="res://Scripts/UI.gd" id="1_w371h"]
+[ext_resource type="LabelSettings" uid="uid://pjukfu4qrdup" path="res://Resources/blueprint_label_settings.tres" id="2_qwshj"]
+[ext_resource type="VideoStream" uid="uid://bfastants1eq8" path="res://Videos/shapes.ogv" id="3_48q88"]
+[ext_resource type="FontFile" uid="uid://dbb1aunswvl1g" path="res://Fonts/circle-triangle-square-Regular.otf" id="3_dewlx"]
+[ext_resource type="FontFile" uid="uid://653p86rf1v0e" path="res://Fonts/Aileron-Heavy.otf" id="3_wunin"]
+[ext_resource type="Script" uid="uid://dnyl3fayamem0" path="res://Scripts/pickup_tracker.gd" id="4_hfhsn"]
+[ext_resource type="LabelSettings" uid="uid://d270b5vas2gjr" path="res://Resources/blueprint_label_next_settings.tres" id="4_j04uc"]
+[ext_resource type="VideoStream" uid="uid://v623tjaihuof" path="res://Videos/circle.ogv" id="4_xjg7p"]
+[ext_resource type="VideoStream" uid="uid://6c5q5wn6kuod" path="res://Videos/triangle.ogv" id="5_mg6lk"]
+[ext_resource type="Script" uid="uid://bfkruun4ft5qx" path="res://Scenes/life_indicator.gd" id="5_qwshj"]
+[ext_resource type="VideoStream" uid="uid://dn2ela5p5nfaw" path="res://Videos/square.ogv" id="8_b1goy"]
+[ext_resource type="VideoStream" uid="uid://8vavewke27dp" path="res://Videos/enemies.ogv" id="8_vqx31"]
+[ext_resource type="PackedScene" uid="uid://cj8cr7gmqb0di" path="res://Scenes/shape_inventory.tscn" id="13_n04ve"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_xjg7p"]
+font = ExtResource("3_wunin")
+font_size = 88
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_hfhsn"]
+font = ExtResource("3_dewlx")
+font_size = 36
+font_color = Color(0.0214346, 0.0214346, 0.0214346, 1)
+shadow_color = Color(1, 1, 1, 0.835294)
+
+[sub_resource type="LabelSettings" id="LabelSettings_qwshj"]
+font = ExtResource("3_dewlx")
+font_size = 36
+font_color = Color(0, 0, 0, 1)
+shadow_color = Color(1, 1, 1, 0.733333)
+
+[sub_resource type="LabelSettings" id="LabelSettings_48q88"]
+font = ExtResource("3_dewlx")
+font_size = 36
+font_color = Color(0, 0, 0, 1)
+outline_color = Color(0.0383972, 0.0383972, 0.0383972, 1)
+shadow_color = Color(1, 1, 1, 0.788235)
+
+[sub_resource type="Animation" id="Animation_qwshj"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer/circleCenterContainer/circleIcon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(25, 24)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer/circleCenterContainer/circleIcon:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer/circleCenterContainer/circleIcon:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1.14861, 1.08698)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/triangleVBoxContainer/CenterContainer/triangleIcon:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.0154851, 0.292801)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/squareVBoxContainer/squareCenterContainer/squareIcon:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.359038, 1.25978)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer0/lifeCenterContainer/circleIcon:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(24, 37)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer0/lifeCenterContainer/circleIcon:rotation")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer0/lifeCenterContainer/triangleIcon:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(25, 19)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer0/lifeCenterContainer/triangleIcon:rotation")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer3/lifeCenterContainer/circleIcon:position")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(24, 37)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer3/lifeCenterContainer/circleIcon:rotation")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer3/lifeCenterContainer/triangleIcon:position")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(25, 19)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer3/lifeCenterContainer/triangleIcon:rotation")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer3/lifeCenterContainer/triangleIcon:scale")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.0109501, 0.206528)]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer3/lifeCenterContainer/circleIcon:scale")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.812225, 0.766703)]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/triangleVBoxContainer/CenterContainer/triangleIcon:position")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(25, 20)]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/triangleVBoxContainer/CenterContainer/triangleIcon:rotation")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/squareVBoxContainer/squareCenterContainer/squareIcon:position")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(25, 13)]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/squareVBoxContainer/squareCenterContainer/squareIcon:rotation")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook:position")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(59, 89)]
+}
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook:rotation")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-3.04716]
+}
+tracks/21/type = "value"
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook:scale")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.175, 0.175)]
+}
+
+[sub_resource type="Animation" id="Animation_n04ve"]
+resource_name = "add_blueprint_item"
+length = 0.625
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.375, 0.5, 0.625),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(51, 58), Vector2(59, 89), Vector2(51, 58), Vector2(59, 89), Vector2(61, 92)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.375, 0.5, 0.625),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [-3.04716, -3.04716, -3.04716, -3.04716, -3.04716]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.375, 0.5, 0.625),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.06, 0.06), Vector2(0.175, 0.175), Vector2(0.06, 0.06), Vector2(0.175, 0.175), Vector2(0.19, 0.19)]
+}
+
+[sub_resource type="Animation" id="Animation_j04uc"]
+resource_name = "circle_deny"
+length = 0.5
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer/circleCenterContainer/circleIcon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(6, 24), Vector2(41, 24), Vector2(6, 24), Vector2(41, 24), Vector2(6, 24)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer/circleCenterContainer/circleIcon:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 0.0, 0.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_hfhsn"]
+resource_name = "circle_update"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer/circleCenterContainer/circleIcon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(25, 24)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer/circleCenterContainer/circleIcon:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer/circleCenterContainer/circleIcon:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = false
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1.14861, 1.08698), Vector2(1.784, 1.688), Vector2(1.14861, 1.08698)]
+}
+
+[sub_resource type="Animation" id="Animation_b1goy"]
+resource_name = "square_deny"
+length = 0.5
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/squareVBoxContainer/squareCenterContainer/squareIcon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 13), Vector2(49, 13), Vector2(1, 13), Vector2(49, 13), Vector2(25, 13)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/squareVBoxContainer/squareCenterContainer/squareIcon:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 0.0, 0.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_xjg7p"]
+resource_name = "square_update"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/squareVBoxContainer/squareCenterContainer/squareIcon:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.359038, 1.25978), Vector2(0.479, 1.681), Vector2(0.359038, 1.25978)]
+}
+
+[sub_resource type="Animation" id="Animation_mg6lk"]
+resource_name = "take_damage_0"
+length = 0.25
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer0/lifeCenterContainer/circleIcon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(21, 35), Vector2(25, 41), Vector2(20, 37)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer0/lifeCenterContainer/circleIcon:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer0/lifeCenterContainer/triangleIcon:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(25, 19), Vector2(25, 7), Vector2(33, 13)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer0/lifeCenterContainer/triangleIcon:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [-0.191215, 0.0, 0.350774]
+}
+
+[sub_resource type="Animation" id="Animation_wunin"]
+resource_name = "take_damage_3"
+length = 0.5
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer3/lifeCenterContainer/circleIcon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.375, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(17, 34), Vector2(14, 39), Vector2(6, 32), Vector2(6, 32)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer3/lifeCenterContainer/circleIcon:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.375, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 0.0, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer3/lifeCenterContainer/triangleIcon:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.375, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(30, 17), Vector2(21, 12), Vector2(21, 12), Vector2(21, 12)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer3/lifeCenterContainer/triangleIcon:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.375, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.157356, 0.435694, 0.804172, 0.804172]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer3/lifeCenterContainer/triangleIcon:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.125, 0.375, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.0290982, 0.548817), Vector2(0.0109501, 0.206528), Vector2(0.0109501, 0.206528)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer3/lifeCenterContainer/circleIcon:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.125, 0.375, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(3.43847, 3.24575), Vector2(0.812225, 0.766703), Vector2(0.812225, 0.766703)]
+}
+
+[sub_resource type="Animation" id="Animation_vqx31"]
+resource_name = "triangle_deny"
+length = 0.5
+step = 0.125
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/triangleVBoxContainer/CenterContainer/triangleIcon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(10, 20), Vector2(41, 20), Vector2(11, 20), Vector2(44, 20), Vector2(9, 20)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/triangleVBoxContainer/CenterContainer/triangleIcon:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 0.0, 0.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_48q88"]
+resource_name = "triangle_update"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/Control/BoxContainer/HBoxContainer/triangleVBoxContainer/CenterContainer/triangleIcon:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.0154851, 0.292801), Vector2(0.02, 0.391), Vector2(0.0154851, 0.292801)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_48q88"]
+_data = {
+&"RESET": SubResource("Animation_qwshj"),
+&"add_blueprint_item": SubResource("Animation_n04ve"),
+&"circle_deny": SubResource("Animation_j04uc"),
+&"circle_update": SubResource("Animation_hfhsn"),
+&"square_deny": SubResource("Animation_b1goy"),
+&"square_update": SubResource("Animation_xjg7p"),
+&"take_damage_0": SubResource("Animation_mg6lk"),
+&"take_damage_3": SubResource("Animation_wunin"),
+&"triangle_deny": SubResource("Animation_vqx31"),
+&"triangle_update": SubResource("Animation_48q88")
+}
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_w371h")
+metadata/_edit_horizontal_guides_ = [626.0, 600.0]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="OOB" type="ColorRect" parent="CanvasLayer/Control" groups=["OOB"]]
+visible = false
+layout_mode = 0
+offset_left = 339.0
+offset_top = 81.0
+offset_right = 737.0
+offset_bottom = 283.0
+scale = Vector2(2.13412, 2.28433)
+color = Color(1, 1, 1, 0.937255)
+
+[node name="Instructions" type="Label" parent="CanvasLayer/Control/OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -190.566
+offset_top = -38.3996
+offset_right = 594.434
+offset_bottom = 241.6
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.375, 0.375)
+text = "[SPACE]             JUMP
+[CONTROL]      MELEE ATTACK
+[1]                      SELECT CIRCLE - ACTIVATES INSIGHT
+[2]                      SELECT TRIANGLE - FIRES PROJECTILE
+[3]                      SELECT SQUARE - SPAWN SHIELD
+[B]                      ACTIVATE SHAPE "
+label_settings = ExtResource("2_qwshj")
+
+[node name="blueprint" type="Label" parent="CanvasLayer/Control/OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -192.44
+offset_top = -88.3048
+offset_right = 177.56
+offset_bottom = -43.3048
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.375, 0.375)
+text = "WELCOME"
+label_settings = ExtResource("2_qwshj")
+
+[node name="grappling hook" type="Label" parent="CanvasLayer/Control/OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -194.314
+offset_top = -79.1117
+offset_right = 518.686
+offset_bottom = 75.8883
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.375, 0.375)
+text = "CONTROLS"
+label_settings = SubResource("LabelSettings_xjg7p")
+
+[node name="CIR" type="Area2D" parent="CanvasLayer/Control/OOB"]
+position = Vector2(30.1541, 137.884)
+scale = Vector2(0.0569521, 0.0569521)
+collision_mask = 3
+
+[node name="SQ" type="Line2D" parent="CanvasLayer/Control/OOB/CIR"]
+position = Vector2(111.111, 27.5981)
+points = PackedVector2Array(-83, -80, 77, -80, 76, 66, -83, 66)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="TR" type="Area2D" parent="CanvasLayer/Control/OOB"]
+position = Vector2(40.1543, 118.819)
+scale = Vector2(0.0135777, 0.0135777)
+
+[node name="TRI" type="Line2D" parent="CanvasLayer/Control/OOB/TR"]
+position = Vector2(-291.288, 231.52)
+scale = Vector2(4.12913, 4.12913)
+points = PackedVector2Array(1, -82, -83, 59, 88, 59)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+joint_mode = 1
+
+[node name="SQU" type="Area2D" parent="CanvasLayer/Control/OOB"]
+position = Vector2(35.5605, 106.63)
+scale = Vector2(0.0135777, 0.0135777)
+collision_mask = 3
+
+[node name="SQ" type="Line2D" parent="CanvasLayer/Control/OOB/SQU"]
+position = Vector2(116.513, -57.8791)
+scale = Vector2(3.26719, 3.26719)
+points = PackedVector2Array(-82, -47, -48, -80, 0, -93, 48, -80, 83, -46, 96, 1, 83, 48, 48, 81, 0, 94, -48, 81, -83, 48, -96, 0)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="Instructions3" type="Label" parent="CanvasLayer/Control/OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 44.0
+offset_top = 79.0
+offset_right = 433.0
+offset_bottom = 119.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.375, 0.375)
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 8
+text = "PRESS [ENTER] KEY TO START"
+label_settings = ExtResource("4_j04uc")
+horizontal_alignment = 2
+autowrap_mode = 1
+
+[node name="DESIGNINTENT" type="ColorRect" parent="CanvasLayer/Control" groups=["OOB"]]
+visible = false
+layout_mode = 0
+offset_left = 339.0
+offset_top = 81.0
+offset_right = 737.0
+offset_bottom = 283.0
+scale = Vector2(2.13412, 2.28433)
+color = Color(1, 1, 1, 0.937255)
+
+[node name="Instructions" type="Label" parent="CanvasLayer/Control/DESIGNINTENT"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -192.0
+offset_top = -37.0
+offset_right = 1075.0
+offset_bottom = 421.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.3, 0.3)
+text = " O /\\ [ ] (“circle triangle square”) explores the concept of ‘building under pressure’.  The player is tasked with reuniting (capturing?) a cat that is out-of-reach at the beginning of the level. In this geometric world, the player can harvest shapes from enemies that will allow them to do two things: build the environment and build items. These builds will help the player to overcome obstacles (ie a too-high platform or a hitherto undefeatable enemy) to gain access to the cat. What is currently available in the demo is just the core mechanics of building environment and building an item. The next step is to add the “under pressure” (and puzzle solving) bits which will be expressed in the level design. Building, puzzle-solving, pressure, discovery: this comprises the core gameplay loop of O /\\ [ ]"
+label_settings = ExtResource("2_qwshj")
+autowrap_mode = 2
+
+[node name="Instructions2" type="Label" parent="CanvasLayer/Control/DESIGNINTENT"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = 80.0
+offset_right = 482.0
+offset_bottom = 116.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.375, 0.375)
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 8
+text = "PRESS [ENTER] KEY FOR CONTROLS"
+label_settings = ExtResource("4_j04uc")
+horizontal_alignment = 2
+autowrap_mode = 1
+
+[node name="grappling hook" type="Label" parent="CanvasLayer/Control/DESIGNINTENT"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -194.5
+offset_top = -78.5
+offset_right = 485.5
+offset_bottom = 28.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.375, 0.375)
+text = "DESIGN INTENT"
+label_settings = SubResource("LabelSettings_xjg7p")
+
+[node name="CIR" type="Area2D" parent="CanvasLayer/Control/DESIGNINTENT"]
+position = Vector2(39.0576, 16.623)
+scale = Vector2(0.0569521, 0.0569521)
+collision_mask = 3
+
+[node name="SQ" type="Line2D" parent="CanvasLayer/Control/DESIGNINTENT/CIR"]
+position = Vector2(111.111, 27.5981)
+points = PackedVector2Array(-83, -80, 77, -80, 76, 66, -83, 66)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="TR" type="Area2D" parent="CanvasLayer/Control/DESIGNINTENT"]
+position = Vector2(30.3135, 15.0696)
+scale = Vector2(0.0135777, 0.0135777)
+
+[node name="TRI" type="Line2D" parent="CanvasLayer/Control/DESIGNINTENT/TR"]
+position = Vector2(-291.288, 231.52)
+scale = Vector2(4.12913, 4.12913)
+points = PackedVector2Array(1, -82, -83, 59, 88, 59)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+joint_mode = 1
+
+[node name="TR2" type="Area2D" parent="CanvasLayer/Control/DESIGNINTENT"]
+position = Vector2(392.384, 192.117)
+rotation = 1.56978
+scale = Vector2(0.0135777, 0.0135777)
+
+[node name="TRI" type="Line2D" parent="CanvasLayer/Control/DESIGNINTENT/TR2"]
+position = Vector2(-291.499, 438.582)
+scale = Vector2(4.12913, 4.12913)
+points = PackedVector2Array(1, -82, -83, 59, 88, 59)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+joint_mode = 1
+
+[node name="SQU" type="Area2D" parent="CanvasLayer/Control/DESIGNINTENT"]
+position = Vector2(9.78613, 19.0776)
+scale = Vector2(0.0135777, 0.0135777)
+collision_mask = 3
+
+[node name="SQ" type="Line2D" parent="CanvasLayer/Control/DESIGNINTENT/SQU"]
+position = Vector2(116.513, -57.8791)
+scale = Vector2(3.26719, 3.26719)
+points = PackedVector2Array(-82, -47, -48, -80, 0, -93, 48, -80, 83, -46, 96, 1, 83, 48, 48, 81, 0, 94, -48, 81, -83, 48, -96, 0)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="SHAPES_OOB" type="ColorRect" parent="CanvasLayer/Control" groups=["OOB"]]
+visible = false
+layout_mode = 0
+offset_left = 338.0
+offset_top = 81.0
+offset_right = 736.0
+offset_bottom = 283.0
+scale = Vector2(2.13412, 2.28433)
+color = Color(1, 1, 1, 0.937255)
+
+[node name="Continue_msg" type="Label" parent="CanvasLayer/Control/SHAPES_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -52.8038
+offset_top = 81.1103
+offset_right = 587.196
+offset_bottom = 119.11
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.375, 0.375)
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 8
+text = "PRESS [ENTER] KEY TO EXIT"
+label_settings = ExtResource("4_j04uc")
+horizontal_alignment = 2
+autowrap_mode = 1
+
+[node name="Title" type="Label" parent="CanvasLayer/Control/SHAPES_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -194.5
+offset_top = -78.5
+offset_right = 152.5
+offset_bottom = 28.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.375, 0.375)
+text = "SHAPES"
+label_settings = SubResource("LabelSettings_xjg7p")
+
+[node name="Description" type="Label" parent="CanvasLayer/Control/SHAPES_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -11.1006
+offset_top = -41.4639
+offset_right = 512.899
+offset_bottom = 255.536
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.375, 0.375)
+text = "Attack (CONTROL KEY) and defeat enemies and they will drop shapes. Collect shapes by getting close to them. 
+
+Each shape has a unique ability. Select a shape by pressing the 1, 2 or 3 key."
+label_settings = ExtResource("2_qwshj")
+autowrap_mode = 2
+
+[node name="VideoContainer" type="ColorRect" parent="CanvasLayer/Control/SHAPES_OOB"]
+clip_contents = true
+layout_mode = 0
+offset_left = 8.43433
+offset_top = 63.9137
+offset_right = 860.434
+offset_bottom = 543.914
+scale = Vector2(0.197185, 0.197185)
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="CanvasLayer/Control/SHAPES_OOB/VideoContainer"]
+layout_mode = 2
+offset_left = -97.4298
+offset_right = 1022.57
+offset_bottom = 480.0
+stream = ExtResource("3_48q88")
+volume_db = -80.0
+loop = true
+
+[node name="CIR" type="Area2D" parent="CanvasLayer/Control/SHAPES_OOB"]
+position = Vector2(39.0576, 16.623)
+scale = Vector2(0.0569521, 0.0569521)
+collision_mask = 3
+
+[node name="SQ" type="Line2D" parent="CanvasLayer/Control/SHAPES_OOB/CIR"]
+position = Vector2(111.111, 27.5981)
+points = PackedVector2Array(-83, -80, 77, -80, 76, 66, -83, 66)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="TR" type="Area2D" parent="CanvasLayer/Control/SHAPES_OOB"]
+position = Vector2(30.3135, 15.0696)
+scale = Vector2(0.0135777, 0.0135777)
+
+[node name="TRI" type="Line2D" parent="CanvasLayer/Control/SHAPES_OOB/TR"]
+position = Vector2(-291.288, 231.52)
+scale = Vector2(4.12913, 4.12913)
+points = PackedVector2Array(1, -82, -83, 59, 88, 59)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+joint_mode = 1
+
+[node name="SQU" type="Area2D" parent="CanvasLayer/Control/SHAPES_OOB"]
+position = Vector2(9.78613, 19.0776)
+scale = Vector2(0.0135777, 0.0135777)
+collision_mask = 3
+
+[node name="SQ" type="Line2D" parent="CanvasLayer/Control/SHAPES_OOB/SQU"]
+position = Vector2(116.513, -57.8791)
+scale = Vector2(3.26719, 3.26719)
+points = PackedVector2Array(-82, -47, -48, -80, 0, -93, 48, -80, 83, -46, 96, 1, 83, 48, 48, 81, 0, 94, -48, 81, -83, 48, -96, 0)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="CIR_OOB" type="ColorRect" parent="CanvasLayer/Control" groups=["OOB"]]
+visible = false
+layout_mode = 0
+offset_left = 339.0
+offset_top = 81.0
+offset_right = 739.0
+offset_bottom = 283.0
+scale = Vector2(2.13412, 2.28433)
+color = Color(1, 1, 1, 0.937255)
+
+[node name="Continue_msg" type="Label" parent="CanvasLayer/Control/CIR_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -65.5183
+offset_top = 80.6725
+offset_right = 605.481
+offset_bottom = 116.673
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.375, 0.375)
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 8
+text = "PRESS [ENTER] KEY TO EXIT"
+label_settings = ExtResource("4_j04uc")
+horizontal_alignment = 2
+autowrap_mode = 1
+
+[node name="Title" type="Label" parent="CanvasLayer/Control/CIR_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -195.5
+offset_top = -78.5
+offset_right = 180.5
+offset_bottom = 28.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.375, 0.375)
+text = "CIRCLES"
+label_settings = SubResource("LabelSettings_xjg7p")
+
+[node name="Description" type="Label" parent="CanvasLayer/Control/CIR_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -6.0
+offset_top = -101.0
+offset_right = 648.0
+offset_bottom = 569.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.3, 0.3)
+text = "If you have a circle in your inventory (bottom of screen), you can trigger INSIGHT using the B key.  INSIGHT reveals hidden shapes in the environment. 
+
+IMPORTANT: While the INSIGHT circle is active, SHAPE inventory behaves differently. If there is a matching shape revealed by insight, pressing B key will fill the new shape and make it permanent. The new environment shape can be interacted with! "
+label_settings = ExtResource("2_qwshj")
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="VideoContainer" type="ColorRect" parent="CanvasLayer/Control/CIR_OOB"]
+layout_mode = 0
+offset_left = 9.84012
+offset_top = 59.9738
+offset_right = 861.84
+offset_bottom = 539.974
+scale = Vector2(0.197185, 0.197185)
+color = Color(0.964742, 0.964742, 0.964742, 1)
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="CanvasLayer/Control/CIR_OOB/VideoContainer"]
+layout_mode = 2
+offset_right = 852.0
+offset_bottom = 480.0
+stream = ExtResource("4_xjg7p")
+volume_db = -80.0
+loop = true
+
+[node name="CIR" type="Area2D" parent="CanvasLayer/Control/CIR_OOB"]
+position = Vector2(39.0576, 16.623)
+scale = Vector2(0.0569521, 0.0569521)
+collision_mask = 3
+
+[node name="SQ" type="Line2D" parent="CanvasLayer/Control/CIR_OOB/CIR"]
+position = Vector2(111.111, 27.5981)
+points = PackedVector2Array(-83, -80, 77, -80, 76, 66, -83, 66)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="TR" type="Area2D" parent="CanvasLayer/Control/CIR_OOB"]
+position = Vector2(30.3135, 15.0696)
+scale = Vector2(0.0135777, 0.0135777)
+
+[node name="TRI" type="Line2D" parent="CanvasLayer/Control/CIR_OOB/TR"]
+position = Vector2(-291.288, 231.52)
+scale = Vector2(4.12913, 4.12913)
+points = PackedVector2Array(1, -82, -83, 59, 88, 59)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+joint_mode = 1
+
+[node name="SQU" type="Area2D" parent="CanvasLayer/Control/CIR_OOB"]
+position = Vector2(9.78613, 19.0776)
+scale = Vector2(0.0135777, 0.0135777)
+collision_mask = 3
+
+[node name="SQ" type="Line2D" parent="CanvasLayer/Control/CIR_OOB/SQU"]
+position = Vector2(116.513, -57.8791)
+scale = Vector2(3.26719, 3.26719)
+points = PackedVector2Array(-82, -47, -48, -80, 0, -93, 48, -80, 83, -46, 96, 1, 83, 48, 48, 81, 0, 94, -48, 81, -83, 48, -96, 0)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="TRI_OOB" type="ColorRect" parent="CanvasLayer/Control" groups=["OOB"]]
+visible = false
+layout_mode = 0
+offset_left = 338.0
+offset_top = 81.0
+offset_right = 740.0
+offset_bottom = 283.0
+scale = Vector2(2.13412, 2.28433)
+color = Color(1, 1, 1, 0.937255)
+
+[node name="Continue_msg" type="Label" parent="CanvasLayer/Control/TRI_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.2856
+offset_top = 81.0
+offset_right = 586.714
+offset_bottom = 116.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.375, 0.375)
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 8
+text = "PRESS [ENTER] KEY TO EXIT"
+label_settings = ExtResource("4_j04uc")
+horizontal_alignment = 2
+autowrap_mode = 1
+
+[node name="Title" type="Label" parent="CanvasLayer/Control/TRI_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -196.5
+offset_top = -78.5
+offset_right = 301.5
+offset_bottom = 28.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.333, 0.333)
+text = "TRIANGLES"
+label_settings = SubResource("LabelSettings_xjg7p")
+
+[node name="Description" type="Label" parent="CanvasLayer/Control/TRI_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -87.0
+offset_right = 624.0
+offset_bottom = 439.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.333, 0.333)
+text = "If you have a triangle  in your inventory (bottom of screen), you can use it as a projectile to attack enemies. 
+
+Press [2] key to select triangle then press the B key to fire it in the direction that you last moved. "
+label_settings = ExtResource("2_qwshj")
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="VideoContainer" type="ColorRect" parent="CanvasLayer/Control/TRI_OOB"]
+layout_mode = 0
+offset_left = 10.3087
+offset_top = 59.9738
+offset_right = 862.309
+offset_bottom = 539.974
+scale = Vector2(0.197185, 0.197185)
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="CanvasLayer/Control/TRI_OOB/VideoContainer"]
+layout_mode = 2
+offset_right = 852.0
+offset_bottom = 480.0
+stream = ExtResource("5_mg6lk")
+volume_db = -80.0
+loop = true
+
+[node name="CIR" type="Area2D" parent="CanvasLayer/Control/TRI_OOB"]
+position = Vector2(39.0576, 16.623)
+scale = Vector2(0.0569521, 0.0569521)
+collision_mask = 3
+
+[node name="SQ" type="Line2D" parent="CanvasLayer/Control/TRI_OOB/CIR"]
+position = Vector2(111.111, 27.5981)
+points = PackedVector2Array(-83, -80, 77, -80, 76, 66, -83, 66)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="TR" type="Area2D" parent="CanvasLayer/Control/TRI_OOB"]
+position = Vector2(30.3135, 15.0696)
+scale = Vector2(0.0135777, 0.0135777)
+
+[node name="TRI" type="Line2D" parent="CanvasLayer/Control/TRI_OOB/TR"]
+position = Vector2(-291.288, 231.52)
+scale = Vector2(4.12913, 4.12913)
+points = PackedVector2Array(1, -82, -83, 59, 88, 59)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+joint_mode = 1
+
+[node name="SQU" type="Area2D" parent="CanvasLayer/Control/TRI_OOB"]
+position = Vector2(9.78613, 19.0776)
+scale = Vector2(0.0135777, 0.0135777)
+collision_mask = 3
+
+[node name="SQ" type="Line2D" parent="CanvasLayer/Control/TRI_OOB/SQU"]
+position = Vector2(116.513, -57.8791)
+scale = Vector2(3.26719, 3.26719)
+points = PackedVector2Array(-82, -47, -48, -80, 0, -93, 48, -80, 83, -46, 96, 1, 83, 48, 48, 81, 0, 94, -48, 81, -83, 48, -96, 0)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="SQU_OOB" type="ColorRect" parent="CanvasLayer/Control" groups=["OOB"]]
+visible = false
+layout_mode = 0
+offset_left = 338.0
+offset_top = 81.0
+offset_right = 740.0
+offset_bottom = 283.0
+scale = Vector2(2.13412, 2.28433)
+color = Color(1, 1, 1, 0.937255)
+
+[node name="Continue_msg" type="Label" parent="CanvasLayer/Control/SQU_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.7542
+offset_top = 80.1245
+offset_right = 586.246
+offset_bottom = 115.124
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.375, 0.375)
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 8
+text = "PRESS [ENTER] KEY TO EXIT"
+label_settings = ExtResource("4_j04uc")
+horizontal_alignment = 2
+autowrap_mode = 1
+
+[node name="Title" type="Label" parent="CanvasLayer/Control/SQU_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -196.5
+offset_top = -78.5
+offset_right = 301.5
+offset_bottom = 28.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.333, 0.333)
+text = "SQUARES"
+label_settings = SubResource("LabelSettings_xjg7p")
+
+[node name="Description" type="Label" parent="CanvasLayer/Control/SQU_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -87.0
+offset_right = 624.0
+offset_bottom = 439.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.333, 0.333)
+text = "If you have a square  in your inventory (bottom of screen), you can use it as an enemy barrier or a temporary platform. 
+
+Press [3] key to select square  then press the [B] key to toss it in the direction that you last moved. "
+label_settings = ExtResource("2_qwshj")
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="VideoContainer" type="ColorRect" parent="CanvasLayer/Control/SQU_OOB"]
+layout_mode = 0
+offset_left = 10.3087
+offset_top = 59.9738
+offset_right = 862.309
+offset_bottom = 539.974
+scale = Vector2(0.197185, 0.197185)
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="CanvasLayer/Control/SQU_OOB/VideoContainer"]
+layout_mode = 2
+offset_right = 852.0
+offset_bottom = 480.0
+stream = ExtResource("8_b1goy")
+volume_db = -80.0
+loop = true
+
+[node name="CIR" type="Area2D" parent="CanvasLayer/Control/SQU_OOB"]
+position = Vector2(39.0576, 16.623)
+scale = Vector2(0.0569521, 0.0569521)
+collision_mask = 3
+
+[node name="SQ" type="Line2D" parent="CanvasLayer/Control/SQU_OOB/CIR"]
+position = Vector2(111.111, 27.5981)
+points = PackedVector2Array(-83, -80, 77, -80, 76, 66, -83, 66)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="TR" type="Area2D" parent="CanvasLayer/Control/SQU_OOB"]
+position = Vector2(30.3135, 15.0696)
+scale = Vector2(0.0135777, 0.0135777)
+
+[node name="TRI" type="Line2D" parent="CanvasLayer/Control/SQU_OOB/TR"]
+position = Vector2(-291.288, 231.52)
+scale = Vector2(4.12913, 4.12913)
+points = PackedVector2Array(1, -82, -83, 59, 88, 59)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+joint_mode = 1
+
+[node name="SQU" type="Area2D" parent="CanvasLayer/Control/SQU_OOB"]
+position = Vector2(9.78613, 19.0776)
+scale = Vector2(0.0135777, 0.0135777)
+collision_mask = 3
+
+[node name="SQ" type="Line2D" parent="CanvasLayer/Control/SQU_OOB/SQU"]
+position = Vector2(116.513, -57.8791)
+scale = Vector2(3.26719, 3.26719)
+points = PackedVector2Array(-82, -47, -48, -80, 0, -93, 48, -80, 83, -46, 96, 1, 83, 48, 48, 81, 0, 94, -48, 81, -83, 48, -96, 0)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="ENEMY_OOB" type="ColorRect" parent="CanvasLayer/Control" groups=["OOB"]]
+visible = false
+layout_mode = 0
+offset_left = 338.0
+offset_top = 81.0
+offset_right = 740.0
+offset_bottom = 283.0
+scale = Vector2(2.13412, 2.28433)
+color = Color(1, 1, 1, 0.937255)
+
+[node name="Continue_msg" type="Label" parent="CanvasLayer/Control/ENEMY_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -37.4666
+offset_top = 81.1097
+offset_right = 567.533
+offset_bottom = 116.109
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.375, 0.375)
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 8
+text = "PRESS [ENTER] KEY TO EXIT"
+label_settings = ExtResource("4_j04uc")
+horizontal_alignment = 2
+autowrap_mode = 1
+
+[node name="Title" type="Label" parent="CanvasLayer/Control/ENEMY_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -193.034
+offset_top = -78.5
+offset_right = 562.966
+offset_bottom = 28.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.333, 0.333)
+text = "ENEMIES / MELEE"
+label_settings = SubResource("LabelSettings_xjg7p")
+
+[node name="Description" type="Label" parent="CanvasLayer/Control/ENEMY_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.6229
+offset_top = -71.0
+offset_right = 623.377
+offset_bottom = 407.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.333, 0.333)
+text = "When faced with a hostile enemy, proceed with caution. You can always use the melee attack ([CTRL] key) to fight back. 
+
+Enemies  aren't all bad though -- they drop shapes that you will need to complete your journey."
+label_settings = ExtResource("2_qwshj")
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="VideoContainer" type="ColorRect" parent="CanvasLayer/Control/ENEMY_OOB"]
+layout_mode = 0
+offset_left = 10.3087
+offset_top = 59.9738
+offset_right = 862.309
+offset_bottom = 539.974
+scale = Vector2(0.197185, 0.197185)
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="CanvasLayer/Control/ENEMY_OOB/VideoContainer"]
+layout_mode = 2
+offset_right = 852.0
+offset_bottom = 480.0
+stream = ExtResource("8_vqx31")
+volume_db = -80.0
+loop = true
+
+[node name="CIR" type="Area2D" parent="CanvasLayer/Control/ENEMY_OOB"]
+position = Vector2(39.0576, 16.623)
+scale = Vector2(0.0569521, 0.0569521)
+collision_mask = 3
+
+[node name="SQ" type="Line2D" parent="CanvasLayer/Control/ENEMY_OOB/CIR"]
+position = Vector2(111.111, 27.5981)
+points = PackedVector2Array(-83, -80, 77, -80, 76, 66, -83, 66)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="TR" type="Area2D" parent="CanvasLayer/Control/ENEMY_OOB"]
+position = Vector2(30.3135, 15.0696)
+scale = Vector2(0.0135777, 0.0135777)
+
+[node name="TRI" type="Line2D" parent="CanvasLayer/Control/ENEMY_OOB/TR"]
+position = Vector2(-291.288, 231.52)
+scale = Vector2(4.12913, 4.12913)
+points = PackedVector2Array(1, -82, -83, 59, 88, 59)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+joint_mode = 1
+
+[node name="SQU" type="Area2D" parent="CanvasLayer/Control/ENEMY_OOB"]
+position = Vector2(9.78613, 19.0776)
+scale = Vector2(0.0135777, 0.0135777)
+collision_mask = 3
+
+[node name="SQ" type="Line2D" parent="CanvasLayer/Control/ENEMY_OOB/SQU"]
+position = Vector2(116.513, -57.8791)
+scale = Vector2(3.26719, 3.26719)
+points = PackedVector2Array(-82, -47, -48, -80, 0, -93, 48, -80, 83, -46, 96, 1, 83, 48, 48, 81, 0, 94, -48, 81, -83, 48, -96, 0)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="BLUEPRINT_OOB" type="ColorRect" parent="CanvasLayer/Control" groups=["OOB"]]
+visible = false
+layout_mode = 0
+offset_left = 338.0
+offset_top = 81.0
+offset_right = 740.0
+offset_bottom = 283.0
+scale = Vector2(2.13412, 2.28433)
+color = Color(1, 1, 1, 0.937255)
+
+[node name="Continue_msg" type="Label" parent="CanvasLayer/Control/BLUEPRINT_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -37.4666
+offset_top = 81.1097
+offset_right = 567.533
+offset_bottom = 116.109
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.375, 0.375)
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 8
+text = "PRESS [ENTER] KEY TO EXIT"
+label_settings = ExtResource("4_j04uc")
+horizontal_alignment = 2
+autowrap_mode = 1
+
+[node name="Title" type="Label" parent="CanvasLayer/Control/BLUEPRINT_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -192.566
+offset_top = -78.674
+offset_right = 563.434
+offset_bottom = 28.326
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.333, 0.333)
+text = "BLUEPRINTS"
+label_settings = SubResource("LabelSettings_xjg7p")
+
+[node name="Description" type="Label" parent="CanvasLayer/Control/BLUEPRINT_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.6229
+offset_top = -71.0
+offset_right = 623.377
+offset_bottom = 407.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.333, 0.333)
+text = "Approach the floating yellow diamond and an interface will appear. You need to 'spend' shapes to build the item. Once you've added all required shapes, you will receive the item.
+
+Activate it by pressing [4] key. It can be used on areas that are only visible while it is activated. Use it by hitting the action [B] key."
+label_settings = ExtResource("2_qwshj")
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="VideoContainer" type="ColorRect" parent="CanvasLayer/Control/BLUEPRINT_OOB"]
+layout_mode = 0
+offset_left = 10.3087
+offset_top = 59.9738
+offset_right = 862.309
+offset_bottom = 539.974
+scale = Vector2(0.197185, 0.197185)
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="CanvasLayer/Control/BLUEPRINT_OOB/VideoContainer"]
+layout_mode = 2
+offset_right = 852.0
+offset_bottom = 480.0
+stream = ExtResource("8_vqx31")
+volume_db = -80.0
+loop = true
+
+[node name="CIR" type="Area2D" parent="CanvasLayer/Control/BLUEPRINT_OOB"]
+position = Vector2(39.0576, 16.623)
+scale = Vector2(0.0569521, 0.0569521)
+collision_mask = 3
+
+[node name="SQ" type="Line2D" parent="CanvasLayer/Control/BLUEPRINT_OOB/CIR"]
+position = Vector2(111.111, 27.5981)
+points = PackedVector2Array(-83, -80, 77, -80, 76, 66, -83, 66)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="TR" type="Area2D" parent="CanvasLayer/Control/BLUEPRINT_OOB"]
+position = Vector2(30.3135, 15.0696)
+scale = Vector2(0.0135777, 0.0135777)
+
+[node name="TRI" type="Line2D" parent="CanvasLayer/Control/BLUEPRINT_OOB/TR"]
+position = Vector2(-291.288, 231.52)
+scale = Vector2(4.12913, 4.12913)
+points = PackedVector2Array(1, -82, -83, 59, 88, 59)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+joint_mode = 1
+
+[node name="SQU" type="Area2D" parent="CanvasLayer/Control/BLUEPRINT_OOB"]
+position = Vector2(9.78613, 19.0776)
+scale = Vector2(0.0135777, 0.0135777)
+collision_mask = 3
+
+[node name="SQ" type="Line2D" parent="CanvasLayer/Control/BLUEPRINT_OOB/SQU"]
+position = Vector2(116.513, -57.8791)
+scale = Vector2(3.26719, 3.26719)
+points = PackedVector2Array(-82, -47, -48, -80, 0, -93, 48, -80, 83, -46, 96, 1, 83, 48, 48, 81, 0, 94, -48, 81, -83, 48, -96, 0)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="CAT_OOB" type="ColorRect" parent="CanvasLayer/Control" groups=["OOB"]]
+visible = false
+layout_mode = 0
+offset_left = 340.0
+offset_top = 81.0
+offset_right = 742.0
+offset_bottom = 283.0
+scale = Vector2(2.13412, 2.28433)
+color = Color(1, 1, 1, 0.937255)
+
+[node name="Continue_msg" type="Label" parent="CanvasLayer/Control/CAT_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -37.4666
+offset_top = 81.1097
+offset_right = 567.533
+offset_bottom = 116.109
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.375, 0.375)
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 8
+text = "PRESS [ENTER] KEY TO EXIT"
+label_settings = ExtResource("4_j04uc")
+horizontal_alignment = 2
+autowrap_mode = 1
+
+[node name="Title" type="Label" parent="CanvasLayer/Control/CAT_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -192.566
+offset_top = -78.674
+offset_right = 563.434
+offset_bottom = 28.326
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.333, 0.333)
+text = "THE CAT"
+label_settings = SubResource("LabelSettings_xjg7p")
+
+[node name="Description" type="Label" parent="CanvasLayer/Control/CAT_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.6229
+offset_top = -71.0
+offset_right = 623.377
+offset_bottom = 407.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.333, 0.333)
+text = "This is the goal of the game -- SAVE THE CAT. Unfortunately, the cat does not want to be saved. 
+
+But that won't stop you from trying... will it?"
+label_settings = ExtResource("2_qwshj")
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="VideoContainer" type="ColorRect" parent="CanvasLayer/Control/CAT_OOB"]
+layout_mode = 0
+offset_left = 10.3087
+offset_top = 59.9738
+offset_right = 862.309
+offset_bottom = 539.974
+scale = Vector2(0.197185, 0.197185)
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="CanvasLayer/Control/CAT_OOB/VideoContainer"]
+layout_mode = 2
+offset_right = 852.0
+offset_bottom = 480.0
+stream = ExtResource("8_vqx31")
+volume_db = -80.0
+loop = true
+
+[node name="CIR" type="Area2D" parent="CanvasLayer/Control/CAT_OOB"]
+position = Vector2(39.0576, 16.623)
+scale = Vector2(0.0569521, 0.0569521)
+collision_mask = 3
+
+[node name="SQ" type="Line2D" parent="CanvasLayer/Control/CAT_OOB/CIR"]
+position = Vector2(111.111, 27.5981)
+points = PackedVector2Array(-83, -80, 77, -80, 76, 66, -83, 66)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="TR" type="Area2D" parent="CanvasLayer/Control/CAT_OOB"]
+position = Vector2(30.3135, 15.0696)
+scale = Vector2(0.0135777, 0.0135777)
+
+[node name="TRI" type="Line2D" parent="CanvasLayer/Control/CAT_OOB/TR"]
+position = Vector2(-291.288, 231.52)
+scale = Vector2(4.12913, 4.12913)
+points = PackedVector2Array(1, -82, -83, 59, 88, 59)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+joint_mode = 1
+
+[node name="SQU" type="Area2D" parent="CanvasLayer/Control/CAT_OOB"]
+position = Vector2(9.78613, 19.0776)
+scale = Vector2(0.0135777, 0.0135777)
+collision_mask = 3
+
+[node name="SQ" type="Line2D" parent="CanvasLayer/Control/CAT_OOB/SQU"]
+position = Vector2(116.513, -57.8791)
+scale = Vector2(3.26719, 3.26719)
+points = PackedVector2Array(-82, -47, -48, -80, 0, -93, 48, -80, 83, -46, 96, 1, 83, 48, 48, 81, 0, 94, -48, 81, -83, 48, -96, 0)
+closed = true
+width = 30.0
+default_color = Color(1, 0, 0, 1)
+
+[node name="BoxContainer" type="CenterContainer" parent="CanvasLayer/Control"]
+layout_direction = 2
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 653.0
+offset_top = 584.0
+offset_right = 811.0
+offset_bottom = 649.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/BoxContainer"]
+layout_mode = 2
+script = ExtResource("4_hfhsn")
+active_color = Color(0.698712, 0, 0.0298413, 1)
+
+[node name="circleVBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/BoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+
+[node name="circleCenterContainer" type="CenterContainer" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="circleIcon" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer/circleCenterContainer"]
+position = Vector2(25, 24)
+scale = Vector2(1.14861, 1.08698)
+color = Color(0, 0, 0, 1)
+offset = Vector2(8.01086e-05, -3.8147e-05)
+polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+
+[node name="circleLabel" type="Label" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/circleVBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 11.04
+text = "0"
+label_settings = SubResource("LabelSettings_hfhsn")
+horizontal_alignment = 1
+
+[node name="triangleVBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/BoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/triangleVBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="triangleIcon" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/triangleVBoxContainer/CenterContainer"]
+position = Vector2(25, 20)
+scale = Vector2(0.0154851, 0.292801)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-1216.78, 59.4238, 1001.33, 59.424, -101.033, -30.5611)
+
+[node name="triangleLabel" type="Label" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/triangleVBoxContainer"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.41
+text = "0"
+label_settings = SubResource("LabelSettings_qwshj")
+horizontal_alignment = 1
+
+[node name="squareVBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/BoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+
+[node name="squareCenterContainer" type="CenterContainer" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/squareVBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="squareIcon" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/squareVBoxContainer/squareCenterContainer"]
+position = Vector2(25, 13)
+scale = Vector2(0.359038, 1.25978)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-39.6514, 18.9757, 38.8253, 18.9757, 38.8253, -1.55965, -38.8253, -1.55965)
+
+[node name="squareLabel" type="Label" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/squareVBoxContainer"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "0"
+label_settings = SubResource("LabelSettings_48q88")
+horizontal_alignment = 1
+
+[node name="grapplingHookVBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/BoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+
+[node name="squareCenterContainer" type="CenterContainer" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="item_blueprint_grapplinghook" type="Area2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer/squareCenterContainer"]
+position = Vector2(59, 89)
+rotation = -3.04716
+scale = Vector2(0.175, 0.175)
+
+[node name="blueprint_triangle_filled" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook"]
+position = Vector2(256.487, 267.221)
+rotation = -0.0944374
+scale = Vector2(2.21294, 2.21294)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(8, -13.9093, 24, 15.8964, -8, 15.8964)
+
+[node name="blueprint_triangle_filled2" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook"]
+position = Vector2(-25.5073, 293.931)
+rotation = -0.0944374
+scale = Vector2(2.21294, 2.21294)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(8, -13.9093, 24, 15.8964, -8, 15.8964)
+
+[node name="blueprint_triangle_filled3" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook"]
+position = Vector2(164.216, 419.511)
+rotation = 3.04716
+scale = Vector2(2.21294, 2.21294)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(8, -13.9093, 24, 15.8964, -8, 15.8964)
+
+[node name="blueprint_triangle_filled4" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook"]
+position = Vector2(282.929, 319.321)
+rotation = 1.46065
+scale = Vector2(1.99165, 1.99165)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-7.64301, -14.2607, 23.6431, 18.2348, -8.14565, 17.7354)
+
+[node name="blueprint_triangle_filled5" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook"]
+position = Vector2(14.6274, 364.805)
+rotation = 3.04716
+scale = Vector2(1.99165, 1.99165)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-7.64301, -14.2607, 23.6431, 18.2348, -8.14565, 17.7354)
+
+[node name="blueprint_circle_filled" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook"]
+position = Vector2(139.542, 346.76)
+rotation = 3.04716
+scale = Vector2(0.331941, 0.331941)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-100, 2, -86, 50, -50, 85, 0, 99, 50, 84, 86, 51, 100, 1, 88, -48, 51, -83, -1, -97, -50, -83, -86, -48)
+
+[node name="blueprint_square_filled" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook"]
+position = Vector2(133.194, 279.746)
+rotation = 3.04716
+scale = Vector2(1.93632, 1.93632)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-16, 16, 16, 16, 16, -16, -16, -16)
+
+[node name="blueprint_square_filled2" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook"]
+position = Vector2(210.327, 343.11)
+rotation = 3.04716
+scale = Vector2(1.93632, 1.93632)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-16, 16, 16, 16, 16, -16, -16, -16)
+
+[node name="blueprint_square_filled4" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook"]
+position = Vector2(126.561, 209.704)
+rotation = 3.04716
+scale = Vector2(1.93632, 1.93632)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-16, 16, 16, 16, 16, -16, -16, -16)
+
+[node name="blueprint_square_filled3" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook"]
+position = Vector2(69.3296, 356.466)
+rotation = 3.04716
+scale = Vector2(1.93632, 1.93632)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-16, 16, 16, 16, 16, -16, -16, -16)
+
+[node name="blueprint_square_filled5" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/grapplingHookVBoxContainer/squareCenterContainer/item_blueprint_grapplinghook"]
+position = Vector2(119.925, 139.662)
+rotation = 3.04716
+scale = Vector2(1.93632, 1.93632)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-16, 16, 16, 16, 16, -16, -16, -16)
+
+[node name="pickaxeVBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/BoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+
+[node name="squareCenterContainer" type="CenterContainer" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/pickaxeVBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="item_blueprint_pickaxe" type="Area2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/pickaxeVBoxContainer/squareCenterContainer"]
+position = Vector2(83, 93)
+rotation = -3.04716
+scale = Vector2(0.175, 0.175)
+
+[node name="blueprint_triangle_filled" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/pickaxeVBoxContainer/squareCenterContainer/item_blueprint_pickaxe"]
+position = Vector2(289.795, 391.822)
+rotation = 1.46065
+scale = Vector2(1.99165, 1.99165)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-7.64301, -14.2607, 23.6431, 18.2348, -8.14565, 17.7354)
+
+[node name="blueprint_triangle_filled2" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/pickaxeVBoxContainer/squareCenterContainer/item_blueprint_pickaxe"]
+position = Vector2(21.4946, 437.304)
+rotation = 3.04716
+scale = Vector2(1.99165, 1.99165)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-7.64301, -14.2607, 23.6431, 18.2348, -8.14565, 17.7354)
+
+[node name="blueprint_circle_filled" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/pickaxeVBoxContainer/squareCenterContainer/item_blueprint_pickaxe"]
+position = Vector2(146.409, 419.259)
+rotation = 3.04716
+scale = Vector2(0.331941, 0.331941)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-100, 2, -86, 50, -50, 85, 0, 99, 50, 84, 86, 51, 100, 1, 88, -48, 51, -83, -1, -97, -50, -83, -86, -48)
+
+[node name="blueprint_square_filled" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/pickaxeVBoxContainer/squareCenterContainer/item_blueprint_pickaxe"]
+position = Vector2(216.907, 412.583)
+rotation = 3.04716
+scale = Vector2(1.93632, 1.93632)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-16, 16, 16, 16, 16, -16, -16, -16)
+
+[node name="blueprint_square_filled2" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/pickaxeVBoxContainer/squareCenterContainer/item_blueprint_pickaxe"]
+position = Vector2(139.774, 349.219)
+rotation = 3.04716
+scale = Vector2(1.93632, 1.93632)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-16, 16, 16, 16, 16, -16, -16, -16)
+
+[node name="blueprint_square_filled3" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/pickaxeVBoxContainer/squareCenterContainer/item_blueprint_pickaxe"]
+position = Vector2(75.9097, 425.937)
+rotation = 3.04716
+scale = Vector2(1.93632, 1.93632)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-16, 16, 16, 16, 16, -16, -16, -16)
+
+[node name="blueprint_square_filled4" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/pickaxeVBoxContainer/squareCenterContainer/item_blueprint_pickaxe"]
+position = Vector2(126.56, 209.704)
+rotation = 3.04716
+scale = Vector2(1.93632, 1.93632)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-16, 16, 16, 16, 16, -16, -16, -16)
+
+[node name="blueprint_square_filled5" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/pickaxeVBoxContainer/squareCenterContainer/item_blueprint_pickaxe"]
+position = Vector2(133.14, 279.176)
+rotation = 3.04716
+scale = Vector2(1.93632, 1.93632)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-16, 16, 16, 16, 16, -16, -16, -16)
+
+[node name="blueprint_square_filled6" type="Polygon2D" parent="CanvasLayer/Control/BoxContainer/HBoxContainer/pickaxeVBoxContainer/squareCenterContainer/item_blueprint_pickaxe"]
+position = Vector2(119.925, 139.662)
+rotation = 3.04716
+scale = Vector2(1.93632, 1.93632)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-16, 16, 16, 16, 16, -16, -16, -16)
+
+[node name="lifeBoxContainer" type="BoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 15.0
+offset_right = 222.0
+offset_bottom = 74.0
+
+[node name="lifeHBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/lifeBoxContainer"]
+layout_mode = 2
+script = ExtResource("5_qwshj")
+
+[node name="lifeVBoxContainer0" type="VBoxContainer" parent="CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+
+[node name="lifeCenterContainer" type="CenterContainer" parent="CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer0"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="circleIcon" type="Polygon2D" parent="CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer0/lifeCenterContainer"]
+position = Vector2(24, 37)
+scale = Vector2(0.812225, 0.766703)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(12.3119, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12.3119, 0, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+
+[node name="triangleIcon" type="Polygon2D" parent="CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer0/lifeCenterContainer"]
+position = Vector2(25, 19)
+scale = Vector2(0.0109501, 0.206528)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-913.234, 82.3134, 730.588, 82.3134, -91.3232, -121.049)
+
+[node name="lifeVBoxContainer1" type="VBoxContainer" parent="CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+
+[node name="lifeCenterContainer" type="CenterContainer" parent="CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer1"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="circleIcon" type="Polygon2D" parent="CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer1/lifeCenterContainer"]
+position = Vector2(24, 37)
+scale = Vector2(0.812225, 0.766703)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(12.3119, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12.3119, 0, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+
+[node name="triangleIcon" type="Polygon2D" parent="CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer1/lifeCenterContainer"]
+position = Vector2(25, 19)
+scale = Vector2(0.0109501, 0.206528)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-913.234, 82.3134, 730.588, 82.3134, -91.3232, -121.049)
+
+[node name="lifeVBoxContainer2" type="VBoxContainer" parent="CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+
+[node name="lifeCenterContainer" type="CenterContainer" parent="CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer2"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="circleIcon" type="Polygon2D" parent="CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer2/lifeCenterContainer"]
+position = Vector2(24, 37)
+scale = Vector2(0.812225, 0.766703)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(12.3119, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12.3119, 0, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+
+[node name="triangleIcon" type="Polygon2D" parent="CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer2/lifeCenterContainer"]
+position = Vector2(25, 19)
+scale = Vector2(0.0109501, 0.206528)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-913.234, 82.3134, 730.588, 82.3134, -91.3232, -121.049)
+
+[node name="lifeVBoxContainer3" type="VBoxContainer" parent="CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+
+[node name="lifeCenterContainer" type="CenterContainer" parent="CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer3"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+
+[node name="circleIcon" type="Polygon2D" parent="CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer3/lifeCenterContainer"]
+position = Vector2(24, 37)
+scale = Vector2(0.812225, 0.766703)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(12.3119, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12.3119, 0, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+
+[node name="triangleIcon" type="Polygon2D" parent="CanvasLayer/Control/lifeBoxContainer/lifeHBoxContainer/lifeVBoxContainer3/lifeCenterContainer"]
+position = Vector2(25, 19)
+scale = Vector2(0.0109501, 0.206528)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(-913.234, 82.3134, 730.588, 82.3134, -91.3232, -121.049)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_48q88")
+}
+
+[node name="ShapeInventory" parent="." instance=ExtResource("13_n04ve")]
+offset_left = -779.0
+offset_top = 635.0
+offset_right = -745.48
+offset_bottom = 635.0
