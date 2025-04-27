@@ -490,6 +490,10 @@ func handle_input() -> void:
 
 	if Input.is_action_just_pressed("activate_pickaxe") and Global.has_pick_axe:
 		update_activation("pickaxe")
+		
+	if Input.is_action_just_pressed("level_2"):
+		Global.has_grappling_hook = true
+		LevelManager.change_level("level2")
 
 func apply_gravity(delta: float) -> void:
 	if is_wall_sliding:
@@ -1570,6 +1574,10 @@ func change_state(new_state: PlayerState) -> void:
 			# Clean up building state
 			current_blueprint = null
 			is_building = false
+			
+			# Reset camera zoom
+			var tween = create_tween()
+			tween.tween_property(camera, "zoom", Vector2(1, 1), 0.5)
 			
 	# Enter new state
 	current_state = new_state

@@ -16,12 +16,12 @@
 [ext_resource type="Script" uid="uid://b5u5t4ir8jilt" path="res://Scripts/mcguffin.gd" id="13_1phco"]
 [ext_resource type="PackedScene" uid="uid://bemm6jn2h2it7" path="res://Scenes/blueprint_pickup.tscn" id="15_nb51f"]
 [ext_resource type="PackedScene" uid="uid://c6tc30u6hj6da" path="res://Scenes/grappling_hook_point.tscn" id="16_nnt18"]
-[ext_resource type="PackedScene" uid="uid://c2a8f1fbc7m4n" path="res://Scenes/oob_trigger.tscn" id="17_ewbju"]
 [ext_resource type="PackedScene" uid="uid://dtoyjmhtnlybu" path="res://Scenes/circle_pickup.tscn" id="18_7nbq1"]
 [ext_resource type="Material" uid="uid://bktyivkiltmw1" path="res://Resources/blueprint_particles.tres" id="19_7t8sx"]
 [ext_resource type="PackedScene" uid="uid://cxivow1cwemf8" path="res://Scenes/triangle_pickup.tscn" id="19_exi56"]
 [ext_resource type="PackedScene" uid="uid://dqgxiqht64kh0" path="res://Scenes/square_pickup.tscn" id="20_7t8sx"]
 [ext_resource type="LabelSettings" uid="uid://pjukfu4qrdup" path="res://Resources/blueprint_label_settings.tres" id="20_mg4q0"]
+[ext_resource type="PackedScene" uid="uid://l0ph0wck2pgf" path="res://Scenes/tutorial_trigger.tscn" id="23_mg4q0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_na51i"]
 texture = ExtResource("1_8ruqu")
@@ -689,15 +689,25 @@ text = "... THEN PICK UP THE DROPPED SHAPES"
 label_settings = ExtResource("20_mg4q0")
 horizontal_alignment = 1
 
-[node name="OOB_enemy_trigger" parent="." groups=["oob_trigger"] instance=ExtResource("17_ewbju")]
-position = Vector2(-222, -105)
-collision_mask = 3
-oob_to_display = "enemy"
+[node name="ColorRect8" type="ColorRect" parent="."]
+offset_left = -515.0
+offset_top = -259.0
+offset_right = -276.0
+offset_bottom = -210.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(1, 1, 1, 0.784314)
 
-[node name="OOB_cir_trigger" parent="." groups=["oob_trigger"] instance=ExtResource("17_ewbju")]
-position = Vector2(350, -46)
-collision_mask = 3
-oob_to_display = "circle"
+[node name="shapes_label" type="Label" parent="ColorRect8"]
+layout_mode = 0
+offset_left = -7.0
+offset_top = 13.0
+offset_right = 457.0
+offset_bottom = 81.0
+scale = Vector2(0.526566, 0.526566)
+text = "PRESS [L] TO SKIP TUTORIAL LVL"
+label_settings = ExtResource("20_mg4q0")
+horizontal_alignment = 1
 
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_left = 428.0
@@ -754,12 +764,6 @@ text = "1) SELECT TRIANGLE  IN INVENTORY [2] KEY
 label_settings = ExtResource("20_mg4q0")
 horizontal_alignment = 1
 
-[node name="OOB_tri_trigger" parent="." groups=["oob_trigger"] instance=ExtResource("17_ewbju")]
-position = Vector2(1062, -151)
-scale = Vector2(3.52, 1)
-collision_mask = 3
-oob_to_display = "triangle"
-
 [node name="triangle_pickup" parent="." instance=ExtResource("19_exi56")]
 position = Vector2(1240, -137)
 scale = Vector2(1.55054, 1.55054)
@@ -769,11 +773,6 @@ gravity_scale = 0.0
 [node name="GPUParticles2D" type="GPUParticles2D" parent="triangle_pickup"]
 position = Vector2(2, 8.36203)
 process_material = ExtResource("19_7t8sx")
-
-[node name="OOB_squ_trigger" parent="." groups=["oob_trigger"] instance=ExtResource("17_ewbju")]
-position = Vector2(1724, -70)
-collision_mask = 3
-oob_to_display = "square"
 
 [node name="ColorRect4" type="ColorRect" parent="."]
 offset_left = 2305.0
@@ -807,11 +806,6 @@ gravity_scale = 0.0
 position = Vector2(2, 13)
 process_material = ExtResource("19_7t8sx")
 
-[node name="OOB_blueprint_trigger" parent="." groups=["oob_trigger"] instance=ExtResource("17_ewbju")]
-position = Vector2(2946, -59)
-collision_mask = 3
-oob_to_display = "blueprint"
-
 [node name="ColorRect5" type="ColorRect" parent="."]
 offset_left = 2960.0
 offset_top = -235.0
@@ -831,11 +825,6 @@ scale = Vector2(0.526566, 0.526566)
 text = "APPROACH THE FLOATING YELLOW DIAMOND TO CRAFT AN USEFUL ITEM"
 label_settings = ExtResource("20_mg4q0")
 horizontal_alignment = 1
-
-[node name="OOB_cat_trigger" parent="." groups=["oob_trigger"] instance=ExtResource("17_ewbju")]
-position = Vector2(3612, -59)
-collision_mask = 3
-oob_to_display = "cat"
 
 [node name="ColorRect6" type="ColorRect" parent="."]
 offset_left = 3517.0
@@ -869,5 +858,35 @@ position = Vector2(2567, -92)
 max_health = 1
 move_speed = 300.0
 should_respawn = false
+
+[node name="enemy_tutorial_trigger" parent="." instance=ExtResource("23_mg4q0")]
+position = Vector2(-172, -100)
+collision_mask = 3
+oob_to_display = "enemy"
+
+[node name="circle_tutorial_trigger" parent="." instance=ExtResource("23_mg4q0")]
+position = Vector2(435, -100)
+collision_mask = 3
+oob_to_display = "circle"
+
+[node name="triangle_tutorial_trigger" parent="." instance=ExtResource("23_mg4q0")]
+position = Vector2(1080, -100)
+collision_mask = 3
+oob_to_display = "triangle"
+
+[node name="square_tutorial_trigger" parent="." instance=ExtResource("23_mg4q0")]
+position = Vector2(1835, -100)
+collision_mask = 3
+oob_to_display = "square"
+
+[node name="blueprint_tutorial_trigger" parent="." instance=ExtResource("23_mg4q0")]
+position = Vector2(2957, -100)
+collision_mask = 3
+oob_to_display = "blueprint"
+
+[node name="cat_tutorial_trigger" parent="." instance=ExtResource("23_mg4q0")]
+position = Vector2(3612, -100)
+collision_mask = 3
+oob_to_display = "cat"
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -5,22 +5,22 @@ extends CanvasLayer
 @onready var designintent_dialogue: ColorRect = $CanvasLayer/Control/DESIGNINTENT
 
 @onready var enemy_oob: ColorRect = $CanvasLayer/Control/ENEMY_OOB
-@onready var enemy_oob_trigger: Area2D = $"/root/Game/OOB_enemy_trigger"
+@onready var enemy_oob_trigger: Area2D = $"/root/Game/enemy_tutorial_trigger"
 
 @onready var tri_oob: ColorRect = $CanvasLayer/Control/TRI_OOB
-@onready var tri_oob_trigger: Area2D = $"/root/Game/OOB_tri_trigger"
+@onready var tri_oob_trigger: Area2D = $"/root/Game/triangle_tutorial_trigger"
 
 @onready var cir_oob: ColorRect = $CanvasLayer/Control/CIR_OOB
-@onready var cir_oob_trigger: Area2D = $"/root/Game/OOB_cir_trigger"
+@onready var cir_oob_trigger: Area2D = $"/root/Game/circle_tutorial_trigger"
 
 @onready var squ_oob: ColorRect = $CanvasLayer/Control/SQU_OOB
-@onready var squ_oob_trigger: Area2D = $"/root/Game/OOB_squ_trigger"
+@onready var squ_oob_trigger: Area2D = $"/root/Game/square_tutorial_trigger"
 
 @onready var cat_oob: ColorRect = $CanvasLayer/Control/CAT_OOB
-@onready var cat_oob_trigger: Area2D = $"/root/Game/OOB_cat_trigger"
+@onready var cat_oob_trigger: Area2D = $"/root/Game/cat_tutorial_trigger"
 
 @onready var blueprint_oob: ColorRect = $CanvasLayer/Control/BLUEPRINT_OOB
-@onready var blueprint_oob_trigger: Area2D = $"/root/Game/OOB_blueprint_trigger"
+@onready var blueprint_oob_trigger: Area2D = $"/root/Game/blueprint_tutorial_trigger"
 
 @onready var shapes_oob: ColorRect = $CanvasLayer/Control/SHAPES_OOB
 
@@ -54,14 +54,14 @@ func _ready() -> void:
 			blueprint_oob_trigger.connect("oob_triggered", _show_onboarding)
 			enemy.connect("on_death", _show_onboarding.bind("shapes"))
 		
-		var _show_shapes_onboarding = Callable(self, "show_shapes_onboarding")
-		enemy.connect("on_death", _show_shapes_onboarding)
-		
-		var _show_circle_triangle_square_onboarding = Callable(self, "show_circle_triangle_square_onboarding") 
-		player.connect("on_activate", _show_circle_triangle_square_onboarding)
+			var _show_shapes_onboarding = Callable(self, "show_shapes_onboarding")
+			enemy.connect("on_death", _show_shapes_onboarding)
+			
+			var _show_circle_triangle_square_onboarding = Callable(self, "show_circle_triangle_square_onboarding") 
+			player.connect("on_activate", _show_circle_triangle_square_onboarding)
 
-		emit_signal("dialog_visible", true)
-		# figure out what's going on with the dialogues
+			emit_signal("dialog_visible", true)
+			# figure out what's going on with the dialogues
 		
 	else:
 		dialog_state = "none"
@@ -91,31 +91,24 @@ func show_onboarding(oob_to_display: String) -> void:
 		return
 
 	if oob_to_display == "circle":
-		if !Global.has_seen_circles_onboarding:
 			dialog_state = "circles"
 			get_state()
 	elif oob_to_display == "triangle":
-		if !Global.has_seen_triangles_onboarding:
 			dialog_state = "triangles"
 			get_state()
 	elif oob_to_display == "square":
-		if !Global.has_seen_squares_onboarding:
 			dialog_state = "squares"
 			get_state()
 	elif oob_to_display == "enemy":
-		if !Global.has_seen_enemy_onboarding:
 			dialog_state = "enemy"
 			get_state()
 	elif oob_to_display == "shapes":
-		if !Global.has_seen_shapes_onboarding:
 			dialog_state = "shapes"
 			get_state()
 	elif oob_to_display == "blueprint":
-		if !Global.has_seen_blueprint_onboarding:
 			dialog_state = "blueprint"
 			get_state()
 	elif oob_to_display == "cat":
-		if !Global.has_seen_cat_onboarding:
 			dialog_state = "cat"
 			get_state()
 
@@ -129,6 +122,8 @@ func slide_dialog( out_dialog: ColorRect, in_dialog: ColorRect) -> void:
 		out_tween.tween_property(out_dialog, "global_position", Vector2(out_dialog_target_position_x, out_dialog.global_position.y), 0.25)
 		await out_tween.finished
 		out_dialog.hide()
+		if (in_dialog == null):
+			out_dialog.global_position.x = 339.0
 	
 	if (in_dialog):
 		
@@ -205,7 +200,6 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_accept") and any_dialogues_visible:
 		get_state()
 
-			
 
 func _on_oob_trigger_body_entered(body: Node2D) -> void:
 	if (body.is_in_group("player")):

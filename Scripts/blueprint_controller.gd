@@ -94,6 +94,7 @@ func _process(_delta: float) -> void:
 func start_building() -> void:
 	if is_building:
 		return
+	print("start building")
 	camera = current_player.camera
 	# Store original camera position and zoom
 	original_camera_pos = camera.global_position
@@ -136,9 +137,9 @@ func stop_building() -> void:
 	if not is_building:
 		return
 	print("stop building")
-	# Zoom back out
+	# Zoom back to player's current position
 	camera_zoom_out_tween = create_tween()
-	camera_zoom_out_tween.tween_property(camera, "global_position", original_camera_pos, 0.5)
+	camera_zoom_out_tween.tween_property(camera, "global_position", player.global_position, 0.5)
 	
 	# Show the panel but move it off screen
 	var hidden_building_panel_pos = Vector2(building_panel_pos.x - 1000, building_panel_pos.y)
@@ -147,13 +148,6 @@ func stop_building() -> void:
 	panel_grow_tween.tween_callback(hide_building_panel)
 
 	is_building = false
-	# placed_shapes = {
-	# 	"circle": 0,
-	# 	"triangle": 0,
-	# 	"square": 0
-	# }
-
-
 	_update_shape_count_labels()
 
 func place_shape(shape_type: String) -> void:

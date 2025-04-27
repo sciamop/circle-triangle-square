@@ -1,0 +1,64 @@
+[gd_scene load_steps=7 format=3 uid="uid://l0ph0wck2pgf"]
+
+[ext_resource type="Script" uid="uid://5q5ad10hgm7y" path="res://Scripts/oob_trigger.gd" id="1_bn4yf"]
+[ext_resource type="Material" uid="uid://bktyivkiltmw1" path="res://Resources/blueprint_particles.tres" id="1_pdrya"]
+[ext_resource type="FontFile" uid="uid://653p86rf1v0e" path="res://Fonts/Aileron-Heavy.otf" id="1_s6b4p"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pdrya"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_bn4yf"]
+font = ExtResource("1_s6b4p")
+font_size = 196
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_2kd57"]
+font = ExtResource("1_s6b4p")
+font_size = 46
+
+[node name="tutorial_trigger" type="Area2D"]
+script = ExtResource("1_bn4yf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(2.56694, 2.56694)
+shape = SubResource("CircleShape2D_pdrya")
+
+[node name="Polygon2D3" type="Polygon2D" parent="."]
+rotation = 1.6673
+scale = Vector2(0.162217, 0.162217)
+color = Color(0, 0, 0, 1)
+polygon = PackedVector2Array(99.4939, -9.63105, 98.0785, 19.509, 92.388, 38.2683, 83.147, 55.557, 70.7107, 70.7107, 55.557, 83.147, 38.2683, 92.388, 19.509, 98.0785, 6.12303e-15, 100, -19.509, 98.0785, -38.2683, 92.388, -55.557, 83.147, -70.7107, 70.7107, -83.147, 55.557, -92.388, 38.2683, -98.0785, 19.509, -100, 1.22461e-14, -98.0785, -19.509, -92.388, -38.2683, -83.147, -55.557, -70.7107, -70.7107, -55.557, -83.147, -38.2683, -92.388, -19.509, -98.0785, -1.83691e-14, -100, 19.509, -98.0785, 38.2683, -92.388, 55.557, -83.147, 70.7107, -70.7107, 83.147, -55.557, 92.388, -38.2683, 99.4939, -9.63105, 49.747, -4.81552, 47.8207, -24.7143, 55.8439, -45.5762, 35.3553, -35.3553, 27.7785, -41.5735, 19.1342, -46.194, 9.75452, -49.0393, -9.18455e-15, -50, -9.75452, -49.0393, -19.1342, -46.194, -27.7785, -41.5735, -35.3553, -35.3553, -41.5735, -27.7785, -46.194, -19.1342, -49.0393, -9.75452, -50, 6.12303e-15, -49.0393, 9.75452, -46.194, 19.1342, -41.5735, 27.7785, -35.3553, 35.3553, -27.7785, 41.5735, -19.1342, 46.194, -9.75452, 49.0393, 3.06152e-15, 50, 9.75452, 49.0393, 19.1342, 46.194, 27.7785, 41.5735, 35.3553, 35.3553, 41.5735, 27.7785, 46.194, 19.1342, 49.0393, 9.75452, 49.747, -4.81552)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(1, 13)
+scale = Vector2(0.0807277, 0.0807277)
+process_material = ExtResource("1_pdrya")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -4.0
+offset_top = -10.0
+offset_right = 107.0
+offset_bottom = 227.0
+scale = Vector2(0.0807277, 0.0807277)
+text = "?"
+label_settings = SubResource("LabelSettings_bn4yf")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -69.0
+offset_top = -55.0
+offset_right = -1.0
+offset_bottom = -46.0
+scale = Vector2(2.18151, 2.18151)
+color = Color(0, 0, 0, 1)
+
+[node name="Label2" type="Label" parent="ColorRect"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 1.0
+offset_right = 523.0
+offset_bottom = 57.0
+scale = Vector2(0.121546, 0.121546)
+text = "PRESS [E] TO ACTIVATE"
+label_settings = SubResource("LabelSettings_2kd57")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
