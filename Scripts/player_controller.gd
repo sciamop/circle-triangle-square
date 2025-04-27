@@ -231,15 +231,7 @@ var wall_build_cooldown_timer: float = 0.0
 @export var wall_scene: PackedScene
 
 func _ready() -> void:
-	# Initialize shape counts
-	shape_counts["square"] = square_pieces
-	shape_counts["triangle"] = triangle_pieces
-	shape_counts["circle"] = circle_pieces
-	
-	# Emit signals for each shape type
-	emit_signal("on_pickup", "circle", circle_pieces)
-	emit_signal("on_pickup", "triangle", triangle_pieces)
-	emit_signal("on_pickup", "square", square_pieces)
+
 
 	var is_dialogue = Callable(self, "set_dialog_invinciblity") 
 	ui.connect("dialog_visible", is_dialogue)
@@ -303,6 +295,18 @@ func _ready() -> void:
 	grappling_line.default_color = Color(1, 1, 1, 0.8)
 	add_child(grappling_line)
 	grappling_line.visible = false
+
+		# Initialize shape counts
+	shape_counts["square"] = square_pieces
+	shape_counts["triangle"] = triangle_pieces
+	shape_counts["circle"] = circle_pieces
+	
+	await get_tree().create_timer(1.0).timeout
+
+	# Emit signals for each shape type
+	emit_signal("on_pickup", "circle", circle_pieces)
+	emit_signal("on_pickup", "triangle", triangle_pieces)
+	emit_signal("on_pickup", "square", square_pieces)
 
 func _physics_process(delta: float) -> void:
 	# Skip all physics if player is disabled
@@ -982,16 +986,23 @@ func collect_pickup(pickup: Node2D) -> void:
 	if pickup.is_in_group("pickup_group"):
 		var pickup_parent = pickup.get_parent()
 		if pickup_parent:
+			print("Collecting pickup: ", pickup_parent.name)
 			# Add to appropriate shape count
 			if pickup_parent.is_in_group("triangle_pickup"):
 				triangle_pieces += 1
-				Global.emit_signal("shape_collected", "triangle", triangle_pieces)
+				shape_counts["triangle"] = triangle_pieces
+				print("Emitting triangle pickup signal: ", triangle_pieces)
+				emit_signal("on_pickup", "triangle", triangle_pieces)
 			elif pickup_parent.is_in_group("square_pickup"):
 				square_pieces += 1
-				Global.emit_signal("shape_collected", "square", square_pieces)
+				shape_counts["square"] = square_pieces
+				print("Emitting square pickup signal: ", square_pieces)
+				emit_signal("on_pickup", "square", square_pieces)
 			elif pickup_parent.is_in_group("circle_pickup"):
 				circle_pieces += 1
-				Global.emit_signal("shape_collected", "circle", circle_pieces)
+				shape_counts["circle"] = circle_pieces
+				print("Emitting circle pickup signal: ", circle_pieces)
+				emit_signal("on_pickup", "circle", circle_pieces)
 			
 			# Update activation states
 			update_activation("all")

@@ -28,16 +28,16 @@ func _ready() -> void:
 	triangle_icon.add_to_group("shape_triangle")
 	square_icon.add_to_group("shape_square")
 	
-	var _updateScore = Callable(self, "updateScore") 
-	player.connect("on_pickup", _updateScore)
-	
-	var _checkForActivate = Callable(self, "checkForActivated") 
-	player.connect("on_activate", _checkForActivate)
-	
-	var _no_projectile = Callable(self, "no_projectile") 
-	player.connect("on_empty", _no_projectile)
+	# Connect to player signals
+	if player:
+		print("Connecting to player signals")
+		player.connect("on_pickup", Callable(self, "updateScore"))
+		player.connect("on_activate", Callable(self, "checkForActivated"))
+		player.connect("on_empty", Callable(self, "no_projectile"))
+	else:
+		print("Player not found!")
 		
-	checkStatus()	
+	checkStatus()
 
 func checkForActivated(shape:String) -> void:
 	print(shape)
@@ -87,29 +87,28 @@ func set_blueprint_item_status():
 			polygon2d.color = blueprint_color
 
 func updateScore(pickup_type:String, pieces:int):
-
-	# var iconStr:String = "../"+pickup_type+"VBoxContainer/"+pickup_type+"CenterContainer/" + pickup_type + "Icon"
-
-	# var icon:Polygon2D = get_node(iconStr)
-	
+	print("score updated")
 	var labelStr:String = pickup_type + "VBoxContainer/" + pickup_type + "Label"
-	var label:Label =  get_node(labelStr)	
-	
-	
-	label.set_text(str(pieces))
-	animation_player.play(pickup_type + "_update")
-	await animation_player.animation_finished
-	animation_player.play("RESET")
-	if (pickup_type == "triangle"):
-		triangle_score = pieces
-	if (pickup_type == "square"):
-		square_score = pieces
-	if (pickup_type == "circle"):
-		circle_score = pieces
+	var label:Label = get_node(labelStr)
+
+	if label:
+		label.set_text(str(pieces))
+		animation_player.play(pickup_type + "_update")
+		await animation_player.animation_finished
+		animation_player.play("RESET")
 		
-	checkStatus()
-	emit_signal("on_score", circle_score, triangle_score, square_score)
-	
+		if (pickup_type == "triangle"):
+			triangle_score = pieces
+		if (pickup_type == "square"):
+			square_score = pieces
+		if (pickup_type == "circle"):
+			circle_score = pieces
+			
+		checkStatus()
+		emit_signal("on_score", circle_score, triangle_score, square_score)
+	else:
+		print("Label not found: ", labelStr)
+
 func no_projectile(shape: String) -> void:
 	animation_player.play(shape + "_deny")
 	print(shape + "_deny")

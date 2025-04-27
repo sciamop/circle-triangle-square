@@ -45,6 +45,9 @@ grappling_hook_point=""
 summit_point=""
 oob_trigger=""
 pickaxe_target=""
+circle_pickup=""
+triangle_group=""
+square_group=""
 
 [input]
 
