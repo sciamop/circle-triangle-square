@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://dm4ey0iltuo33" path="res://Scripts/UI.gd" id="1_w371h"]
 [ext_resource type="LabelSettings" uid="uid://pjukfu4qrdup" path="res://Resources/blueprint_label_settings.tres" id="2_qwshj"]
 [ext_resource type="VideoStream" uid="uid://bfastants1eq8" path="res://Videos/shapes.ogv" id="3_48q88"]
-[ext_resource type="FontFile" uid="uid://dbb1aunswvl1g" path="res://Fonts/circle-triangle-square-Regular.otf" id="3_dewlx"]
 [ext_resource type="FontFile" uid="uid://653p86rf1v0e" path="res://Fonts/Aileron-Heavy.otf" id="3_wunin"]
 [ext_resource type="Script" uid="uid://dnyl3fayamem0" path="res://Scripts/pickup_tracker.gd" id="4_hfhsn"]
 [ext_resource type="LabelSettings" uid="uid://d270b5vas2gjr" path="res://Resources/blueprint_label_next_settings.tres" id="4_j04uc"]
@@ -21,21 +20,25 @@ font = ExtResource("3_wunin")
 font_size = 88
 font_color = Color(0, 0, 0, 1)
 
+[sub_resource type="LabelSettings" id="LabelSettings_wi7yl"]
+font = ExtResource("3_wunin")
+font_size = 46
+
 [sub_resource type="LabelSettings" id="LabelSettings_hfhsn"]
-font = ExtResource("3_dewlx")
-font_size = 36
+font = ExtResource("3_wunin")
+font_size = 24
 font_color = Color(0.0214346, 0.0214346, 0.0214346, 1)
 shadow_color = Color(1, 1, 1, 0.835294)
 
 [sub_resource type="LabelSettings" id="LabelSettings_qwshj"]
-font = ExtResource("3_dewlx")
-font_size = 36
+font = ExtResource("3_wunin")
+font_size = 24
 font_color = Color(0, 0, 0, 1)
 shadow_color = Color(1, 1, 1, 0.733333)
 
 [sub_resource type="LabelSettings" id="LabelSettings_48q88"]
-font = ExtResource("3_dewlx")
-font_size = 36
+font = ExtResource("3_wunin")
+font_size = 24
 font_color = Color(0, 0, 0, 1)
 outline_color = Color(0.0383972, 0.0383972, 0.0383972, 1)
 shadow_color = Color(1, 1, 1, 0.788235)
@@ -681,18 +684,19 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -190.566
-offset_top = -38.3996
+offset_top = -36.6485
 offset_right = 594.434
-offset_bottom = 241.6
+offset_bottom = 280.351
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.375, 0.375)
-text = "[SPACE]             JUMP
-[CONTROL]      MELEE ATTACK
-[1]                      SELECT CIRCLE - ACTIVATES INSIGHT
-[2]                      SELECT TRIANGLE - FIRES PROJECTILE
-[3]                      SELECT SQUARE - SPAWN SHIELD
-[B]                      ACTIVATE SHAPE "
+text = "[SPACE]                       JUMP
+[CONTROL]                MELEE ATTACK
+[1]                                SELECT CIRCLE - ACTIVATES INSIGHT
+[2]                                SELECT TRIANGLE - FIRES PROJECTILE
+[3]                                SELECT SQUARE - SPAWN SHIELD
+[B]                                ACTIVATE SHAPE
+[E]                                ALT ACTION"
 label_settings = ExtResource("2_qwshj")
 
 [node name="blueprint" type="Label" parent="CanvasLayer/Control/OOB"]
@@ -730,6 +734,7 @@ text = "CONTROLS"
 label_settings = SubResource("LabelSettings_xjg7p")
 
 [node name="CIR" type="Area2D" parent="CanvasLayer/Control/OOB"]
+visible = false
 position = Vector2(30.1541, 137.884)
 scale = Vector2(0.0569521, 0.0569521)
 collision_mask = 3
@@ -742,6 +747,7 @@ width = 30.0
 default_color = Color(1, 0, 0, 1)
 
 [node name="TR" type="Area2D" parent="CanvasLayer/Control/OOB"]
+visible = false
 position = Vector2(40.1543, 118.819)
 scale = Vector2(0.0135777, 0.0135777)
 
@@ -755,6 +761,7 @@ default_color = Color(1, 0, 0, 1)
 joint_mode = 1
 
 [node name="SQU" type="Area2D" parent="CanvasLayer/Control/OOB"]
+visible = false
 position = Vector2(35.5605, 106.63)
 scale = Vector2(0.0135777, 0.0135777)
 collision_mask = 3
@@ -774,19 +781,217 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 44.0
+offset_left = 7.0
 offset_top = 79.0
-offset_right = 433.0
+offset_right = 494.0
 offset_bottom = 119.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.375, 0.375)
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_font_sizes/font_size = 8
-text = "PRESS [ENTER] KEY TO START"
+text = "PRESS [ENTER] OR          KEY TO START"
 label_settings = ExtResource("4_j04uc")
 horizontal_alignment = 2
 autowrap_mode = 1
+
+[node name="controller_button" type="Polygon2D" parent="CanvasLayer/Control/OOB" groups=["controller_UI"]]
+position = Vector2(33.269, 175.636)
+rotation = -1.5708
+scale = Vector2(0.513184, 0.519708)
+color = Color(0.20871, 0.20871, 0.20871, 1)
+polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+
+[node name="Label3" type="Label" parent="CanvasLayer/Control/OOB/controller_button"]
+offset_left = 10.3301
+offset_top = -5.65295
+offset_right = 42.3301
+offset_bottom = 50.347
+rotation = 1.57079
+scale = Vector2(0.379552, 0.379552)
+text = "Y"
+label_settings = SubResource("LabelSettings_wi7yl")
+metadata/_edit_use_anchors_ = true
+
+[node name="controller_button_X" type="Polygon2D" parent="CanvasLayer/Control/OOB" groups=["controller_UI"]]
+position = Vector2(33.269, 157.83)
+rotation = -1.5708
+scale = Vector2(0.513184, 0.519708)
+color = Color(0.20871, 0.20871, 0.20871, 1)
+polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+
+[node name="Label3" type="Label" parent="CanvasLayer/Control/OOB/controller_button_X"]
+offset_left = 10.3301
+offset_top = -5.65295
+offset_right = 42.3301
+offset_bottom = 50.347
+rotation = 1.57079
+scale = Vector2(0.379552, 0.379552)
+text = "X"
+label_settings = SubResource("LabelSettings_wi7yl")
+metadata/_edit_use_anchors_ = true
+
+[node name="controller_button_Y2" type="Polygon2D" parent="CanvasLayer/Control/OOB" groups=["controller_UI"]]
+position = Vector2(308.57, 186.488)
+rotation = -1.5708
+scale = Vector2(0.513184, 0.519708)
+color = Color(1, 0.207843, 0.207843, 1)
+polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+
+[node name="Label3" type="Label" parent="CanvasLayer/Control/OOB/controller_button_Y2"]
+offset_left = 10.3301
+offset_top = -5.65295
+offset_right = 42.3301
+offset_bottom = 50.347
+rotation = 1.57079
+scale = Vector2(0.379552, 0.379552)
+text = "Y"
+label_settings = SubResource("LabelSettings_wi7yl")
+metadata/_edit_use_anchors_ = true
+
+[node name="controller_button9" type="Polygon2D" parent="CanvasLayer/Control/OOB" groups=["controller_UI"]]
+position = Vector2(77.3152, 88.4286)
+rotation = -1.5708
+scale = Vector2(0.513184, 0.519708)
+color = Color(0.20871, 0.20871, 0.20871, 1)
+polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+
+[node name="Label3" type="Label" parent="CanvasLayer/Control/OOB/controller_button9"]
+offset_left = 10.3301
+offset_top = -5.65295
+offset_right = 42.3301
+offset_bottom = 50.347
+rotation = 1.57079
+scale = Vector2(0.379552, 0.379552)
+text = "B"
+label_settings = SubResource("LabelSettings_wi7yl")
+metadata/_edit_use_anchors_ = true
+
+[node name="controller_button10" type="Polygon2D" parent="CanvasLayer/Control/OOB" groups=["controller_UI"]]
+position = Vector2(60.915, 70.4802)
+rotation = -1.5708
+scale = Vector2(0.513184, 0.519708)
+color = Color(0.20871, 0.20871, 0.20871, 1)
+polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+
+[node name="Label3" type="Label" parent="CanvasLayer/Control/OOB/controller_button10"]
+offset_left = 10.3301
+offset_top = -5.65295
+offset_right = 42.3301
+offset_bottom = 50.347
+rotation = 1.57079
+scale = Vector2(0.379552, 0.379552)
+text = "A"
+label_settings = SubResource("LabelSettings_wi7yl")
+metadata/_edit_use_anchors_ = true
+
+[node name="controller_button3" type="Polygon2D" parent="CanvasLayer/Control/OOB" groups=["controller_UI"]]
+position = Vector2(33.269, 140.962)
+rotation = -1.5708
+scale = Vector2(0.513183, 0.519708)
+color = Color(0.20871, 0.20871, 0.20871, 1)
+polygon = PackedVector2Array(12, 0, 11.945, 21.6388, 8.53284, 27.0485, -0.850586, 28.8517, -10.234, 25.2452, -11.9401, 18.9338, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+
+[node name="Label3" type="Label" parent="CanvasLayer/Control/OOB/controller_button3"]
+offset_left = 10.239
+offset_top = -2.70487
+offset_right = 89.239
+offset_bottom = 53.2951
+rotation = 1.57079
+scale = Vector2(0.379552, 0.379552)
+text = "RB  "
+label_settings = SubResource("LabelSettings_wi7yl")
+metadata/_edit_use_anchors_ = true
+
+[node name="controller_button4" type="Polygon2D" parent="CanvasLayer/Control/OOB" groups=["controller_UI"]]
+position = Vector2(67.2286, 140.96)
+rotation = -4.71238
+scale = Vector2(0.513183, 0.519708)
+color = Color(0.20871, 0.20871, 0.20871, 1)
+polygon = PackedVector2Array(12, 0, 11.945, 21.6388, 8.53284, 27.0485, -0.850586, 28.8517, -10.234, 25.2452, -11.9401, 18.9338, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+
+[node name="Label3" type="Label" parent="CanvasLayer/Control/OOB/controller_button4"]
+offset_left = -11.0894
+offset_top = 19.8356
+offset_right = 67.9106
+offset_bottom = 75.8356
+rotation = -1.57079
+scale = Vector2(0.379552, 0.379552)
+text = "LB  "
+label_settings = SubResource("LabelSettings_wi7yl")
+metadata/_edit_use_anchors_ = true
+
+[node name="controller_button5" type="Polygon2D" parent="CanvasLayer/Control/OOB" groups=["controller_UI"]]
+position = Vector2(33.269, 123.45)
+rotation = -1.5708
+scale = Vector2(0.513183, 0.519708)
+color = Color(0.20871, 0.20871, 0.20871, 1)
+polygon = PackedVector2Array(12, 0, 11.945, 21.6388, 8.53284, 27.0485, -0.850586, 28.8517, -10.234, 25.2452, -11.9401, 18.9338, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+
+[node name="Label3" type="Label" parent="CanvasLayer/Control/OOB/controller_button5"]
+offset_left = 10.239
+offset_top = -2.70487
+offset_right = 89.239
+offset_bottom = 53.2951
+rotation = 1.57079
+scale = Vector2(0.379552, 0.379552)
+text = "RB  "
+label_settings = SubResource("LabelSettings_wi7yl")
+metadata/_edit_use_anchors_ = true
+
+[node name="controller_button6" type="Polygon2D" parent="CanvasLayer/Control/OOB" groups=["controller_UI"]]
+position = Vector2(67.2286, 123.479)
+rotation = -4.71238
+scale = Vector2(0.513183, 0.519708)
+color = Color(0.20871, 0.20871, 0.20871, 1)
+polygon = PackedVector2Array(12, 0, 11.945, 21.6388, 8.53284, 27.0485, -0.850586, 28.8517, -10.234, 25.2452, -11.9401, 18.9338, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+
+[node name="Label3" type="Label" parent="CanvasLayer/Control/OOB/controller_button6"]
+offset_left = -11.0894
+offset_top = 19.8356
+offset_right = 67.9106
+offset_bottom = 75.8356
+rotation = -1.57079
+scale = Vector2(0.379552, 0.379552)
+text = "LB  "
+label_settings = SubResource("LabelSettings_wi7yl")
+metadata/_edit_use_anchors_ = true
+
+[node name="controller_button7" type="Polygon2D" parent="CanvasLayer/Control/OOB" groups=["controller_UI"]]
+position = Vector2(33.269, 105.095)
+rotation = -1.5708
+scale = Vector2(0.513183, 0.519708)
+color = Color(0.20871, 0.20871, 0.20871, 1)
+polygon = PackedVector2Array(12, 0, 11.945, 21.6388, 8.53284, 27.0485, -0.850586, 28.8517, -10.234, 25.2452, -11.9401, 18.9338, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+
+[node name="Label3" type="Label" parent="CanvasLayer/Control/OOB/controller_button7"]
+offset_left = 10.239
+offset_top = -2.70487
+offset_right = 89.239
+offset_bottom = 53.2951
+rotation = 1.57079
+scale = Vector2(0.379552, 0.379552)
+text = "RB  "
+label_settings = SubResource("LabelSettings_wi7yl")
+metadata/_edit_use_anchors_ = true
+
+[node name="controller_button8" type="Polygon2D" parent="CanvasLayer/Control/OOB" groups=["controller_UI"]]
+position = Vector2(67.2286, 105.093)
+rotation = -4.71238
+scale = Vector2(0.513183, 0.519708)
+color = Color(0.20871, 0.20871, 0.20871, 1)
+polygon = PackedVector2Array(12, 0, 11.945, 21.6388, 8.53284, 27.0485, -0.850586, 28.8517, -10.234, 25.2452, -11.9401, 18.9338, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+
+[node name="Label3" type="Label" parent="CanvasLayer/Control/OOB/controller_button8"]
+offset_left = -11.0894
+offset_top = 19.8356
+offset_right = 67.9106
+offset_bottom = 75.8356
+rotation = -1.57079
+scale = Vector2(0.379552, 0.379552)
+text = "LB  "
+label_settings = SubResource("LabelSettings_wi7yl")
+metadata/_edit_use_anchors_ = true
 
 [node name="DESIGNINTENT" type="ColorRect" parent="CanvasLayer/Control" groups=["OOB"]]
 visible = false
@@ -815,27 +1020,6 @@ scale = Vector2(0.3, 0.3)
 text = " O /\\ [ ] (“circle triangle square”) explores the concept of ‘building under pressure’.  The player is tasked with reuniting (capturing?) a cat that is out-of-reach at the beginning of the level. In this geometric world, the player can harvest shapes from enemies that will allow them to do two things: build the environment and build items. These builds will help the player to overcome obstacles (ie a too-high platform or a hitherto undefeatable enemy) to gain access to the cat. What is currently available in the demo is just the core mechanics of building environment and building an item. The next step is to add the “under pressure” (and puzzle solving) bits which will be expressed in the level design. Building, puzzle-solving, pressure, discovery: this comprises the core gameplay loop of O /\\ [ ]"
 label_settings = ExtResource("2_qwshj")
 autowrap_mode = 2
-
-[node name="Instructions2" type="Label" parent="CanvasLayer/Control/DESIGNINTENT"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -4.0
-offset_top = 80.0
-offset_right = 482.0
-offset_bottom = 116.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.375, 0.375)
-theme_override_colors/font_color = Color(1, 0, 0, 1)
-theme_override_font_sizes/font_size = 8
-text = "PRESS [ENTER] KEY FOR CONTROLS"
-label_settings = ExtResource("4_j04uc")
-horizontal_alignment = 2
-autowrap_mode = 1
 
 [node name="grappling hook" type="Label" parent="CanvasLayer/Control/DESIGNINTENT"]
 layout_mode = 1
@@ -884,15 +1068,6 @@ position = Vector2(392.384, 192.117)
 rotation = 1.56978
 scale = Vector2(0.0135777, 0.0135777)
 
-[node name="TRI" type="Line2D" parent="CanvasLayer/Control/DESIGNINTENT/TR2"]
-position = Vector2(-291.499, 438.582)
-scale = Vector2(4.12913, 4.12913)
-points = PackedVector2Array(1, -82, -83, 59, 88, 59)
-closed = true
-width = 30.0
-default_color = Color(1, 0, 0, 1)
-joint_mode = 1
-
 [node name="SQU" type="Area2D" parent="CanvasLayer/Control/DESIGNINTENT"]
 position = Vector2(9.78613, 19.0776)
 scale = Vector2(0.0135777, 0.0135777)
@@ -906,6 +1081,45 @@ closed = true
 width = 30.0
 default_color = Color(1, 0, 0, 1)
 
+[node name="Instructions3" type="Label" parent="CanvasLayer/Control/DESIGNINTENT"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.47762
+offset_top = 79.797
+offset_right = 503.522
+offset_bottom = 158.797
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.375, 0.375)
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 8
+text = "PRESS [ENTER] OR          FOR CONTROLS"
+label_settings = ExtResource("4_j04uc")
+horizontal_alignment = 2
+autowrap_mode = 1
+
+[node name="controller_button_Y2" type="Polygon2D" parent="CanvasLayer/Control/DESIGNINTENT" groups=["controller_UI"]]
+position = Vector2(295.155, 187.723)
+rotation = -1.5708
+scale = Vector2(0.513184, 0.519708)
+color = Color(1, 0.207843, 0.207843, 1)
+polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+
+[node name="Label3" type="Label" parent="CanvasLayer/Control/DESIGNINTENT/controller_button_Y2"]
+offset_left = 10.3301
+offset_top = -5.65295
+offset_right = 42.3301
+offset_bottom = 50.347
+rotation = 1.57079
+scale = Vector2(0.379552, 0.379552)
+text = "Y"
+label_settings = SubResource("LabelSettings_wi7yl")
+metadata/_edit_use_anchors_ = true
+
 [node name="SHAPES_OOB" type="ColorRect" parent="CanvasLayer/Control" groups=["OOB"]]
 visible = false
 layout_mode = 0
@@ -915,27 +1129,6 @@ offset_right = 736.0
 offset_bottom = 283.0
 scale = Vector2(2.13412, 2.28433)
 color = Color(1, 1, 1, 0.937255)
-
-[node name="Continue_msg" type="Label" parent="CanvasLayer/Control/SHAPES_OOB"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -52.8038
-offset_top = 81.1103
-offset_right = 587.196
-offset_bottom = 119.11
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.375, 0.375)
-theme_override_colors/font_color = Color(1, 0, 0, 1)
-theme_override_font_sizes/font_size = 8
-text = "PRESS [ENTER] KEY TO EXIT"
-label_settings = ExtResource("4_j04uc")
-horizontal_alignment = 2
-autowrap_mode = 1
 
 [node name="Title" type="Label" parent="CanvasLayer/Control/SHAPES_OOB"]
 layout_mode = 1
@@ -1030,6 +1223,45 @@ closed = true
 width = 30.0
 default_color = Color(1, 0, 0, 1)
 
+[node name="Instructions3" type="Label" parent="CanvasLayer/Control/SHAPES_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.47762
+offset_top = 81.9858
+offset_right = 503.522
+offset_bottom = 160.986
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.375, 0.375)
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 8
+text = "PRESS [ENTER] OR           TO EXIT"
+label_settings = ExtResource("4_j04uc")
+horizontal_alignment = 2
+autowrap_mode = 1
+
+[node name="controller_button_Y2" type="Polygon2D" parent="CanvasLayer/Control/SHAPES_OOB" groups=["controller_UI"]]
+position = Vector2(333.678, 189.738)
+rotation = -1.5708
+scale = Vector2(0.513184, 0.519708)
+color = Color(1, 0.207843, 0.207843, 1)
+polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+
+[node name="Label3" type="Label" parent="CanvasLayer/Control/SHAPES_OOB/controller_button_Y2"]
+offset_left = 10.3301
+offset_top = -5.65295
+offset_right = 42.3301
+offset_bottom = 50.347
+rotation = 1.57079
+scale = Vector2(0.379552, 0.379552)
+text = "Y"
+label_settings = SubResource("LabelSettings_wi7yl")
+metadata/_edit_use_anchors_ = true
+
 [node name="CIR_OOB" type="ColorRect" parent="CanvasLayer/Control" groups=["OOB"]]
 visible = false
 layout_mode = 0
@@ -1039,27 +1271,6 @@ offset_right = 739.0
 offset_bottom = 283.0
 scale = Vector2(2.13412, 2.28433)
 color = Color(1, 1, 1, 0.937255)
-
-[node name="Continue_msg" type="Label" parent="CanvasLayer/Control/CIR_OOB"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -65.5183
-offset_top = 80.6725
-offset_right = 605.481
-offset_bottom = 116.673
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.375, 0.375)
-theme_override_colors/font_color = Color(1, 0, 0, 1)
-theme_override_font_sizes/font_size = 8
-text = "PRESS [ENTER] KEY TO EXIT"
-label_settings = ExtResource("4_j04uc")
-horizontal_alignment = 2
-autowrap_mode = 1
 
 [node name="Title" type="Label" parent="CanvasLayer/Control/CIR_OOB"]
 layout_mode = 1
@@ -1154,6 +1365,45 @@ closed = true
 width = 30.0
 default_color = Color(1, 0, 0, 1)
 
+[node name="Instructions3" type="Label" parent="CanvasLayer/Control/CIR_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1.79182
+offset_top = 79.797
+offset_right = 507.208
+offset_bottom = 158.797
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.375, 0.375)
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 8
+text = "PRESS [ENTER] OR          TO EXIT"
+label_settings = ExtResource("4_j04uc")
+horizontal_alignment = 2
+autowrap_mode = 1
+
+[node name="controller_button_Y2" type="Polygon2D" parent="CanvasLayer/Control/CIR_OOB" groups=["controller_UI"]]
+position = Vector2(340.157, 187.723)
+rotation = -1.5708
+scale = Vector2(0.513184, 0.519708)
+color = Color(1, 0.207843, 0.207843, 1)
+polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+
+[node name="Label3" type="Label" parent="CanvasLayer/Control/CIR_OOB/controller_button_Y2"]
+offset_left = 10.3301
+offset_top = -5.65295
+offset_right = 42.3301
+offset_bottom = 50.347
+rotation = 1.57079
+scale = Vector2(0.379552, 0.379552)
+text = "Y"
+label_settings = SubResource("LabelSettings_wi7yl")
+metadata/_edit_use_anchors_ = true
+
 [node name="TRI_OOB" type="ColorRect" parent="CanvasLayer/Control" groups=["OOB"]]
 visible = false
 layout_mode = 0
@@ -1163,27 +1413,6 @@ offset_right = 740.0
 offset_bottom = 283.0
 scale = Vector2(2.13412, 2.28433)
 color = Color(1, 1, 1, 0.937255)
-
-[node name="Continue_msg" type="Label" parent="CanvasLayer/Control/TRI_OOB"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -48.2856
-offset_top = 81.0
-offset_right = 586.714
-offset_bottom = 116.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.375, 0.375)
-theme_override_colors/font_color = Color(1, 0, 0, 1)
-theme_override_font_sizes/font_size = 8
-text = "PRESS [ENTER] KEY TO EXIT"
-label_settings = ExtResource("4_j04uc")
-horizontal_alignment = 2
-autowrap_mode = 1
 
 [node name="Title" type="Label" parent="CanvasLayer/Control/TRI_OOB"]
 layout_mode = 1
@@ -1277,6 +1506,45 @@ closed = true
 width = 30.0
 default_color = Color(1, 0, 0, 1)
 
+[node name="Instructions3" type="Label" parent="CanvasLayer/Control/TRI_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1.79182
+offset_top = 79.797
+offset_right = 507.208
+offset_bottom = 158.797
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.375, 0.375)
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 8
+text = "PRESS [ENTER] OR          TO EXIT"
+label_settings = ExtResource("4_j04uc")
+horizontal_alignment = 2
+autowrap_mode = 1
+
+[node name="controller_button_Y2" type="Polygon2D" parent="CanvasLayer/Control/TRI_OOB" groups=["controller_UI"]]
+position = Vector2(340.158, 187.723)
+rotation = -1.5708
+scale = Vector2(0.513184, 0.519708)
+color = Color(1, 0.207843, 0.207843, 1)
+polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+
+[node name="Label3" type="Label" parent="CanvasLayer/Control/TRI_OOB/controller_button_Y2"]
+offset_left = 10.3301
+offset_top = -5.65295
+offset_right = 42.3301
+offset_bottom = 50.347
+rotation = 1.57079
+scale = Vector2(0.379552, 0.379552)
+text = "Y"
+label_settings = SubResource("LabelSettings_wi7yl")
+metadata/_edit_use_anchors_ = true
+
 [node name="SQU_OOB" type="ColorRect" parent="CanvasLayer/Control" groups=["OOB"]]
 visible = false
 layout_mode = 0
@@ -1286,27 +1554,6 @@ offset_right = 740.0
 offset_bottom = 283.0
 scale = Vector2(2.13412, 2.28433)
 color = Color(1, 1, 1, 0.937255)
-
-[node name="Continue_msg" type="Label" parent="CanvasLayer/Control/SQU_OOB"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -48.7542
-offset_top = 80.1245
-offset_right = 586.246
-offset_bottom = 115.124
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.375, 0.375)
-theme_override_colors/font_color = Color(1, 0, 0, 1)
-theme_override_font_sizes/font_size = 8
-text = "PRESS [ENTER] KEY TO EXIT"
-label_settings = ExtResource("4_j04uc")
-horizontal_alignment = 2
-autowrap_mode = 1
 
 [node name="Title" type="Label" parent="CanvasLayer/Control/SQU_OOB"]
 layout_mode = 1
@@ -1400,6 +1647,45 @@ closed = true
 width = 30.0
 default_color = Color(1, 0, 0, 1)
 
+[node name="Instructions3" type="Label" parent="CanvasLayer/Control/SQU_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1.79182
+offset_top = 79.797
+offset_right = 507.208
+offset_bottom = 158.797
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.375, 0.375)
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 8
+text = "PRESS [ENTER] OR          TO EXIT"
+label_settings = ExtResource("4_j04uc")
+horizontal_alignment = 2
+autowrap_mode = 1
+
+[node name="controller_button_Y2" type="Polygon2D" parent="CanvasLayer/Control/SQU_OOB" groups=["controller_UI"]]
+position = Vector2(340.157, 187.723)
+rotation = -1.5708
+scale = Vector2(0.513184, 0.519708)
+color = Color(1, 0.207843, 0.207843, 1)
+polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+
+[node name="Label3" type="Label" parent="CanvasLayer/Control/SQU_OOB/controller_button_Y2"]
+offset_left = 10.3301
+offset_top = -5.65295
+offset_right = 42.3301
+offset_bottom = 50.347
+rotation = 1.57079
+scale = Vector2(0.379552, 0.379552)
+text = "Y"
+label_settings = SubResource("LabelSettings_wi7yl")
+metadata/_edit_use_anchors_ = true
+
 [node name="ENEMY_OOB" type="ColorRect" parent="CanvasLayer/Control" groups=["OOB"]]
 visible = false
 layout_mode = 0
@@ -1409,27 +1695,6 @@ offset_right = 740.0
 offset_bottom = 283.0
 scale = Vector2(2.13412, 2.28433)
 color = Color(1, 1, 1, 0.937255)
-
-[node name="Continue_msg" type="Label" parent="CanvasLayer/Control/ENEMY_OOB"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -37.4666
-offset_top = 81.1097
-offset_right = 567.533
-offset_bottom = 116.109
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.375, 0.375)
-theme_override_colors/font_color = Color(1, 0, 0, 1)
-theme_override_font_sizes/font_size = 8
-text = "PRESS [ENTER] KEY TO EXIT"
-label_settings = ExtResource("4_j04uc")
-horizontal_alignment = 2
-autowrap_mode = 1
 
 [node name="Title" type="Label" parent="CanvasLayer/Control/ENEMY_OOB"]
 layout_mode = 1
@@ -1523,6 +1788,45 @@ closed = true
 width = 30.0
 default_color = Color(1, 0, 0, 1)
 
+[node name="Instructions3" type="Label" parent="CanvasLayer/Control/ENEMY_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1.79182
+offset_top = 79.797
+offset_right = 507.208
+offset_bottom = 158.797
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.375, 0.375)
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 8
+text = "PRESS [ENTER] OR          TO EXIT"
+label_settings = ExtResource("4_j04uc")
+horizontal_alignment = 2
+autowrap_mode = 1
+
+[node name="controller_button_Y2" type="Polygon2D" parent="CanvasLayer/Control/ENEMY_OOB" groups=["controller_UI"]]
+position = Vector2(340.157, 187.723)
+rotation = -1.5708
+scale = Vector2(0.513184, 0.519708)
+color = Color(1, 0.207843, 0.207843, 1)
+polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+
+[node name="Label3" type="Label" parent="CanvasLayer/Control/ENEMY_OOB/controller_button_Y2"]
+offset_left = 10.3301
+offset_top = -5.65295
+offset_right = 42.3301
+offset_bottom = 50.347
+rotation = 1.57079
+scale = Vector2(0.379552, 0.379552)
+text = "Y"
+label_settings = SubResource("LabelSettings_wi7yl")
+metadata/_edit_use_anchors_ = true
+
 [node name="BLUEPRINT_OOB" type="ColorRect" parent="CanvasLayer/Control" groups=["OOB"]]
 visible = false
 layout_mode = 0
@@ -1532,27 +1836,6 @@ offset_right = 740.0
 offset_bottom = 283.0
 scale = Vector2(2.13412, 2.28433)
 color = Color(1, 1, 1, 0.937255)
-
-[node name="Continue_msg" type="Label" parent="CanvasLayer/Control/BLUEPRINT_OOB"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -37.4666
-offset_top = 81.1097
-offset_right = 567.533
-offset_bottom = 116.109
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.375, 0.375)
-theme_override_colors/font_color = Color(1, 0, 0, 1)
-theme_override_font_sizes/font_size = 8
-text = "PRESS [ENTER] KEY TO EXIT"
-label_settings = ExtResource("4_j04uc")
-horizontal_alignment = 2
-autowrap_mode = 1
 
 [node name="Title" type="Label" parent="CanvasLayer/Control/BLUEPRINT_OOB"]
 layout_mode = 1
@@ -1648,6 +1931,45 @@ closed = true
 width = 30.0
 default_color = Color(1, 0, 0, 1)
 
+[node name="Instructions3" type="Label" parent="CanvasLayer/Control/BLUEPRINT_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1.79182
+offset_top = 79.797
+offset_right = 507.208
+offset_bottom = 158.797
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.375, 0.375)
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 8
+text = "PRESS [ENTER] OR          TO EXIT"
+label_settings = ExtResource("4_j04uc")
+horizontal_alignment = 2
+autowrap_mode = 1
+
+[node name="controller_button_Y2" type="Polygon2D" parent="CanvasLayer/Control/BLUEPRINT_OOB" groups=["controller_UI"]]
+position = Vector2(340.157, 187.723)
+rotation = -1.5708
+scale = Vector2(0.513184, 0.519708)
+color = Color(1, 0.207843, 0.207843, 1)
+polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+
+[node name="Label3" type="Label" parent="CanvasLayer/Control/BLUEPRINT_OOB/controller_button_Y2"]
+offset_left = 10.3301
+offset_top = -5.65295
+offset_right = 42.3301
+offset_bottom = 50.347
+rotation = 1.57079
+scale = Vector2(0.379552, 0.379552)
+text = "Y"
+label_settings = SubResource("LabelSettings_wi7yl")
+metadata/_edit_use_anchors_ = true
+
 [node name="CAT_OOB" type="ColorRect" parent="CanvasLayer/Control" groups=["OOB"]]
 visible = false
 layout_mode = 0
@@ -1657,27 +1979,6 @@ offset_right = 742.0
 offset_bottom = 283.0
 scale = Vector2(2.13412, 2.28433)
 color = Color(1, 1, 1, 0.937255)
-
-[node name="Continue_msg" type="Label" parent="CanvasLayer/Control/CAT_OOB"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -37.4666
-offset_top = 81.1097
-offset_right = 567.533
-offset_bottom = 116.109
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.375, 0.375)
-theme_override_colors/font_color = Color(1, 0, 0, 1)
-theme_override_font_sizes/font_size = 8
-text = "PRESS [ENTER] KEY TO EXIT"
-label_settings = ExtResource("4_j04uc")
-horizontal_alignment = 2
-autowrap_mode = 1
 
 [node name="Title" type="Label" parent="CanvasLayer/Control/CAT_OOB"]
 layout_mode = 1
@@ -1780,6 +2081,45 @@ points = PackedVector2Array(-82, -47, -48, -80, 0, -93, 48, -80, 83, -46, 96, 1,
 closed = true
 width = 30.0
 default_color = Color(1, 0, 0, 1)
+
+[node name="Instructions3" type="Label" parent="CanvasLayer/Control/CAT_OOB"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1.79182
+offset_top = 79.797
+offset_right = 507.208
+offset_bottom = 158.797
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.375, 0.375)
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 8
+text = "PRESS [ENTER] OR          TO EXIT"
+label_settings = ExtResource("4_j04uc")
+horizontal_alignment = 2
+autowrap_mode = 1
+
+[node name="controller_button_Y2" type="Polygon2D" parent="CanvasLayer/Control/CAT_OOB" groups=["controller_UI"]]
+position = Vector2(340.157, 187.723)
+rotation = -1.5708
+scale = Vector2(0.513184, 0.519708)
+color = Color(1, 0.207843, 0.207843, 1)
+polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+
+[node name="Label3" type="Label" parent="CanvasLayer/Control/CAT_OOB/controller_button_Y2"]
+offset_left = 10.3301
+offset_top = -5.65295
+offset_right = 42.3301
+offset_bottom = 50.347
+rotation = 1.57079
+scale = Vector2(0.379552, 0.379552)
+text = "Y"
+label_settings = SubResource("LabelSettings_wi7yl")
+metadata/_edit_use_anchors_ = true
 
 [node name="BoxContainer" type="CenterContainer" parent="CanvasLayer/Control"]
 layout_direction = 2

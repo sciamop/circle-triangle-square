@@ -432,7 +432,7 @@ func update_timers(delta: float) -> void:
 
 func handle_input() -> void:
 	# Skip input handling if player is disabled and not grappling
-	if Input.is_action_just_pressed("attack_ranged") and ranged_cooldown_timer <= 0 and ranged_unlocked and active_projectile_shape == "blueprint":
+	if Input.is_action_just_pressed("attack_ranged") and ranged_cooldown_timer <= 0 and ranged_unlocked and active_projectile_shape == "grappling_hook":
 		print("is_grappling: " + str(is_grappling))
 		if is_grappling:
 			print("Detaching from grappling hook")
@@ -485,19 +485,16 @@ func handle_input() -> void:
 		
 	if Input.is_action_just_pressed("activate_circle"):
 		update_activation("circle")
-				
+		
 	if Input.is_action_just_pressed("activate_square"):
 		update_activation("square")
 
-	if Input.is_action_just_pressed("activate_blueprint_item") and Global.has_grappling_hook:
-		update_activation("blueprint")
+	if Input.is_action_just_pressed("activate_grappling_hook") and Global.has_grappling_hook:
+		update_activation("grappling_hook")
 
 	if Input.is_action_just_pressed("activate_pickaxe") and Global.has_pick_axe:
 		update_activation("pickaxe")
-		
-	if Input.is_action_just_pressed("level_2"):
-		Global.has_grappling_hook = true
-		LevelManager.change_level("level2")
+
 
 func apply_gravity(delta: float) -> void:
 	if is_wall_sliding:
@@ -918,7 +915,7 @@ func update_activation(shape: String) -> void:
 	switch_projectile(shape)
 	
 	# Handle grappling hook point visibility
-	if shape == "blueprint" and Global.has_grappling_hook:
+	if shape == "grappling_hook" and Global.has_grappling_hook:
 		# Find the grappling hook point in the scene
 		var grappling_hook_point = get_tree().get_first_node_in_group("grappling_hook_point")
 		print("grappling hook point: ", grappling_hook_point.name)
@@ -986,26 +983,22 @@ func collect_pickup(pickup: Node2D) -> void:
 	if pickup.is_in_group("pickup_group"):
 		var pickup_parent = pickup.get_parent()
 		if pickup_parent:
-			print("Collecting pickup: ", pickup_parent.name)
 			# Add to appropriate shape count
 			if pickup_parent.is_in_group("triangle_pickup"):
 				triangle_pieces += 1
 				shape_counts["triangle"] = triangle_pieces
-				print("Emitting triangle pickup signal: ", triangle_pieces)
 				emit_signal("on_pickup", "triangle", triangle_pieces)
 			elif pickup_parent.is_in_group("square_pickup"):
 				square_pieces += 1
 				shape_counts["square"] = square_pieces
-				print("Emitting square pickup signal: ", square_pieces)
 				emit_signal("on_pickup", "square", square_pieces)
 			elif pickup_parent.is_in_group("circle_pickup"):
 				circle_pieces += 1
 				shape_counts["circle"] = circle_pieces
-				print("Emitting circle pickup signal: ", circle_pieces)
 				emit_signal("on_pickup", "circle", circle_pieces)
 			
-			# Update activation states
-			update_activation("all")
+			# Update activation states without changing selection
+			update_activation(active_projectile_shape)
 			
 			# Remove pickup
 			pickup_parent.queue_free()
@@ -1638,10 +1631,10 @@ func perform_ranged_attack() -> void:
 		pickaxe_wall()
 		
 
-	# Handle blueprint grappling hook
-	print("Checking blueprint conditions - active shape: ", active_projectile_shape, " has blueprint: ", Global.has_grappling_hook)
-	if active_projectile_shape == "blueprint" and Global.has_grappling_hook:
-		print("Blueprint shape active and has blueprint item")
+	# Handle grappling hook
+	print("Checking grappling hook conditions - active shape: ", active_projectile_shape, " has grappling hook: ", Global.has_grappling_hook)
+	if active_projectile_shape == "grappling_hook" and Global.has_grappling_hook:
+		print("Grappling hook shape active and has grappling hook item")
 		var grappling_hook_point = get_tree().get_first_node_in_group("grappling_hook_point")
 		print("Found grappling hook point: ", grappling_hook_point)
 		if grappling_hook_point and grappling_hook_point.visible:
@@ -1664,7 +1657,7 @@ func perform_ranged_attack() -> void:
 		else:
 			print("Grappling hook point not found or not visible")
 	else:
-		print("Blueprint conditions not met - active shape: ", active_projectile_shape, " has blueprint: ", Global.has_grappling_hook)
+		print("Grappling hook conditions not met - active shape: ", active_projectile_shape, " has grappling hook: ", Global.has_grappling_hook)
 
 
 

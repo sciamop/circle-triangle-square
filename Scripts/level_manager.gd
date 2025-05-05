@@ -1,7 +1,7 @@
 extends Node
 
 # Level management
-var current_level: String = "level2"
+var current_level: String = "game"
 var levels = {
 	"game": "res://Scenes/game.tscn",
 	"level2": "res://Scenes/level2.tscn"

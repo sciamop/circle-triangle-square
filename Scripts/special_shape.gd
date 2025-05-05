@@ -1,17 +1,8 @@
 @tool
 extends Area2D
 
-@export var active_shape: String = "rhombus":
-	set(value):
-		active_shape = value
-		if is_inside_tree():
-			update_visibility()
-
-@export var is_keyhole: bool = false:
-	set(value):
-		is_keyhole = value
-		if is_inside_tree():
-			update_visibility()
+@export var active_shape: String = "rhombus"
+@export var is_keyhole: bool = false
 
 var shapes: Dictionary
 
@@ -24,8 +15,7 @@ func _ready() -> void:
 	}
 
 	update_visibility()
-	if not Engine.is_editor_hint():
-		body_entered.connect(_on_body_entered)
+	body_entered.connect(_on_body_entered)
 
 func update_visibility() -> void:
 	if is_keyhole:
@@ -44,6 +34,13 @@ func update_visibility() -> void:
 		var shape = shapes[shape_name]
 		if shape:
 			shape.visible = (shape_name == active_shape)
+
+	#for _collected_shape in Global.collected_shapes:
+#
+		#if shapes[_collected_shape]:
+			#shapes[_collected_shape].queue_free()
+	
+			# queue_free()
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):

@@ -17,3 +17,4 @@ var has_seen_triangles_onboarding: bool = false
 var has_seen_squares_onboarding: bool = false
 var has_seen_cat_onboarding: bool = false
 var has_completed_checkpoint: bool = false
+var is_controller_connected: bool = false

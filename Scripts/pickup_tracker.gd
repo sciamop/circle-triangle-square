@@ -28,6 +28,9 @@ func _ready() -> void:
 	triangle_icon.add_to_group("shape_triangle")
 	square_icon.add_to_group("shape_square")
 	
+	# Add pickup tracker to group
+	add_to_group("pickup_tracker")
+	
 	# Connect to player signals
 	if player:
 		print("Connecting to player signals")
@@ -40,7 +43,7 @@ func _ready() -> void:
 	checkStatus()
 
 func checkForActivated(shape:String) -> void:
-	print(shape)
+	print("ACTIVATED: " + shape)
 	currently_activated = shape
 	checkStatus()
 
@@ -61,30 +64,32 @@ func checkStatus() -> void:
 	else:
 		circle_icon.color = enabled_color
 
-	set_blueprint_item_status()
-	
-	var activated_icon:Polygon2D = find_child(currently_activated + "Icon")
-	if activated_icon:
-		activated_icon.color = active_color
-	
-func set_blueprint_item_status():
-		var blueprint_color:Color = enabled_color
+	# Handle grappling hook
+	var grappling_hook_color:Color = enabled_color
+	if (currently_activated == "grappling_hook"):
+		grappling_hook_color = active_color
 		
-		if (currently_activated == "blueprint"):
-			blueprint_color = active_color
-			
-		var blueprint_item_polygon2ds = blueprint_item.get_children()
-		for polygon2d:Polygon2D in blueprint_item_polygon2ds:
-			polygon2d.color = blueprint_color
+	if blueprint_item:
+		var grappling_hook_polygon2ds = blueprint_item.get_children()
+		for polygon2d:Polygon2D in grappling_hook_polygon2ds:
+			polygon2d.color = grappling_hook_color
 
-		if (currently_activated == "pickaxe"):
-			blueprint_color = active_color
-		else:
-			blueprint_color = enabled_color
+	# Handle pickaxe
+	var pickaxe_color:Color = enabled_color
+	if (currently_activated == "pickaxe"):
+		pickaxe_color = active_color
 
+	if pickaxe_item:
 		var pickaxe_item_polygon2ds = pickaxe_item.get_children()
 		for polygon2d:Polygon2D in pickaxe_item_polygon2ds:
-			polygon2d.color = blueprint_color
+			polygon2d.color = pickaxe_color
+	
+	# Handle basic shapes
+	if currently_activated in ["triangle", "square", "circle"]:
+		var activated_icon:Polygon2D = find_child(currently_activated + "Icon")
+		if activated_icon:
+			activated_icon.color = active_color
+
 
 func updateScore(pickup_type:String, pieces:int):
 	print("score updated")
@@ -115,5 +120,62 @@ func no_projectile(shape: String) -> void:
 	await animation_player.animation_finished
 	animation_player.play("RESET")
 	
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("inventory_left"):
+		cycle_inventory(-1)
+	elif event.is_action_pressed("inventory_right"):
+		cycle_inventory(1)
+
+func cycle_inventory(direction: int) -> void:
+	# Get available shapes based on player's inventory
+	var available_shapes = []
+	
+	# Add shapes in visual order: circle, triangle, square, grappling hook, pickaxe
+	if circle_score > 0:
+		available_shapes.append("circle")
+	if triangle_score > 0:
+		available_shapes.append("triangle")
+	if square_score > 0:
+		available_shapes.append("square")
+	
+	# Add special items if player has them
+	if player.current_state != player.PlayerState.BUILDING:
+		if Global.has_grappling_hook:
+			print("Adding grappling hook to available shapes")
+			available_shapes.append("grappling_hook")
+		if Global.has_pick_axe:
+			available_shapes.append("pickaxe")
+	
+	print("Available shapes: ", available_shapes)
+	print("Current shape: ", currently_activated)
+	print("Has grappling hook: ", Global.has_grappling_hook)
+	
+	# If no shapes are available, return
+	if available_shapes.size() == 0:
+		return
+	
+	# Find current index
+	var current_index = available_shapes.find(currently_activated)
+	print("Current index: ", current_index)
+	if current_index == -1:
+		current_index = 0  # Default to first item if current not found
+
+
+	# Calculate new index with wrap-around
+	var new_index = (current_index + direction) % available_shapes.size()
+	if new_index < 0:
+		new_index = available_shapes.size() - 1
+	
+	print("New index: ", new_index)
+	
+	# Update selection and active projectile
+	var new_shape = available_shapes[new_index]
+	print("New shape: ", new_shape)
+	
+	# Update activation and projectile
+	checkForActivated(new_shape)
+	if player:
+		player.update_activation(new_shape)
+		player.switch_projectile(new_shape)
 
 	

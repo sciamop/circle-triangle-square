@@ -27,6 +27,7 @@ class_name Blueprint
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var player: CharacterBody2D = $"/root/Game/Player"
 @onready var shape_cooldown_timer: Timer = $ShapeCooldownTimer
+@onready var building_cooldown_timer: Timer = $BuildingCooldownTimer
 # State
 var player_in_range: bool = false
 var current_player: Node = null
@@ -51,6 +52,8 @@ var original_camera_zoom
 var camera
 var blueprint_complete: bool = false
 
+var activated_shape: String = ""
+
 signal blueprint_item_added_to_inventory(blueprint_item_name)
 signal shape_spent_on_blueprint(shape_type)
 
@@ -59,9 +62,11 @@ func _ready() -> void:
 	interaction_area.area_entered.connect(_on_interaction_area_entered)
 	interaction_area.area_exited.connect(_on_interaction_area_exited)
 	
-	# Set up cooldown timer
+	# Set up cooldown timers
 	shape_cooldown_timer.wait_time = 0.5
 	shape_cooldown_timer.one_shot = true
+	building_cooldown_timer.wait_time = 0.5
+	building_cooldown_timer.one_shot = true
 	
 	# Set visual properties
 	polygon.color = glow_color
@@ -71,6 +76,20 @@ func _ready() -> void:
 	# Initialize building panel
 	building_panel.hide()
 	_update_shape_count_labels()
+
+	if player:
+		player.connect("on_activate", Callable(self, "checkForActivated"))
+		
+	# Hide pickaxe blueprint if player already has it
+	if blueprint_name == "item_blueprint_pickaxe" and Global.has_pick_axe:
+		queue_free()
+		
+	# Set default activated shape
+	activated_shape = "triangle"
+
+func checkForActivated(shape:String) -> void:
+	print("BLUEPRINT: " + shape)
+	activated_shape = shape
 
 func _on_interaction_area_entered(area: Area2D) -> void:
 	if area.get_parent().is_in_group("player") && area.name != "InsightArea" && blueprint_complete == false:
@@ -88,11 +107,11 @@ func _on_interaction_area_exited(area: Area2D) -> void:
 func _process(_delta: float) -> void:
 	if player_in_range and current_player:
 		# Check if player has a square and is pressing the action key
-		if current_player.shape_counts["square"] > 0 and blueprint_complete == false:
+		if blueprint_complete == false:
 			start_building()
 
 func start_building() -> void:
-	if is_building:
+	if is_building or not building_cooldown_timer.is_stopped():
 		return
 	print("start building")
 	camera = current_player.camera
@@ -127,14 +146,15 @@ func start_building() -> void:
 	_update_shape_count_labels()
 	if current_player.has_method("start_blueprint_building"):
 		current_player.start_blueprint_building(self)
-
+	
+	building_cooldown_timer.start()
 
 func hide_building_panel() -> void:
 	building_panel.global_position = building_panel_pos
 	building_panel.hide()
 
 func stop_building() -> void:
-	if not is_building:
+	if not is_building or not building_cooldown_timer.is_stopped():
 		return
 	print("stop building")
 	# Zoom back to player's current position
@@ -149,6 +169,12 @@ func stop_building() -> void:
 
 	is_building = false
 	_update_shape_count_labels()
+	
+	# Update player state to IDLE when exiting building mode
+	if current_player and current_player.has_method("change_state"):
+		current_player.change_state(current_player.PlayerState.IDLE)
+		
+	building_cooldown_timer.start()
 
 func place_shape(shape_type: String) -> void:
 	if is_building and placed_shapes[shape_type] < required_shapes[shape_type]:
@@ -245,13 +271,15 @@ func move_blueprint_item_into_inventory() -> void:
 	blueprint_item_inventory_tween.tween_property(blueprint_item, "global_position", end_pos, 0.25)
 	blueprint_item_inventory_tween.tween_callback(blueprint_move_complete)
 	
+	# Hide the pickaxe item when it reaches the UI
+	if blueprint_name == "item_blueprint_pickaxe":
+		blueprint_item_inventory_tween.tween_callback(func(): blueprint_item.hide())
+
 func blueprint_move_complete() -> void:
-	
 	if (blueprint_name == "item_blueprint_grapplinghook"):
 		emit_signal("blueprint_item_added_to_inventory","grappling hook")
 		Global.has_grappling_hook = true
 	elif (blueprint_name == "item_blueprint_pickaxe"):
-	
 		emit_signal("blueprint_item_added_to_inventory","pickaxe")
 		Global.has_pick_axe = true
 
@@ -288,7 +316,16 @@ func _input(event: InputEvent) -> void:
 		elif event.is_action_pressed("activate_square"):
 			if placed_shapes["square"] < required_shapes["square"]:
 				place_shape("square")
-				shape_cooldown_timer.start() 
+				shape_cooldown_timer.start()
+		elif event.is_action_pressed("inventory_left") or event.is_action_pressed("inventory_right"):
+			# Get the pickup tracker
+			print("activated_shape: " + activated_shape)
+			print(placed_shapes[activated_shape])
+			if placed_shapes[activated_shape] < required_shapes[activated_shape]:
+				place_shape(activated_shape)
+				shape_cooldown_timer.start()
+			# Get the pickup tracker
+			
 
 func _on_blueprint_activated(blueprint: Node2D) -> void:
 	if not blueprint.is_in_group("blueprint"):

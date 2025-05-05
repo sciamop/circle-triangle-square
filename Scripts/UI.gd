@@ -24,7 +24,6 @@ extends CanvasLayer
 
 @onready var shapes_oob: ColorRect = $CanvasLayer/Control/SHAPES_OOB
 
-
 @onready var enemy: Enemy = $"/root/Game/enemy"
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var blueprint_pickup: Blueprint = $"/root/Game/BlueprintPickup"
@@ -181,8 +180,9 @@ func get_state() -> void:
 				for oob in visible_oob:
 					if oob.visible:
 						slide_dialog(oob, null)
-				emit_signal("dialog_visible", false)
+				await get_tree().create_timer(0.25).timeout
 				any_dialogues_visible = false
+				emit_signal("dialog_visible", false)
 
 func show_dialogue(dialog: ColorRect) -> void:
 	# Don't show dialogue if player is building
@@ -197,7 +197,7 @@ func show_dialogue(dialog: ColorRect) -> void:
 	dialog_state = "none"
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_accept") and any_dialogues_visible:
+	if event.is_action_pressed("ui_accept") or event.is_action_pressed("activate") and any_dialogues_visible:
 		get_state()
 
 

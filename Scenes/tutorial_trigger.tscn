@@ -43,22 +43,40 @@ text = "?"
 label_settings = SubResource("LabelSettings_bn4yf")
 
 [node name="ColorRect" type="ColorRect" parent="."]
-offset_left = -69.0
+offset_left = -85.0
 offset_top = -55.0
-offset_right = -1.0
+offset_right = 2.0
 offset_bottom = -46.0
 scale = Vector2(2.18151, 2.18151)
 color = Color(0, 0, 0, 1)
 
 [node name="Label2" type="Label" parent="ColorRect"]
 layout_mode = 0
-offset_left = 2.0
-offset_top = 1.0
-offset_right = 523.0
-offset_bottom = 57.0
+offset_left = 1.83359
+offset_top = 0.916796
+offset_right = 687.834
+offset_bottom = 56.9168
 scale = Vector2(0.121546, 0.121546)
-text = "PRESS [E] TO ACTIVATE"
+text = "PRESS [E] OR           TO ACTIVATE"
 label_settings = SubResource("LabelSettings_2kd57")
+
+[node name="controller_button" type="Polygon2D" parent="ColorRect" groups=["controller_UI"]]
+position = Vector2(44.0062, 4.58398)
+rotation = -1.5708
+scale = Vector2(0.340274, 0.3446)
+color = Color(0.20871, 0.20871, 0.20871, 1)
+polygon = PackedVector2Array(12, 0, 10.3923, 6, 6, 10.3923, 7.34764e-16, 12, -6, 10.3923, -10.3923, 6, -12, 1.46953e-15, -10.3923, -6, -6, -10.3923, -2.20429e-15, -12, 6, -10.3923, 10.3923, -6)
+
+[node name="Label3" type="Label" parent="ColorRect/controller_button"]
+offset_left = 10.3302
+offset_top = -5.65286
+offset_right = 42.3302
+offset_bottom = 50.3471
+rotation = 1.57079
+scale = Vector2(0.379552, 0.379552)
+text = "Y"
+label_settings = SubResource("LabelSettings_2kd57")
+metadata/_edit_use_anchors_ = true
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
